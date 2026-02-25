@@ -79,7 +79,6 @@ jobs:
                       "name": name,
                       "title": title,
                       "ext": ext,
-                      "size": size,
                       "date": date,
                   })
 
