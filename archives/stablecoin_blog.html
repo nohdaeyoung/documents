@@ -52,7 +52,21 @@ nav{
   padding:16px 32px;
   display:flex;align-items:center;justify-content:space-between;
 }
-.nav-left{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--text-muted);}
+.nav-left{display:flex;align-items:center;gap:16px;}
+.nav-home{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.08em;color:var(--text-muted);
+  text-decoration:none;
+  padding:5px 12px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  transition:all .2s;
+  white-space:nowrap;
+}
+.nav-home:hover{border-color:var(--gold);color:var(--gold);}
+.nav-home svg{flex-shrink:0;}
+.nav-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--text-muted);}
 .nav-tags{display:flex;gap:8px;}
 .tag{
   font-family:'JetBrains Mono',monospace;font-size:10px;
@@ -283,6 +297,7 @@ footer{
   .score-grid{grid-template-columns:repeat(2,1fr);}
   nav{padding:12px 20px;}
   .nav-tags{display:none;}
+  .nav-title{display:none;}
 }
 </style>
 </head>
@@ -291,7 +306,15 @@ footer{
 <div id="bar"></div>
 
 <nav>
-  <span class="nav-left">STABLECOIN DEEP DIVE / 2026.02.24</span>
+  <div class="nav-left">
+    <a href="https://nohdaeyoung.github.io/documents/" class="nav-home">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+      Archives
+    </a>
+    <span class="nav-title">STABLECOIN DEEP DIVE / 2026.02.24</span>
+  </div>
   <div class="nav-tags">
     <span class="tag">달러패권</span>
     <span class="tag">블록체인</span>
