@@ -3,791 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>노년에 대한 공상과 외면 — 정진웅 교수</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>노년에 대한 공상과 외면 — 노년 꿈꾸기를 저해하는 문화적 무의식</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #1a1612;
-    --paper: #f5f0e8;
-    --cream: #ebe4d6;
-    --accent: #8b4513;
-    --accent-light: #c4956a;
-    --muted: #7a7062;
-    --divider: #d4cbb8;
-    --highlight: #fff8ed;
-    --deep: #2c1810;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html {
-    scroll-behavior: smooth;
-    background: var(--deep);
-  }
-
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    color: var(--ink);
-    background: var(--paper);
-    line-height: 1.85;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .hero {
-    background: var(--deep);
-    color: var(--paper);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 4rem 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background:
-      radial-gradient(ellipse at 20% 50%, rgba(139,69,19,0.15) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 30%, rgba(196,149,106,0.1) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .hero-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--accent-light);
-    margin-bottom: 2.5rem;
-    font-weight: 500;
-    opacity: 0;
-    animation: fadeUp 1s 0.3s forwards;
-  }
-
-  .hero h1 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: clamp(2.2rem, 6vw, 4.2rem);
-    font-weight: 900;
-    line-height: 1.3;
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 1s 0.6s forwards;
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    color: var(--accent-light);
-  }
-
-  .hero-meta {
-    font-size: 0.9rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    opacity: 0;
-    animation: fadeUp 1s 0.9s forwards;
-  }
-
-  .hero-meta span { margin: 0 0.75rem; }
-
-  .scroll-indicator {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    animation: fadeUp 1s 1.2s forwards, float 3s 2s infinite;
-  }
-
-  .scroll-indicator svg {
-    width: 24px;
-    height: 24px;
-    stroke: var(--accent-light);
-    stroke-width: 1.5;
-    fill: none;
-  }
-
-  .content {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 5rem 2rem 4rem;
-  }
-
-  .section {
-    margin-bottom: 4.5rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUp 0.8s forwards;
-  }
-
-  .section:nth-child(1) { animation-delay: 0.1s; }
-  .section:nth-child(2) { animation-delay: 0.15s; }
-  .section:nth-child(3) { animation-delay: 0.2s; }
-
-  .section-number {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    margin-bottom: 0.75rem;
-    display: block;
-  }
-
-  .section h2 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.65rem;
-    font-weight: 700;
-    color: var(--deep);
-    line-height: 1.4;
-    margin-bottom: 1.5rem;
-    position: relative;
-    padding-bottom: 1.25rem;
-  }
-
-  .section h2::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background: var(--accent);
-  }
-
-  .section p {
-    font-size: 1rem;
-    color: var(--ink);
-    margin-bottom: 1.25rem;
-    font-weight: 300;
-    line-height: 2;
-  }
-
-  .story-block {
-    background: var(--highlight);
-    border-left: 3px solid var(--accent);
-    padding: 2rem 2rem 2rem 2.5rem;
-    margin: 2rem 0;
-    border-radius: 0 8px 8px 0;
-  }
-
-  .story-block .icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-    display: block;
-  }
-
-  .story-block h3 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--deep);
-    margin-bottom: 0.75rem;
-  }
-
-  .story-block p {
-    font-size: 0.95rem;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-    line-height: 1.9;
-  }
-
-  .compare {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 2.5rem 0;
-  }
-
-  @media (max-width: 600px) {
-    .compare { grid-template-columns: 1fr; }
-  }
-
-  .compare-card {
-    padding: 2rem;
-    border-radius: 12px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .compare-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-
-  .compare-card.left {
-    background: #faf5f0;
-    border: 1px solid #e8ddd0;
-  }
-  .compare-card.left::before { background: #b8860b; }
-
-  .compare-card.right {
-    background: #f0f5f2;
-    border: 1px solid #cdddd4;
-  }
-  .compare-card.right::before { background: #2e7d5b; }
-
-  .compare-card .label {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .compare-card.left .label { color: #b8860b; }
-  .compare-card.right .label { color: #2e7d5b; }
-
-  .compare-card h3 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: var(--deep);
-  }
-
-  .compare-card p {
-    font-size: 0.88rem;
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 0;
-  }
-
-  .stat-row {
-    display: flex;
-    gap: 1.5rem;
-    margin: 2.5rem 0;
-    flex-wrap: wrap;
-  }
-
-  .stat-item {
-    flex: 1;
-    min-width: 140px;
-    text-align: center;
-    padding: 1.75rem 1rem;
-    background: var(--cream);
-    border-radius: 12px;
-  }
-
-  .stat-item .num {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--accent);
-    display: block;
-    line-height: 1.2;
-    margin-bottom: 0.4rem;
-  }
-
-  .stat-item .desc {
-    font-size: 0.78rem;
-    color: var(--muted);
-    line-height: 1.5;
-    font-weight: 400;
-  }
-
-  /* ── Word Analysis Block ── */
-  .word-analysis {
-    background: white;
-    border: 1px solid var(--divider);
-    border-radius: 12px;
-    padding: 2rem;
-    margin: 2rem 0;
-  }
-
-  .word-analysis .word-row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #f0ebe0;
-  }
-
-  .word-analysis .word-row:last-child {
-    border-bottom: none;
-  }
-
-  .word-analysis .term {
-    font-family: 'Noto Serif KR', serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--deep);
-    min-width: 120px;
-  }
-
-  .word-analysis .verdict {
-    font-size: 0.82rem;
-    padding: 0.25rem 0.6rem;
-    border-radius: 4px;
-    font-weight: 500;
-    white-space: nowrap;
-  }
-
-  .verdict.odd {
-    background: #fde8e8;
-    color: #9b2c2c;
-  }
-
-  .verdict.ok {
-    background: #e8f5e8;
-    color: #2e7d32;
-  }
-
-  .word-analysis .why {
-    font-size: 0.82rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  /* ── Quote Block ── */
-  .quote-block {
-    background: var(--cream);
-    padding: 2rem 2.5rem;
-    border-radius: 12px;
-    margin: 2rem 0;
-    text-align: center;
-    position: relative;
-  }
-
-  .quote-block::before {
-    content: '"';
-    font-family: 'Noto Serif KR', serif;
-    font-size: 3rem;
-    color: var(--accent);
-    opacity: 0.3;
-    position: absolute;
-    top: 0.5rem;
-    left: 1.5rem;
-    line-height: 1;
-  }
-
-  .quote-block .q-text {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--deep);
-    line-height: 1.7;
-    margin-bottom: 0.75rem;
-  }
-
-  .quote-block .q-from {
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-weight: 400;
-  }
-
-  /* ── Paradox Block ── */
-  .paradox {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 0.75rem;
-    align-items: center;
-    margin: 2.5rem 0;
-    padding: 2rem;
-    background: var(--cream);
-    border-radius: 12px;
-  }
-
-  @media (max-width: 600px) {
-    .paradox {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
-  }
-
-  .paradox-side {
-    text-align: center;
-  }
-
-  .paradox-side .era {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    font-weight: 700;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .paradox-side .big {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: var(--deep);
-    margin-bottom: 0.25rem;
-  }
-
-  .paradox-side .sub {
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-
-  .paradox-vs {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .insight-section {
-    background: var(--deep);
-    color: var(--paper);
-    padding: 5rem 2rem;
-    margin-top: 2rem;
-  }
-
-  .insight-inner {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .insight-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--accent-light);
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .insight-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(196,149,106,0.3);
-  }
-
-  .insight-section h2 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    line-height: 1.5;
-    color: var(--cream);
-  }
-
-  .insight-section p {
-    font-size: 0.95rem;
-    line-height: 2.1;
-    color: rgba(235,228,214,0.8);
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-  }
-
-  .insight-section p strong {
-    color: var(--accent-light);
-    font-weight: 500;
-  }
-
-  footer {
-    text-align: center;
-    padding: 3rem 2rem;
-    background: var(--deep);
-    border-top: 1px solid rgba(196,149,106,0.15);
-  }
-
-  footer p {
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-
-  .section-divider {
-    width: 100%;
-    height: 1px;
-    background: var(--divider);
-    margin: 4rem 0;
-    position: relative;
-  }
-
-  .section-divider::after {
-    content: '◆';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--paper);
-    padding: 0 1rem;
-    color: var(--accent);
-    font-size: 0.6rem;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(25px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
-  }
+:root{--bg:#0d0d0d;--surface:#1e1e1e;--border:#2e2e2e;--gold:#c9a84c;--text:#e8e2d5;--text-muted:#888880;--text-dim:#444440;--violet:#8b5cf6;--violet-bg:#0f0520;--max:760px;--wide:1200px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif KR',serif;font-size:17px;line-height:1.9;-webkit-font-smoothing:antialiased}
+#bar{position:fixed;top:0;left:0;height:2px;width:0;background:var(--gold);z-index:1000;transition:width .05s}
+nav{position:sticky;top:0;z-index:900;background:rgba(13,13,13,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-left{display:flex;align-items:center;gap:16px}
+.nav-home{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--text-muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:4px;transition:all .2s;white-space:nowrap}
+.nav-home:hover{border-color:var(--gold);color:var(--gold)}
+.nav-home svg{flex-shrink:0}
+.nav-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--text-muted)}
+.nav-tags{display:flex;gap:8px}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 10px;border:1px solid var(--border);color:var(--text-dim);letter-spacing:.1em}
+.hero{position:relative;padding:100px 32px 80px;border-bottom:1px solid var(--border);max-width:var(--max);margin:0 auto}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.hero-label::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.12;color:#fff;margin-bottom:20px;letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-family:'Noto Sans KR',sans-serif;font-size:15px;color:var(--text-muted);margin-bottom:40px;line-height:1.65}
+.hero-meta{display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:.05em}
+.hero-meta span{color:var(--text-muted)}
+.wrapper{max-width:var(--wide);margin:0 auto;position:relative}
+.article-body{max-width:var(--max);margin:0 auto;padding:64px 32px}
+.toc{position:fixed;top:50%;right:24px;transform:translateY(-50%);width:180px;border-left:2px solid var(--border);padding:0 0 0 14px;z-index:50}
+.toc-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px}
+.toc ol{list-style:none}
+.toc li{margin-bottom:4px;font-size:11px;line-height:1.4}
+.toc a{color:#555552;text-decoration:none;transition:color .2s}
+.toc a:hover{color:var(--text)}
+.toc a.active{color:var(--gold);font-weight:500}
+section{margin-bottom:72px;padding-top:24px}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.section-num::after{content:'';flex:1;height:1px;background:var(--border)}
+section h2{font-family:'DM Serif Display',serif;font-size:clamp(22px,3vw,30px);line-height:1.2;color:#fff;margin-bottom:24px;letter-spacing:-.01em}
+section p{margin-bottom:18px;color:var(--text)}
+section h3{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--text);margin:32px 0 12px}
+.pullquote{border-left:3px solid var(--gold);margin:32px 0;padding:16px 24px;background:rgba(201,168,76,.04)}
+.pullquote p{font-family:'Noto Serif KR',serif;font-style:italic;font-size:17px;line-height:1.7;color:#d4c8b0;margin:0}
+.pullquote cite{display:block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--text-dim);font-style:normal}
+.insight{border:1px solid rgba(139,92,246,.25);border-radius:2px;margin:24px 0;padding:18px 20px;background:var(--violet-bg)}
+.insight-h{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;color:var(--violet)}
+.insight p{font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.7;color:#ccc;margin:0}
+.supp{background:var(--surface);border:1px solid var(--border);margin:24px 0;padding:18px 20px}
+.supp-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px}
+.supp p{font-family:'Noto Sans KR',sans-serif;font-size:14px;color:#bbb;line-height:1.7;margin:0}
+.divider{height:1px;background:var(--border);margin:48px 0;position:relative}
+.divider::after{content:'\00A7';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'DM Serif Display',serif;font-size:14px;color:var(--text-dim);background:var(--bg);padding:0 12px}
+footer{border-top:1px solid var(--border);max-width:var(--max);margin:0 auto;padding:40px 32px 48px;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text-dim)}
+@media(max-width:1200px){.toc{display:none}}
+@media(max-width:640px){.hero{padding:64px 20px 48px}.article-body{padding:40px 20px}nav{padding:12px 20px}.nav-tags{display:none}.nav-title{display:none}}
 </style>
 </head>
 <body>
+<div id="bar"></div>
+<nav>
+<div class="nav-left">
+<a href="https://nohdaeyoung.github.io/documents/" class="nav-home"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Archives</a>
+<span class="nav-title">노년에 대한 공상과 외면 / 2023.04.21</span>
+</div>
+<div class="nav-tags"><span class="tag">문화인류학</span><span class="tag">노년</span><span class="tag">무의식</span></div>
+</nav>
 
-<!-- ══ HERO ══ -->
-<section class="hero">
-  <p class="hero-label">강연 요약 노트</p>
-  <h1>노년에 대한<br><em>공상과 외면</em></h1>
-  <p class="hero-meta">
-    노년 꿈꾸기를 저해하는 문화적 무의식
-    <br><span>2023.04.21</span>·<span>정진웅</span>·<span>덕성여자대학교 문화인류학과 교수</span>
-  </p>
-  <div class="scroll-indicator">
-    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-  </div>
+<div class="hero">
+<div class="hero-label">강연 요약 &amp; 분석</div>
+<h1>노년에 대한<br><em>공상과 외면</em></h1>
+<p class="hero-sub">노년 꿈꾸기를 저해하는 문화적 무의식 — 덕성여대 문화인류학과 정진웅 교수의 강연 전체 내용 정리 + 통찰 분석</p>
+<div class="hero-meta">
+<span>강연일 : 2023.04.21</span>
+<span>강연 42분</span>
+<span>강연자 : 정진웅 교수</span>
+</div>
+</div>
+
+<div class="wrapper">
+<aside class="toc">
+<p class="toc-title">목차</p>
+<ol>
+<li><a href="#s1">꿈이 없는 노년</a></li>
+<li><a href="#s2">'노인'이라는 기표</a></li>
+<li><a href="#s3">타자화되는 노년</a></li>
+<li><a href="#s4">젠더와 노년의 교차</a></li>
+<li><a href="#s5">슈퍼 시니어의 함정</a></li>
+<li><a href="#s6">학문이 강화하는 편견</a></li>
+<li><a href="#s7">꿈꾸기와 비우기</a></li>
+<li><a href="#s8">우리 모두의 과업</a></li>
+</ol>
+</aside>
+
+<div class="article-body">
+
+<section id="s1">
+<div class="section-num">01 — 꿈이 없는 노년</div>
+<h2>40년의 시간에 청사진이 없다</h2>
+<p>강연자는 덕성여자대학교 문화인류학과 교수 정진웅이다. 「노년의 문화인류학」, 「메이커 코리아」 등의 저자이며, 노년과 문화적 무의식의 관계를 오랫동안 연구해온 학자다.</p>
+<p>강연의 출발점은 단순하다. <strong>당신은 노년에 대한 꿈이 있는가?</strong> 이 질문에 누구도 쉽게 답하지 못한다. 젊은이에게는 낯선 질문이고, 나이 든 이에게도 마찬가지다. 그 이유는 우리 문화가 노년의 꿈을 상상해본 적이 없기 때문이다.</p>
+<div class="pullquote">
+<p>꿈이 없다는 건 뭔가 결핍된 거다. 노년에 희망과 꿈이 없으면 삶이 굳어지고 완고해진다. 꿈이 없으면 삶의 활기도 반짝이는 눈빛도 없다.</p>
+<cite>— 프란치스코 교황 (강연자 인용)</cite>
+</div>
+<p>공자는 평균수명 40세 시대에 70세까지의 삶의 청사진을 제시했다. 60에 이순(耳順), 70에 종심소욕불유구(從心所欲不踰矩). 그런데 기대수명이 90을 넘긴 오늘, 삶의 청사진은 50대에서 멈춘다. 50대 초중반에 퇴직하고 나면 약 40년이 남는다. 아무런 꿈도 없이 40년을 보내야 한다면, 그것은 어떤 삶인가.</p>
+<div class="insight">
+<div class="insight-h">&#128161; 분석 통찰</div>
+<p>수명 40세 시대에는 70세까지의 청사진이 있었고, 수명 90세 시대에는 50세까지의 청사진만 있다. 인류는 오래 사는 법은 발명했지만, 오래 사는 삶의 의미는 아직 발명하지 못했다. 이 강연 자체가 그 부재를 메우려는 시도다.</p>
+</div>
 </section>
 
-<!-- ══ MAIN CONTENT ══ -->
-<main class="content">
+<div class="divider"></div>
 
-  <!-- ─ 1. 꿈이 없는 노년 ─ -->
-  <div class="section">
-    <span class="section-number">01</span>
-    <h2>꿈이 없는 노년 — 유리천장으로서의 문화</h2>
-    <p>
-      여성이나 흑인의 가능성을 가로막는 유리천장에 대한 인식은 이미 높아졌다. 하지만 <strong>노년의 가능성을 가로막는 유리천장</strong>에 대해서는 인식 자체가 거의 없다. 정진웅 교수는 이 보이지 않는 장벽을 <strong>'문화적 무의식'</strong>이라고 명명한다. 우리가 의식하지 못하는 사이에, 노년에 대한 부정적 인식이 사회 전체에 스며들어 노년의 꿈 자체를 불가능하게 만들고 있다는 것이다.
-    </p>
-
-    <div class="quote-block">
-      <p class="q-text">꿈이 없다는 건 뭔가 결핍된 거다.<br>노년에 희망과 꿈이 없으면 삶이 굳어지고 완고해진다.<br>꿈이 없으면 삶의 활기도, 반짝이는 눈빛도 없다.</p>
-      <p class="q-from">— 프란치스코 교황, 넷플릭스 인터뷰 중</p>
-    </div>
-
-    <p>
-      한국 사회에서 평균 50대 초중반에 퇴직한 뒤, 기대수명 90~100세까지 약 <strong>40년의 시간</strong>을 살아야 한다. 이 긴 시간을 아무런 꿈 없이 보내야 한다면, 그것은 실존적 재앙이다. 그런데 우리의 지배 문화가 제시하는 노년의 모습은 꿈이 아니라, <strong>쇠퇴의 연쇄로 이루어진 내리막길</strong>뿐이다.
-    </p>
-
-    <div class="paradox">
-      <div class="paradox-side">
-        <p class="era">공자의 시대</p>
-        <p class="big">평균 수명 ~40세</p>
-        <p class="sub">70세까지의 삶의 청사진을 제시<br>(이순 → 종심소욕불유구)</p>
-      </div>
-      <div class="paradox-vs">vs</div>
-      <div class="paradox-side">
-        <p class="era">현대 한국</p>
-        <p class="big">기대 수명 90세+</p>
-        <p class="sub">삶의 청사진이<br>50세에서 멈춤</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- ─ 2. '노인'이라는 기표 ─ -->
-  <div class="section">
-    <span class="section-number">02</span>
-    <h2>'노인'이라는 기표 — 나이 들고 보잘것없는 익명의 존재</h2>
-    <p>
-      '노인'이라는 단어의 용법을 분석해보면 흥미로운 사실이 드러난다. 나이가 많아도 국회의원, 재벌 회장, 은퇴한 대통령을 '노인'이라고 부르지는 않는다. 이 단어는 <strong>근대적 성취에서 소외되어 공궁하게 사는 사람</strong>을 지칭할 때만 사용된다. '노인'이라는 기표에는 이미 '나이 들고 보잘것없는 익명의 존재'라는 뜻이 내장되어 있는 것이다.
-    </p>
-
-    <div class="word-analysis">
-      <div class="word-row">
-        <span class="term">노인 사장</span>
-        <span class="verdict odd">어색함</span>
-        <span class="why">성취한 사람에게 '노인'은 붙지 않는다</span>
-      </div>
-      <div class="word-row">
-        <span class="term">노인 국회의원</span>
-        <span class="verdict odd">어색함</span>
-        <span class="why">권력을 가진 사람은 '노인'이 아니다</span>
-      </div>
-      <div class="word-row">
-        <span class="term">노인 지식인</span>
-        <span class="verdict odd">어색함</span>
-        <span class="why">근대적 지식의 총아가 '노인'일 수 없다</span>
-      </div>
-      <div class="word-row">
-        <span class="term">노인 복지</span>
-        <span class="verdict ok">자연스러움</span>
-        <span class="why">주변적 존재에게 복지는 자연스럽다</span>
-      </div>
-      <div class="word-row">
-        <span class="term">노인 빈곤</span>
-        <span class="verdict ok">자연스러움</span>
-        <span class="why">소외된 존재에게 빈곤은 자연스럽다</span>
-      </div>
-    </div>
-
-    <p>
-      '노인'이라는 기표의 부정적 힘은 주변 단어까지 오염시킨다. <strong>'독거노인'</strong>이 대표적이다. '독거'는 본래 '혼자 사는 것'이라는 중립적 의미일 뿐이다. '독거의 즐거움'이라는 책도 있다. 그러나 '노인'이 붙는 순간, 독거노인은 자동으로 '원치 않는 사정으로 소외되어 불쌍하게 혼자 사는 존재'가 된다. 타워팰리스에 혼자 사는 노인을 떠올리는 사람은 없다.
-    </p>
-
-    <div class="story-block">
-      <span class="icon">📛</span>
-      <h3>'어르신'이라는 대안의 한계</h3>
-      <p>'노인'의 부정성이 너무 심하다 보니 서울시는 2012년 '노인'을 대체할 말을 공모해 '어르신'을 공식 행정용어로 채택했다. 하지만 '어르신'도 완전한 해법은 아니다. 본인이 스스로를 호칭할 수 없는 말이다. "제가 어르신으로서 한마디 드리자면" — 이런 문장은 성립하지 않는다. 나를 항상 객체의 자리에 놓아두는 용어인 셈이다. 그런데도 '노인'보다는 낫다고 선택한 것 자체가, <strong>'노인'이라는 기표의 부정성이 얼마나 강고한지</strong>를 보여준다.</p>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- ─ 3. 타자가 된 노년 ─ -->
-  <div class="section">
-    <span class="section-number">03</span>
-    <h2>타자(他者)가 된 노년 — 열등한 존재로의 추방</h2>
-    <p>
-      '타자'란 언어 권력을 가진 주체가 자신의 부정적 속성을 떠넘기는 자리다. 자신을 이성적이고 문명적이고 윤리적인 존재로 인식하고 싶을 때, 가장 쉬운 방법은 <strong>누군가를 비이성적이고 미개하고 윤리적으로 모자란 존재</strong>로 지정하는 것이다. 한국 사회에서 노년이 바로 그런 타자의 자리에 놓여 있다.
-    </p>
-
-    <div class="story-block">
-      <span class="icon">📺</span>
-      <h3>〈꽃보다 할배〉의 백일섭 — 방영된 것과 편집된 것</h3>
-      <p>유럽 여행 중 무릎이 아픈 배우 백일섭은 부인이 싸준 장조림 큰 통을 꺼내 발로 차서 버린다. 이 장면은 편집 없이 방영되었고, SNS에서 아무도 문제 삼지 않았다. 만약 같은 프로그램의 젊은 출연자 이서진이 같은 행동을 했다면? 편집되었을 것이고, 방영되었다면 방송 출연 정지를 받았을 것이다. <strong>아무도 문제 삼지 않았다는 사실 자체가</strong>, '노인은 그럴 수 있는 열등한 존재'라는 문화적 무의식이 얼마나 깊이 공유되어 있는지를 드러낸다.</p>
-    </div>
-
-    <p>
-      미디어가 보여주는 노년의 타자화에는 두 가지 전형이 있다. 하나는 영화 〈집으로〉나 다큐멘터리에 등장하는 <strong>순박한 할머니·할아버지</strong> — 과거에 고착된 존재로서 칭송받지만, 그 칭송은 그들이 과거에 묶여 있을 때만 성립한다. 다른 하나는 〈꽃보다 할배〉식의 <strong>비이성적이고 윤리적으로 열등한 존재</strong> — 주위를 살피지 못하고(직진 순재), 감정 조절이 안 되는(백일섭) 존재로 재현된다.
-    </p>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- ─ 4. 학문 속 무의식 ─ -->
-  <div class="section">
-    <span class="section-number">04</span>
-    <h2>학문도 자유롭지 못하다 — '노년기 적응'과 '삶의 만족도'</h2>
-    <p>
-      문화적 무의식은 학문적 실천에서도 드러난다.
-    </p>
-
-    <div class="compare">
-      <div class="compare-card left">
-        <span class="label">노년기 적응 연구</span>
-        <h3>🔍 적응 대상이 '노년기 자체'</h3>
-        <p>'대학생의 적응'은 대학생활에 적응하는 것이고, '북한 이주민의 적응'은 한국 사회에 적응하는 것이다. 그런데 '노년기 적응'은? 적응해야 할 대상이 <strong>노년기 그 자체</strong>다. 노년이라는 시기 자체가 '문제적인 시기'로 전제되어 있는 것이다.</p>
-      </div>
-      <div class="compare-card right">
-        <span class="label">삶의 만족도 연구</span>
-        <h3>📊 1차원으로 축소된 삶</h3>
-        <p>사회노년학에서 가장 오래, 가장 많이 연구된 주제다. 다른 세대는 적성, 인지 특성, 직업 탐색 등 다차원적 연구 대상이 되지만, 노년에게 남는 것은 '만족하느냐 아니냐'라는 <strong>평면적인 단일 차원</strong>뿐이다. 추구될 만한 의미와 가치가 모두 증발한 <strong>문화적 황무지</strong>로 노년을 취급하는 무의식의 반영이다.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- ─ 5. 젠더와 노년 ─ -->
-  <div class="section">
-    <span class="section-number">05</span>
-    <h2>'여성 노인'과 '노인 여성' — 연령주의와 젠더의 교차</h2>
-    <p>
-      '여성 노인'과 '노인 여성' 중 어떤 표현이 더 자연스러운가? 대부분 '여성 노인'이 자연스럽다고 느낀다. 그 이유 자체가 문화적 무의식을 드러낸다.
-    </p>
-    <p>
-      남성 중심적 젠더 담론에서 여성성은 <strong>젊은 몸·자연</strong>에 묶여 있을 때 달성된다. 나이가 들어 젊은 몸에서 멀어지면 여성성의 근원에서 소외된다. 1970~80년대 젠더 검열이 심했을 때도 할머니는 담배를 피워도 괜찮았다. <strong>"여자가 아니니까."</strong> '아동'도 마찬가지다. '아동 여성'이 이상한 이유는 아동이 여성이기엔 너무 어리기 때문이다. 할머니는 너무 나이 많고.
-    </p>
-    <p>
-      반면 '노인 남성'이 어색한 이유는 다르다. 남성성은 <strong>문명적 성취</strong>를 통해 달성되는 것으로 간주된다. 그런데 '노인'은 성취에서 멀어진 존재다. 성취 없는 남성을 굳이 '남성'이라 부르니 어색한 것이다. <strong>연령주의와 젠더 차별이 서로를 강화하면서</strong>, 노년 여성은 여성성에서, 노년 남성은 남성성에서 각각 추방당한다.
-    </p>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- ─ 6. 슈퍼 시니어 ─ -->
-  <div class="section">
-    <span class="section-number">06</span>
-    <h2>슈퍼 시니어의 환상 — 중년의 끝없는 연장으로서의 노년</h2>
-    <p>
-      최근 문화 산업이 주도하는 '긍정적 노년 이미지'가 있다. 철인삼종경기에 참가하는 할아버지, 100세에 스키 타는 어르신, 몸 만들어 모델로 서는 노년들. TV 프로그램 〈남자의 자격〉에 등장한 노년 합창단의 이름은 <strong>'청춘 합창단'</strong>이었다.
-    </p>
-
-    <div class="story-block">
-      <span class="icon">🏍️</span>
-      <h3>"70세 달라, 미래를 질주하다"</h3>
-      <p>한 기업 광고의 카피: "할리데이비슨과 아우토반을 열망하는 젊은 할아버지. 그에게 나이는 더 이상 장애물이 아닙니다. 넘치는 열정으로 새로운 인생을 개척해나가는 <strong>진정한 청년</strong>, 그가 눈부십니다." — 메시지는 명확하다. 그 열정을 지니고 <strong>청년으로 남으라</strong>는 것이다.</p>
-    </div>
-
-    <p>
-      언뜻 긍정적으로 보이지만, 이것은 노년 담론의 새로운 장(章)이 아니라 <strong>노년 담론의 증발</strong>이다. 건강, 체력, 시간적 여유를 갖춘 극소수만이 달성할 수 있는 특권적 각본을 노년의 청사진으로 제시하는 것이기 때문이다. 기력이 약해지고, 병들고, 죽음에 가까이 가는 노년의 고유한 경험은 긍정이든 부정이든 언급조차 되지 않는다. 젊은 몸과 젊은 욕망을 끝까지 유지하라는 이 신화 속에서, <strong>죽음을 받아들일 준비는 어떻게 가능한가?</strong>
-    </p>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- ─ 7. 돈과 건강 ─ -->
-  <div class="section">
-    <span class="section-number">07</span>
-    <h2>돈과 건강에서 멈추는 상상력</h2>
-    <p>
-      은퇴 대비 교육에 가면, 사람들이 궁금해하는 것은 딱 두 가지뿐이다. <strong>재정 문제와 건강 문제.</strong> 노년의 삶의 가능성에 대한 상상력이 '돈과 건강'에서 멈추는 것은, 젊음과 소비와 자본과 권력을 좇는 것 이상의 삶에 대한 우리 사회의 <strong>문화적 상상력 자체가 고갈</strong>되어 있다는 증거다.
-    </p>
-    <p>
-      어쩌면 덫에 걸린 것은 노년만이 아니다. <strong>비노년 세대 전체가</strong> 소비 자본주의가 사방에 깔아놓은 문화적 덫에 걸려 있는 것은 아닌가. 그래서 노년의 가능성에 대한 상상력도 계속 낮은 상태로 유지되는 것은 아닌가.
-    </p>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- ─ 8. 꿈꾸기와 비우기 ─ -->
-  <div class="section">
-    <span class="section-number">08</span>
-    <h2>꿈꾸기와 비우기 — 강연자의 노년의 꿈</h2>
-    <p>
-      정진웅 교수는 민망하다면서도 자신의 노년의 꿈을 공유했다. <strong>지혜 가꾸기와 지혜 나누기.</strong> 지혜라는 것은 삶과 세계의 이치에 맞닿아 있는 인식이기에, 유행이 지나도 용도 폐기될 수 없다.
-    </p>
-
-    <div class="compare">
-      <div class="compare-card left">
-        <span class="label">과업 1</span>
-        <h3>✨ 꿈꾸기 — 지혜와 사랑</h3>
-        <p>타자의 고통을 덜어주고, 자기 중심성에서 벗어나 마음이 열릴 때 — 그때 우리는 옹졸하지 않고 넉넉해진다. 나의 존재 의미를 확인하면서 타자에게 보람이 되는 실천. 동서고금의 현자들이 전한 삶을 관통하는 지혜이기도 하다.</p>
-      </div>
-      <div class="compare-card right">
-        <span class="label">과업 2</span>
-        <h3>🍃 비우기 — 내려놓기</h3>
-        <p>삶의 유한성을 받아들이는 과정에서 비켜갈 수 없는 지향점. 삶의 굴곡에 일희일비하지 않게 되는 태도. 서울대 두 번 떨어진 일이 결국 얼마나 다행이었는지를 알게 되는 것. 잘난 존재가 되어 남 위에 서는 성취가 허망해지는 것.</p>
-      </div>
-    </div>
-
-    <p>
-      꿈꾸기와 비우기는 모순처럼 보이지만, '진인사대천명(盡人事待天命)' — 노력은 다하되 결과에 집착하지 않는 것 — 과 같은 길이다. 방향성과 추구가 있어야 삶에 활기와 반짝이는 눈이 있다. 하지만 결과에 집착하지 않아야 무거운 삶의 괴로움으로부터 자유로울 수 있다. 이 <strong>역설을 동시에 살아내는 것</strong>이 노년의 과업이자, 사실은 모든 나이대의 과업이기도 하다.
-    </p>
-
-    <div class="quote-block">
-      <p class="q-text">노년이 꿈의 대상이 되고<br>꿈을 추구하는 시기가 될 수 있는 문화를 만드는 것.<br>그 과정에 참여하는 것 자체가<br>각 개인의 삶을 보람 있고 의미 있고<br>여유롭게 만들어줍니다.</p>
-      <p class="q-from">— 정진웅 교수, 강연 마무리 중</p>
-    </div>
-  </div>
-
-</main>
-
-<!-- ══ CLAUDE'S INSIGHT ══ -->
-<section class="insight-section">
-  <div class="insight-inner">
-    <div class="insight-label">Claude's Insight</div>
-    <h2>노년이라는 단어가 꿈을 삼킨다</h2>
-
-    <p>
-      이 강연은 앞의 세 강연이 다루지 못한 가장 근본적인 층위를 건드린다. <strong>언어와 무의식</strong>의 층위다. 이도훈 교수는 인구 구조를, 송병기 작가는 돌봄의 현장을, 심현보 대표는 실천의 모델을 보여주었다. 정진웅 교수는 그 모든 것의 밑바닥에 깔린 질문을 던진다. 우리는 노년에 대해 <strong>생각할 수 있는 언어 자체를 가지고 있는가?</strong>
-    </p>
-
-    <p>
-      '노인 사장'이 어색하고 '노인 빈곤'이 자연스럽다는 사실이 보여주는 것은, 단어 하나에 이미 사회 전체의 편견이 압축되어 있다는 것이다. 송병기 작가의 강연에서 요양원 할머니가 딸기를 먹지 못한 것도, 심현보 대표의 어르신들이 사원증 하나에 크게 반응한 것도, 결국 이 문화적 무의식 — <strong>'노인은 성취에서 멀어진 보잘것없는 존재'라는 전제</strong> — 가 만들어낸 현실이다. 제도를 바꾸고 사업 모델을 만들어도, 이 전제가 바뀌지 않으면 같은 구조가 재생산된다.
-    </p>
-
-    <p>
-      특히 인상적인 것은 <strong>'슈퍼 시니어' 담론에 대한 비판</strong>이다. 철인삼종경기를 하는 할아버지, 모델로 서는 할머니 — 이것은 부정적 노년 이미지에 대한 대안처럼 보이지만, 실은 <strong>노년 고유의 경험 자체를 부정하는 것</strong>이다. "청년으로 남으라"는 것은 "노년이 되지 마라"는 것이다. 기력이 약해지고, 아프고, 죽음에 가까이 가는 것 — 이 경험들을 긍정적으로든 부정적으로든 다룰 언어가 없으면, 우리는 죽음 앞에서도 여전히 "젊게 살아야 한다"는 강박 속에 갇히게 된다. 이것이 교수가 '공상'이라고 부른 것이고, 그 공상의 이면이 '외면'이다.
-    </p>
-
-    <p>
-      네 강연을 관통하는 하나의 실이 보인다. 이도훈 교수의 <strong>'부양비를 쪽수가 아닌 건강으로 재정의하라'</strong>, 송병기 작가의 <strong>'노년의 언어가 비어 있다'</strong>, 심현보 대표의 <strong>'복지 대상이 아니라 창작 주체로 보라'</strong>, 그리고 정진웅 교수의 <strong>'문화적 무의식을 낯설게 보라'</strong>. 네 사람이 각자의 언어로 말하고 있지만, 결국 같은 것을 가리키고 있다. <strong>나이듦을 바라보는 프레임 자체를 바꾸지 않으면 아무것도 바뀌지 않는다.</strong> 그리고 프레임은 결국 단어에서 시작된다.
-    </p>
-  </div>
+<section id="s2">
+<div class="section-num">02 — '노인'이라는 기표</div>
+<h2>나이 들고 보잘것없는 익명의 존재</h2>
+<p>강연자는 '노인'이라는 단어를 해부한다. 이 단어가 사용되는 용법을 보면, 근대적 성취에서 소외되거나 사회적으로 무력해진 사람만을 지칭한다. 나이가 많아도 국회의원, 재벌 회장, 은퇴한 대통령을 우리는 '노인'이라 부르지 않는다. <strong>'노인'에는 "나이 들고 보잘것없는 익명의 존재"라는 뜻이 내장</strong>되어 있다.</p>
+<p>이 때문에 '노인 사장', '노인 지식인' 같은 표현이 모두 어색하다. '독거노인'이라는 말에서는 중립적 단어 '독거'마저 '노인' 옆에 붙으면 불쌍한 존재로 변색된다.</p>
+<div class="pullquote">
+<p>80평 타워팰리스에 혼자 사는 노인을 상상하시는 분은 없죠. '독거'는 그냥 혼자 사는 건데, '노인'이라는 포스가 입혀지면 갑자기 소외되어 불쌍하게 혼자 사는 존재를 연상하게 됩니다.</p>
+<cite>— 정진웅 교수</cite>
+</div>
+<p>서울시는 2012년 '노인' 대체어를 공모해 '어르신'을 선정했다. 하지만 '어르신'은 자기 자신을 호명할 수 없는 말이다. "제가 어르신으로서 한마디 드리자면…" — 불가능하다. 나를 객체의 자리에 고정시키는 용어다. 그래도 '노인'보다는 낫다며 수용된다. 그만큼 '노인'이라는 기표의 부정성이 강고하다는 반증이다.</p>
+<div class="insight">
+<div class="insight-h">&#128161; 분석 통찰</div>
+<p>언어는 현실을 반영하면서 동시에 구성한다. '노인'을 아무 생각 없이 사용할 때마다 부정적 무의식이 강화된다. 대체어 '어르신'도 주체가 아닌 객체의 자리에 노년을 묶어둔다. 언어를 바꾸는 것보다 그 언어가 작동하는 문화적 구조 자체를 직면하는 것이 먼저다.</p>
+</div>
 </section>
+
+<div class="divider"></div>
+
+<section id="s3">
+<div class="section-num">03 — 타자화되는 노년</div>
+<h2>과거에 고착되고, 윤리적으로 열등한 존재</h2>
+<p>'타자'란 권력을 지닌 주체가 자신의 부정적 속성을 떠넘기는 자리다. 내가 이성적이고 문명적이라 느끼고 싶으면, 누군가를 비이성적이고 야만적인 존재로 지목하면 된다. 우리 사회에서 노년이 바로 그 자리에 놓여 있다.</p>
+<h3>"직진 순재"와 "투덜이 일섭"</h3>
+<p>「꽃보다 할배」에서 배우 이순재는 앞뒤 안 살피고 혼자 걸어가서 '직진 순재'라는 별명을 얻었다. 주위를 살피지 못하는 비이성적 존재, 타인을 배려하지 못하는 윤리적 열등자로 노년이 재현된다.</p>
+<p>더 극적인 사례는 배우 백일섭이다. 무릎이 아파 짐이 무거운 상황에서, 부인이 싸준 장조림 통을 발로 차서 버리고 가는 장면이 방영됐다.</p>
+<div class="pullquote">
+<p>이서진 씨가 같은 행동을 했으면 방영됐을까요? SNS에서 난리가 났겠죠. 거의 방송 출연 정지 상태일 거예요. 그런데 백일섭 씨를 비난하는 사람은 아무도 없었어요. '늙으면 그런 거니까'라는 무의식이 그만큼 넓게 공유되어 있는 겁니다.</p>
+<cite>— 정진웅 교수</cite>
+</div>
+<div class="insight">
+<div class="insight-h">&#128161; 분석 통찰</div>
+<p>같은 행동을 젊은 연예인이 하면 방송 정지감이지만, 노인이 하면 웃음거리가 된다. 이것은 노년에 대한 도덕적 기대 자체가 사라졌음을 의미한다. 기대가 없다는 것은 존중이 없다는 것이고, 존중이 없다는 것은 인격으로 인정하지 않는다는 것이다. 노년의 무례를 웃어넘기는 순간, 노년의 인격을 부정하는 데 동참하고 있는 셈이다.</p>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section id="s4">
+<div class="section-num">04 — 젠더와 노년의 교차</div>
+<h2>'여성 노인'은 자연스럽고 '노인 여성'은 어색한 이유</h2>
+<p>강연자는 언어 실험을 제안한다. '여성 노인'과 '노인 여성' 중 어느 쪽이 자연스러운가? 대부분 '여성 노인'을 고른다. 왜 '노인 여성'이 어색할까?</p>
+<p>남성 중심적 젠더 담론에서 여성성의 근거는 <strong>젊은 몸과 자연</strong>에 있다. 할머니는 성적 존재이기에는 너무 나이가 많다고 간주된다. 1970~80년대 성차별이 극심하던 시절에도 할머니들은 담배를 피워도 문제가 안 됐다. "여자가 아니니까."</p>
+<div class="pullquote">
+<p>나이가 들어가면 여성 노인은 여성성의 근원인 젊은 몸으로부터 소외된 존재로, 노년 남성은 남성성의 근간인 문명적 성취로부터 소외되어가는 비이성적인 존재로 대접받는 셈이죠.</p>
+<cite>— 정진웅 교수</cite>
+</div>
+<p>연령 차별(에이지즘)과 성 차별(섹시즘)이 교차하면서, 노년 여성은 이중의 소외를 경험한다. 강연자가 '노년 여성'이라는 표현을 고집하는 것은 — '중년 여성'이 자연스럽듯 — 무의식의 구조에 균열을 내는 실천이다.</p>
+<div class="insight">
+<div class="insight-h">&#128161; 분석 통찰</div>
+<p>어순 하나에 사회의 무의식이 응축되어 있다. '중년 여성'은 자연스럽지만 '노인 여성'은 어색하다는 사실 안에 젠더 차별과 연령 차별이 교차하는 이중 구조가 숨어 있다. 우리가 무심코 선택하는 어순이 곧 차별의 지도다.</p>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section id="s5">
+<div class="section-num">05 — 슈퍼 시니어의 함정</div>
+<h2>공상적 노년 — 중년의 끝없는 연장이라는 욕망</h2>
+<p>타자화된 노년 이미지에 맞서 등장한 것이 '슈퍼 시니어' 담론이다. 70세 경영인이 몸을 가꾸고, 철인삼종경기에 참가하는 할머니, 100세에 스키를 타는 노인. 언뜻 노년의 가능성을 확장하는 것처럼 보인다.</p>
+<div class="pullquote">
+<p>70세 달라, 미래를 질주하다 — 넘치는 열정으로 새로운 인생을 개척해나가는 진정한 청년, 그가 눈부십니다.</p>
+<cite>— 한 기업 광고 카피</cite>
+</div>
+<p>강연자는 이를 <strong>"중년의 끝없는 연장으로서의 노년"</strong>이라 정의한다. 중년도 이미 "청년의 끝없는 연장"이 되어 버렸다. 각 생애 단계에 고유한 성장과 꿈에 대한 담론이 증발한 것이다. TV에서 노년 합창단의 이름은 '청춘 합창단'이었다. 노년 자체로는 가치가 없고, '청춘'이라는 외피를 입어야만 의미를 획득한다.</p>
+<p>문제는 이 각본을 따를 수 있는 사람이 극히 소수라는 점이다. 건강, 체력, 시간, 경제적 자원을 모두 갖춘 특권적 소수만이 슈퍼 시니어가 될 수 있다. 나이가 들수록 이 각본은 더 불가능해진다.</p>
+<div class="insight">
+<div class="insight-h">&#128161; 분석 통찰</div>
+<p>슈퍼 시니어 담론은 노년에 대한 새로운 이미지가 아니라, 사실상 <strong>노년 담론의 증발</strong>이다. 기력이 약해지고 죽음에 가까워지는 노년 고유의 경험을 직면하는 대신, '여전히 젊다'는 환상으로 덮어버린다. 이것은 노년의 해방이 아니라 노년의 부정이다. 진정한 노년 담론은 약해짐과 유한성을 인정하면서도 그 안에서 의미를 찾는 것이어야 한다.</p>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section id="s6">
+<div class="section-num">06 — 학문이 강화하는 편견</div>
+<h2>노년기 '적응'과 '만족도' — 황무지의 학문</h2>
+<p>학문에서도 문화적 무의식이 작동한다. '대학생의 적응'은 대학생활에 대한 적응이고, '북한 이주민의 적응'은 한국사회에 대한 적응이다. 적응 대상이 명확하다. 그런데 <strong>'노년기 적응'은 노년기 자체가 적응해야 할 문제적 시기</strong>로 전제된다.</p>
+<p>사회노년학에서 가장 오래, 가장 많이 연구된 주제는 '노년기 삶의 만족도'다. 다른 세대는 적성 검사, 인지 특성 등 다양한 연구 대상이 되는데, 노년에는 '만족도'라는 1차원적 지표만 남는다.</p>
+<div class="pullquote">
+<p>노년에 다른 삶의 의미들은 다 증발되고 만족이라는 평면적 의미만 남은 — 일종의 문화적 황무지로 대접하는 지배 문화의 무의식에서 노년학도 자유롭지 못합니다.</p>
+<cite>— 정진웅 교수</cite>
+</div>
+<div class="insight">
+<div class="insight-h">&#128161; 분석 통찰</div>
+<p>학문은 사회의 편견을 교정해야 하지만, 오히려 편견을 학문적 언어로 세탁하여 더 공고하게 만들 수 있다. '노년기 적응'이라는 주제 자체가 노년을 문제적 상태로 전제하고, '만족도'만 측정하는 것은 노년에 의미 있는 가치가 남아있지 않다고 전제한다. 과학적 권위를 입은 편견은 더 위험하다.</p>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section id="s7">
+<div class="section-num">07 — 꿈꾸기와 비우기</div>
+<h2>지혜 가꾸기, 지혜 나누기, 그리고 내려놓기</h2>
+<p>이러한 문화적 무의식의 포위 속에서, 강연자는 자신의 노년의 꿈을 솔직하게 밝힌다. 그것은 <strong>지혜 가꾸기와 지혜 나누기</strong>다.</p>
+<p>강연자가 말하는 지혜란 삶과 세계의 이치에 맞닿아 있는 인식이다. 법념(法念) 스님의 통찰을 인용한다 — "외로운 건 혼자 있어서가 아니라 내가 세계와 주변에 닫혀 있기 때문이다." 그리고 사랑이란 타자의 고통을 덜어주고 싶은 마음, 자기중심성에 갇히지 않고 열려있는 마음이다.</p>
+<div class="pullquote">
+<p>삶의 유한성을 생각하면 잘난 존재가 돼서 남보다 앞서 나가고 누르고 그 위에 뚝 서는 것 같은 성취, 이런 것들이 좀 더 허망하고… 어떤 경우에는 폭력적이지 않나 그런 생각을 해보게 됩니다.</p>
+<cite>— 정진웅 교수</cite>
+</div>
+<p>하지만 꿈꾸기에는 <strong>비우기</strong>가 동반되어야 한다. 삶의 유한성을 받아들이는 과정에서 내려놓음은 피할 수 없다. 젊은 몸과 젊은 욕망을 유지하려는 공상적 노년 각본을 따르면, 죽음을 받아들일 준비가 불가능해진다.</p>
+<p>꿈꾸기와 비우기는 모순처럼 보이지만 같은 길이다. "진인사대천명(盡人事待天命)" — 방향성과 노력은 필요하되, 결과에 집착하지 않는 것. 추구는 하되 내려놓는 것. 이 역설을 살아내는 것이 노년의 고유한 과업이라고 강연자는 말한다.</p>
+
+<div class="supp">
+<div class="supp-title">&#128218; 강연자가 준비 중인 두 가지 모임</div>
+<p><strong>1) 동년배 친구 모임</strong> — 노년의 아픈 경험, 상실의 경험을 서로 나누면서 새로운 서사를 창조하고 지혜를 모색하는 모임. <strong>2) 졸업생 멘토링 모임</strong> — 사회생활에서 겪는 문제를 지배 문화의 서사가 아닌 대안적 서사로 바라보며, 같은 경험을 다른 의미로 살아가는 방법을 탐색하는 모임. 둘 다 지혜를 키우고 나누는 성격의 실천이다.</p>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section id="s8">
+<div class="section-num">08 — 우리 모두의 과업</div>
+<h2>강연 분석 — 이 강연이 우리에게 남기는 것</h2>
+
+<p>42분이라는 짧은 시간 안에 정진웅 교수는 단순히 노년 문제를 고발하는 것이 아니라, <strong>우리가 노년을 바라보는 시선 자체를 해부</strong>했다. 이 강연의 가장 큰 힘은 '문화적 무의식'이라는 프레임에 있다.</p>
+
+<p>우리는 노년을 차별한다고 생각하지 않는다. 하지만 '노인'이라는 단어를 사용할 때, 백일섭의 장면을 웃어넘길 때, '여성 노인'이라는 어순을 자연스럽게 느낄 때 — 이미 차별에 참여하고 있다. 이것이 '무의식'이 무서운 이유다. 의식하지 못하기 때문에 저항도 불가능하다.</p>
+
+<div class="insight">
+<div class="insight-h">&#128161; 핵심 구조 분석</div>
+<p>이 강연은 세 겹의 구조로 되어 있다. <strong>첫째, 부정의 층위</strong> — '노인'이라는 기표가 노년을 보잘것없는 존재로 만든다. <strong>둘째, 타자화의 층위</strong> — 미디어와 학문이 노년을 비이성적, 비윤리적 존재로 재생산한다. <strong>셋째, 공상의 층위</strong> — 슈퍼 시니어 담론이 노년의 실제 경험을 은폐한다. 이 세 층위가 합쳐져서 노년의 꿈을 원천 봉쇄한다. 중요한 것은 이것이 악의가 아니라 무의식이라는 점이다. 누구도 의도하지 않았지만 모두가 동참하고 있다.</p>
+</div>
+
+<p>강연자 자신이 제시하는 대안 — 지혜와 사랑, 꿈꾸기와 비우기 — 은 의도적으로 소박하다. 슈퍼 시니어처럼 화려하지 않고, 학문적 프레임워크처럼 정교하지도 않다. 하지만 바로 그 소박함이 핵심이다. 노년의 꿈은 젊음의 연장이 아니라, 삶의 유한성을 직면한 자리에서만 피어나는 고유한 것이어야 한다.</p>
+
+<p>그리고 이 과업은 노년만의 것이 아니다. 강연자가 마지막에 던진 말 — <strong>"봄이 몇 번 지나고 나면 곧 여러분의 과업이 됩니다"</strong> — 은 모든 세대를 향한 것이다. 소비 자본주의가 따라놓은 문화적 덫에 걸려 있는 것은 비노년 세대 전체다. 노년의 가능성에 대한 상상력이 고갈된 것은, 삶 전체의 의미에 대한 상상력이 고갈된 것의 증상일 뿐이다.</p>
+
+<div class="supp">
+<div class="supp-title">&#128205; 이 강연에서 가져갈 질문들</div>
+<p>1. 나는 '노인'이라는 단어를 사용할 때 어떤 이미지를 떠올리는가? 2. 나의 노년에 대한 꿈은 무엇인가 — 돈과 건강 이외에? 3. 내가 존경하는 노년의 인물이 있는가? 그 사람은 슈퍼 시니어인가, 아니면 다른 종류의 빛을 가진 사람인가? 4. 삶의 유한성 앞에서, 지금 나의 우선순위는 정말 올바른가?</p>
+</div>
+</section>
+
+</div>
+</div>
 
 <footer>
-  <p>강연 요약 및 분석 · 원 강연: 정진웅(덕성여자대학교 문화인류학과) · 2023.04.21</p>
+<p>&copy; 2023 강연 요약 &amp; 분석 | 본 자료는 강연 내용을 정리하고 분석한 것입니다.</p>
+<p style="margin-top:8px;">원본 강연: 2023.04.21 · 강연자: 정진웅 교수(덕성여대 문화인류학과) · 강연 시간: 42분</p>
 </footer>
 
+<script>
+var tocLinks=document.querySelectorAll('.toc a'),sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',function(){
+var st=document.documentElement.scrollTop||document.body.scrollTop;
+var sh=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+document.getElementById('bar').style.width=(sh>0?(st/sh)*100:0)+'%';
+var current='';
+sections.forEach(function(s){if(s.offsetTop<=st+140)current=s.id});
+tocLinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+current)});
+});
+</script>
 </body>
 </html>
