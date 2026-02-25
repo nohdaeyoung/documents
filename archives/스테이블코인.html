@@ -136,43 +136,36 @@ nav .tag {
 
 /* LAYOUT */
 .article-body {
-  display: grid;
-  grid-template-columns: 1fr 268px;
-  gap: 60px;
   padding: 64px 40px;
   max-width: var(--wide);
   margin: 0 auto;
-  align-items: start;
 }
 
-/* TOC */
+/* TOC — fixed sidebar outside content */
 .toc {
-  position: sticky; top: 64px;
-  background: var(--cream);
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--gold);
-  padding: 24px;
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 160px;
+  border-left: 2px solid var(--rule);
+  padding: 0 0 0 12px;
+  z-index: 50;
 }
 .toc-title {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; letter-spacing: .2em;
+  font-size: 9px; letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--gray); margin-bottom: 16px;
+  color: var(--rule); margin-bottom: 10px;
 }
-.toc ol { list-style: none; counter-reset: toc; }
+.toc ol { list-style: none; }
 .toc li {
-  counter-increment: toc;
-  margin-bottom: 8px; padding-left: 28px;
-  position: relative; font-size: 13px; line-height: 1.5;
+  margin-bottom: 4px;
+  font-size: 11px; line-height: 1.4;
 }
-.toc li::before {
-  content: counter(toc, decimal-leading-zero);
-  position: absolute; left: 0;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; color: var(--gold); top: 2px;
-}
-.toc a { color: var(--gray); text-decoration: none; transition: color .2s; }
+.toc a { color: #c0b8ad; text-decoration: none; transition: color .2s; }
 .toc a:hover { color: var(--ink); }
+.toc a.active { color: var(--gold); font-weight: 500; }
 
 /* CONTENT */
 .content section {
@@ -329,9 +322,9 @@ footer p {
 .hero-inner > *:nth-child(5) { animation-delay: .5s; }
 
 /* RESPONSIVE */
+@media (max-width: 1180px) { .toc { display: none; } }
 @media (max-width: 800px) {
-  .article-body { grid-template-columns: 1fr; padding: 40px 20px; gap: 0; }
-  .toc { display: none; }
+  .article-body { padding: 40px 20px; }
   nav { padding: 14px 20px; }
   .hero { padding: 56px 20px 48px; }
   .scoreboard { grid-template-columns: repeat(2, 1fr); }
@@ -386,7 +379,6 @@ footer p {
 
 <div class="article-body">
 
-  <!-- TOC -->
   <aside class="toc">
     <p class="toc-title">목차</p>
     <ol>
@@ -405,7 +397,7 @@ footer p {
       <li><a href="#s13">한국의 상황</a></li>
       <li><a href="#s14">양자 컴퓨터 위협</a></li>
       <li><a href="#s15">AI와 디지털 자산</a></li>
-      <li><a href="#s16">전체 팩트체크 결과</a></li>
+      <li><a href="#s16">전체 팩트체크</a></li>
     </ol>
   </aside>
 
@@ -772,11 +764,23 @@ footer p {
 </footer>
 
 <script>
+var tocLinks = document.querySelectorAll('.toc a');
+var sections = document.querySelectorAll('section[id]');
+
 window.addEventListener('scroll', function() {
-  var el = document.getElementById('bar');
+  // Progress bar
   var st = document.documentElement.scrollTop || document.body.scrollTop;
   var sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  el.style.width = (sh > 0 ? (st / sh) * 100 : 0) + '%';
+  document.getElementById('bar').style.width = (sh > 0 ? (st / sh) * 100 : 0) + '%';
+
+  // TOC active
+  var current = '';
+  sections.forEach(function(s) {
+    if (s.offsetTop <= st + 140) current = s.id;
+  });
+  tocLinks.forEach(function(a) {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
 });
 </script>
 
