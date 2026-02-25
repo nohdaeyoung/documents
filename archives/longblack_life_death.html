@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우리 삶과 죽음은 이대로 괜찮은가</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --paper: #f5f0e8;
+    --cream: #ebe4d6;
+    --accent: #8b4513;
+    --accent-light: #c4956a;
+    --muted: #7a7062;
+    --divider: #d4cbb8;
+    --highlight: #fff8ed;
+    --deep: #2c1810;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--deep);
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.85;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hero Section ── */
+  .hero {
+    background: var(--deep);
+    color: var(--paper);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(139,69,19,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(196,149,106,0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent-light);
+  }
+
+  .hero-meta {
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+
+  .hero-meta span { margin: 0 0.75rem; }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards, float 3s 2s infinite;
+  }
+
+  .scroll-indicator svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent-light);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  /* ── Main Content ── */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 4.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s forwards;
+  }
+
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.15s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+
+  .section-number {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--deep);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 1.25rem;
+  }
+
+  .section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .section p {
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+    line-height: 2;
+  }
+
+  /* ── Story Block ── */
+  .story-block {
+    background: var(--highlight);
+    border-left: 3px solid var(--accent);
+    padding: 2rem 2rem 2rem 2.5rem;
+    margin: 2rem 0;
+    border-radius: 0 8px 8px 0;
+    position: relative;
+  }
+
+  .story-block .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .story-block h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 0.75rem;
+  }
+
+  .story-block p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    line-height: 1.9;
+  }
+
+  /* ── Comparison ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .compare { grid-template-columns: 1fr; }
+  }
+
+  .compare-card {
+    padding: 2rem;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .compare-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .compare-card.left {
+    background: #faf5f0;
+    border: 1px solid #e8ddd0;
+  }
+  .compare-card.left::before { background: #b8860b; }
+
+  .compare-card.right {
+    background: #f0f5f2;
+    border: 1px solid #cdddd4;
+  }
+  .compare-card.right::before { background: #2e7d5b; }
+
+  .compare-card .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .compare-card.left .label { color: #b8860b; }
+  .compare-card.right .label { color: #2e7d5b; }
+
+  .compare-card h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--deep);
+  }
+
+  .compare-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+
+  /* ── Stat Block ── */
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    padding: 1.75rem 1rem;
+    background: var(--cream);
+    border-radius: 12px;
+  }
+
+  .stat-item .num {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-item .desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* ── Insight (Claude) ── */
+  .insight-section {
+    background: var(--deep);
+    color: var(--paper);
+    padding: 5rem 2rem;
+    margin-top: 2rem;
+  }
+
+  .insight-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .insight-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .insight-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(196,149,106,0.3);
+  }
+
+  .insight-section h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    color: var(--cream);
+  }
+
+  .insight-section p {
+    font-size: 0.95rem;
+    line-height: 2.1;
+    color: rgba(235,228,214,0.8);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .insight-section p strong {
+    color: var(--accent-light);
+    font-weight: 500;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--deep);
+    border-top: 1px solid rgba(196,149,106,0.15);
+  }
+
+  footer p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Flow Diagram ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--cream);
+    border-radius: 12px;
+  }
+
+  .flow-step {
+    background: white;
+    padding: 0.6rem 1.1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--deep);
+    border: 1px solid var(--divider);
+    white-space: nowrap;
+  }
+
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+
+  /* ── Keyframes ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── Divider ── */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--divider);
+    margin: 4rem 0;
+    position: relative;
+  }
+
+  .section-divider::after {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--paper);
+    padding: 0 1rem;
+    color: var(--accent);
+    font-size: 0.6rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <p class="hero-label">강연 요약 노트</p>
+  <h1>우리 삶과 죽음은<br><em>이대로 괜찮은가</em></h1>
+  <p class="hero-meta">
+    의료인류학자의 시선으로 바라본 한국의 나이듦과 죽음
+    <br><span>2023.04.21</span>·<span>송병기</span>·<span>『각자도사 사회』 저자</span>
+  </p>
+  <div class="scroll-indicator">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main class="content">
+
+  <!-- ─ 1. 인류학적 접근 ─ -->
+  <div class="section">
+    <span class="section-number">01</span>
+    <h2>아주 작은 장소에 큰 쟁점이 있다 — 인류학적 접근</h2>
+    <p>
+      강연자는 의료인류학자로서, 한국인이 어떻게 나이 들고 생애 말기를 맞이하며 죽음에 이르는지를 추적했다. 인류학의 방법론은 통계나 거시적 제도 분석이 아니라, <strong>작은 현장 속 일상</strong>에 들어가 그 안에서 사회 전체와 맞닿아 있는 보편적 사실을 찾아내는 것이다. 강연자는 서울의 노인요양원과 호스피스에서 참여관찰 연구를 수행했다.
+    </p>
+  </div>
+
+  <!-- ─ 2. 두 노인의 이야기 ─ -->
+  <div class="section">
+    <span class="section-number">02</span>
+    <h2>딸기와 칼국수 — 두 노인의 '먹는 것' 이야기</h2>
+    <p>
+      강연의 핵심은 놀랍도록 사소한 질문에서 시작된다. <strong>노인은 자기가 먹고 싶은 것을 먹을 수 있는가?</strong> 이 단순한 질문이 한국 사회의 돌봄 체계 전체를 비추는 거울이 된다.
+    </p>
+
+    <div class="compare">
+      <div class="compare-card left">
+        <span class="label">요양원 할머니</span>
+        <h3>🍓 딸기를 먹지 못하다</h3>
+        <p>경남 거창에서 농사를 짓다 고관절 골절 후 서울 요양원에 입소한 80대 할머니. 오후 간식으로 나온 미지근한 팥죽을 싫어했지만 매번 먹을 수밖에 없었다. 정작 먹고 싶은 딸기를 말하는 순간, 시간표가 흐트러지고 요양보호사에게 폐가 된다고 느꼈기 때문이다. <strong>입맛은 사라지고, 영양 공급만 남았다.</strong></p>
+      </div>
+      <div class="compare-card right">
+        <span class="label">호스피스 할아버지</span>
+        <h3>🍜 칼국수를 먹다</h3>
+        <p>말기 암 진단을 받고 호스피스에 입원한 80대 할아버지. 비 오는 날 칼국수가 먹고 싶다고 했더니, 의료진이 직접 사다 줬다. 막걸리까지 원했고, 간수치에 문제가 없다는 판단 아래 한 잔을 허락받았다. <strong>입맛이 곧 삶의 의미로 존중받았다.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 3. 공통점과 차이점 ─ -->
+  <div class="section">
+    <span class="section-number">03</span>
+    <h2>공통점과 차이점 — 시설 안의 일상</h2>
+
+    <div class="story-block">
+      <span class="icon">🔗</span>
+      <h3>공통점</h3>
+      <p>① 요양원이든 호스피스든, 죽음을 기다리는 장소가 아니라 <strong>일상이 존재하는 공간</strong>이다. 어르신들은 "오늘 저녁 뭐 먹지?"라고 묻고, 심심해하고, 산다.</p>
+      <p>② 두 분 모두 <strong>시설 안</strong>에 있었다. 집이 아닌 기관에서 생애 말기를 보내고 있었다.</p>
+    </div>
+
+    <div class="story-block">
+      <span class="icon">↔️</span>
+      <h3>차이점</h3>
+      <p>호스피스는 <strong>'존엄한 죽음'을 위한 총체적 돌봄</strong>을 목표로 설계된 공간이다. 말기 진단이라는 의료적 근거, 완화의료라는 철학, 영적 돌봄까지 제도적으로 보장된다. 그래서 칼국수 한 그릇이 가능했다.</p>
+      <p>반면 요양원은 <strong>건강 증진과 영양 관리</strong>에 초점이 맞춰져 있다. 빽빽한 시간표, 정해진 인력 비율 속에서 개인의 기호는 체계를 흐트러뜨리는 요소로 여겨진다. 그래서 딸기 하나가 불가능했다.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 4. 사망 장소의 변화 ─ -->
+  <div class="section">
+    <span class="section-number">04</span>
+    <h2>집에서 병원으로 — 사망 장소의 대전환</h2>
+    <p>
+      1996년 임권택 감독의 영화 <strong>「축제」</strong>에서 장례는 마을 공동체가 함께 치르는 희노애락의 의식이었다. 실제로 90년대 중반까지 대다수 한국인은 집에서 사망했다. 그러나 1인 가구 증가, 주거 규모 축소, 확대 가족의 해체 속에서 집은 더 이상 죽음을 맞이할 공간이 아니게 되었다.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <span class="num">30%</span>
+        <span class="desc">1999년<br>병원 사망 비율</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">80%</span>
+        <span class="desc">현재<br>병원 사망 비율</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">~27만</span>
+        <span class="desc">연간<br>사망자 수</span>
+      </div>
+    </div>
+
+    <p>
+      이 숫자가 말해주는 것은 분명하다. 나이듦과 죽음은 이제 <strong>의료 시스템 안에서 일어나는 사건</strong>이 되었고, 개인의 자율성은 의료진·법·제도와의 끊임없는 협상 속에 놓이게 되었다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 5. 케어 사이클 ─ -->
+  <div class="section">
+    <span class="section-number">05</span>
+    <h2>생애 말기의 경로 — 케어 사이클</h2>
+    <p>
+      한국 노인의 생애 말기는 대체로 일정한 패턴을 따른다. 집에서 생활하다 낙상 등의 사건이 발생하면 응급실로, 이후 상태에 따라 요양시설로 이동한다. 이후 반복적으로 응급실과 시설을 오가다 결국 중환자실에서 사망에 이르게 된다.
+    </p>
+
+    <div class="flow">
+      <span class="flow-step">🏠 자택</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">🚑 응급실</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">🏥 요양시설</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">🔄 반복</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">🏨 중환자실</span>
+    </div>
+
+    <p>
+      남성은 평균 약 4회, 여성은 6~7회 이 사이클을 반복한 후 사망한다. 이 순환 속에서 개인의 의지나 선호는 점점 더 시스템의 논리에 흡수된다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 6. 연명의료 결정법 ─ -->
+  <div class="section">
+    <span class="section-number">06</span>
+    <h2>연명의료 결정법 — 제도의 한계</h2>
+    <p>
+      2009년 세브란스 김할머니 사건을 계기로, 환자의 의사를 반영하기 위한 <strong>연명의료 결정법(2018)</strong>이 제정되었다. 건강할 때 사전연명의료의향서를 작성할 수 있게 되었고, 말기 단계에서는 주치의가 연명의료 중단을 결정할 수 있는 법적 장치가 마련되었다.
+    </p>
+    <p>
+      그러나 이 법의 실효성에는 구조적 한계가 있다. 연명의료 중단 대상 질환이 말기암 등 소수로 제한되어 있고, 의료기관 윤리위원회를 설치한 요양시설은 전체의 10%도 되지 않는다. 결국 사전에 의향서를 썼더라도, 실제 요양 현장에서는 <strong>응급실 의사의 판단, 보호자의 상황, 시설의 역량</strong>에 따라 얼마든지 달라질 수 있다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 7. 호스피스의 의미 ─ -->
+  <div class="section">
+    <span class="section-number">07</span>
+    <h2>호스피스라는 가능성, 그리고 빈자리</h2>
+    <p>
+      정부가 연명의료 결정법을 추진한 배경에는 비용의 문제도 있었다. 말기 환자를 중환자실에서 돌보는 데 드는 막대한 비용은 병원과 건강보험 재정 모두에 부담이었다. 호스피스는 그 대안으로 주목받았다.
+    </p>
+    <p>
+      호스피스에서는 말기 진단이라는 의료적 주체가 존재하고, 공간 자체가 <strong>총체적 돌봄(신체·심리·영적)</strong>을 목표로 설계된다. 그래서 할아버지의 칼국수가 가능했다. 반면 요양시설의 노인들은 '말기'라고 판단할 의료적 주체가 부재하고, 건강 증진 중심의 시스템 속에서 돌봄보다는 관리의 대상이 된다.
+    </p>
+
+    <div class="story-block">
+      <span class="icon">☕</span>
+      <h3>믹스커피를 숨기는 할머니</h3>
+      <p>요양원에서 만난 한 할머니는 믹스커피를 "영혼의 음료"라고 부르면서도, 의사나 간호사가 라운딩할 때마다 숨겨야 했다. 당뇨 관리를 이유로 금지되었기 때문이다. 80대 노인에게 건강 증진이란 어떤 의미일까? 이 작은 장면이 돌봄과 관리 사이의 간극을 선명하게 드러낸다.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 8. 결론 ─ -->
+  <div class="section">
+    <span class="section-number">08</span>
+    <h2>강연자의 질문 — 우리는 무엇을 상상할 수 있는가</h2>
+    <p>
+      우리 사회는 아이를 키우고 교육하고 직업을 갖는 과정에 대해서는 촘촘한 서사와 언어를 갖고 있다. 그러나 나이듦과 죽음에 대해서는 언어가 비어 있다. 기껏해야 "좋은 시설에 가야지", "돈을 모아야지", "스위스에서 안락사해야지"와 같은 극단적이거나 개인화된 상상만이 남아 있다.
+    </p>
+    <p>강연자는 마지막으로 다음과 같은 질문을 던진다.</p>
+    <div class="story-block">
+      <span class="icon">💬</span>
+      <h3>남겨진 질문들</h3>
+      <p>시설에 계속 있는 것이 최선인가? 집으로 돌아갈 방법은 없는가?</p>
+      <p>세대 간 코하우징 같은 새로운 상상력은 불가능한가?</p>
+      <p>의료가 '건강 증진'에만 가치를 두는 것을 넘어, <strong>'완화'와 '돌봄'</strong>이라는 가치가 사회 전체의 책임으로 전환될 수는 없는가?</p>
+      <p>돌봄은 할 일 없는 사람이, 여성이 하는 일이 아니라 <strong>모든 시민의 책임</strong>이 될 수 있지 않은가?</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ CLAUDE'S INSIGHT ══ -->
+<section class="insight-section">
+  <div class="insight-inner">
+    <div class="insight-label">Claude's Insight</div>
+    <h2>딸기 한 알이 비추는 사회의 민낯</h2>
+
+    <p>
+      이 강연에서 가장 강렬한 것은 <strong>'딸기'와 '칼국수'</strong>라는 극도로 일상적인 소재가 한국 사회의 구조적 문제를 정확히 관통한다는 점입니다. 딸기를 먹느냐 못 먹느냐는 단순한 식단의 문제가 아니라, 한 인간의 주체성이 시스템 안에서 어디까지 허용되는가의 문제입니다.
+    </p>
+
+    <p>
+      강연자가 포착한 핵심 역설이 있습니다. 우리 사회는 <strong>죽음에 가까운 사람(호스피스의 말기 암 환자)에게는 일상을 허락하면서, 아직 살아있는 사람(요양원의 노인)에게는 일상을 빼앗는다</strong>는 것입니다. 역설적으로 '죽음이 확정된' 순간에야 비로소 한 인간으로서 존중받는 구조인 셈이죠.
+    </p>
+
+    <p>
+      이것은 우리 사회가 <strong>'살아 있음'을 '건강함'과 동일시</strong>하기 때문에 발생합니다. 건강 증진이 유일한 가치인 체계에서, 80대 당뇨 환자에게 믹스커피를 금지하는 것은 '합리적'입니다. 하지만 그 합리성이 남은 삶의 의미와 기쁨을 지워버린다면, 우리는 과연 누구를 위한 돌봄을 하고 있는 걸까요?
+    </p>
+
+    <p>
+      더 근본적으로, 이 강연은 <strong>죽음에 대한 언어의 부재</strong>가 얼마나 위험한지를 보여줍니다. 우리는 출산·교육·커리어에 대해서는 풍부한 서사를 갖고 있지만, 나이듦과 죽음에 대해서는 "돈을 모으자"거나 "안락사"라는 양 극단만 존재합니다. 그 사이의 광활한 지대 — 어떻게 늙어갈 것인가, 누구와 함께할 것인가, 무엇이 나의 마지막 일상을 이룰 것인가 — 에 대한 상상력이 텅 비어 있습니다.
+    </p>
+
+    <p>
+      강연자가 제안하는 전환은 간명합니다. 돌봄을 <strong>개인의 불운이 아니라 시민 전체의 책임</strong>으로, 건강 증진만이 아니라 <strong>완화와 공존</strong>을 의료의 가치로, 시설 수용이 아니라 <strong>세대 간 함께 사는 새로운 형태의 공동체</strong>를 상상할 수 있느냐는 것. 이것은 먼 미래의 이야기가 아닙니다. 우리 모두 반드시 늙고, 반드시 죽으니까요.
+    </p>
+
+    <p>
+      결국 이 강연이 묻는 것은 하나입니다. <strong>당신은 마지막 날에 무엇을 먹고 싶습니까? 그리고 그것을 먹을 수 있는 사회에 살고 있습니까?</strong>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>강연 요약 및 분석 · 원 강연: 송병기 · 2023.04.21</p>
+</footer>
+
+</body>
+</html>
