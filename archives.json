@@ -1,4 +1,9 @@
 [
+    {
+    "name": "stablecoin_blog.html",
+    "title": "스테이블코인, 그냥 코인이 아니다 — 달러 패권의 디지털 연장선",
+
+  }
   {
     "name": "01_Opening_Korea_society_changed.html",
     "title": "01. 한국 사회의 인구 변동",
@@ -12,7 +17,6 @@
   {
     "name": "stablecoin_blog.html",
     "title": "스테이블코인, 그냥 코인이 아니다 — 달러 패권의 디지털 연장선",
-    "ext": "html",
-    "date": "2026-02-25"
+
   }
 ]
