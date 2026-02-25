@@ -1,42 +1,30 @@
 [
   {
-    "name": "03_어떻게_살아가는가_공존하는가.html",
-    "title": "03 . 어떻게 살아가는가, 공존하는가 — 심현보",
+    "name": "01_Opening_Korea_society_changed.html",
+    "title": "한국 사회의 인구 변동 — 이도훈 교수",
     "ext": "html",
-    "category": "note",
+    "size": 26431,
+    "date": "2026-02-25"
+  },
+  {
+    "name": "03_어떻게_살아가는가_공존하는가.html",
+    "title": "어떻게 살아가는가, 공존하는가 — 심현보",
+    "ext": "html",
     "size": 25385,
-    "date": "2026-02-25",
-    "order": 0,
-    "thumbnail": ""
+    "date": "2026-02-25"
   },
   {
     "name": "longblack_life_death.html",
-    "title": "02. 우리 삶과 죽음은 이대로 괜찮은가",
+    "title": "우리 삶과 죽음은 이대로 괜찮은가",
     "ext": "html",
-    "category": "note",
     "size": 22507,
-    "date": "2026-02-25",
-    "order": 1,
-    "thumbnail": ""
-  },
-  {
-    "name": "01_Opening_Korea_society_changed.html",
-    "title": "01. 한국 사회의 인구 변동 — 이도훈 교수",
-    "ext": "html",
-    "category": "note",
-    "size": 26431,
-    "date": "2024-05-11",
-    "order": 2,
-    "thumbnail": ""
+    "date": "2026-02-25"
   },
   {
     "name": "stablecoin_blog.html",
     "title": "스테이블코인, 그냥 코인이 아니다 — 달러 패권의 디지털 연장선",
     "ext": "html",
-    "category": "report",
-    "size": 62149,
-    "date": "2026-02-25",
-    "order": 3,
-    "thumbnail": ""
+    "size": 62978,
+    "date": "2026-02-25"
   }
 ]
