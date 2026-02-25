@@ -5,8 +5,6 @@ on:
     branches: [main]
     paths:
       - 'archives/**'
-
-  # 수동 실행 가능
   workflow_dispatch:
 
 permissions:
@@ -17,21 +15,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      # Pull latest to avoid overwriting concurrent changes
+      - name: Pull latest changes
+        run: git pull origin main
 
       - name: Ensure archives directory exists
         run: mkdir -p archives
 
-      - name: Generate archives.json
+      - name: Generate archives.json and sitemap.xml
         run: |
           python3 << 'SCRIPT'
           import os, json, re
           from datetime import datetime
 
           ARCHIVES_DIR = "archives"
-          OUTPUT_FILE = "archives.json"
+          ARCHIVES_JSON = "archives.json"
+          SITEMAP_FILE = "sitemap.xml"
+          BASE_URL = "https://nohdaeyoung.github.io/documents"
 
           def get_title_from_html(filepath):
-              """Extract <title> from HTML files."""
               try:
                   with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
                       content = f.read(4096)
@@ -43,7 +49,6 @@ jobs:
               return None
 
           def get_title_from_md(filepath):
-              """Extract first # heading from Markdown files."""
               try:
                   with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
                       for line in f:
@@ -56,52 +61,101 @@ jobs:
                   pass
               return None
 
-          files = []
+          # Load existing archives.json to preserve ALL user-edited fields
+          existing = {}
+          existing_order = []
+          if os.path.isfile(ARCHIVES_JSON):
+              try:
+                  with open(ARCHIVES_JSON, "r", encoding="utf-8") as f:
+                      data = json.load(f)
+                      for item in data:
+                          existing[item["name"]] = item
+                          existing_order.append(item["name"])
+              except:
+                  pass
+
+          # Scan actual files in archives/
+          current_files = set()
+          new_files = []
           if os.path.isdir(ARCHIVES_DIR):
-              for name in sorted(os.listdir(ARCHIVES_DIR)):
+              for name in os.listdir(ARCHIVES_DIR):
                   filepath = os.path.join(ARCHIVES_DIR, name)
                   if not os.path.isfile(filepath):
                       continue
                   if name.startswith("."):
                       continue
+                  current_files.add(name)
 
                   ext = name.rsplit(".", 1)[-1].lower() if "." in name else ""
                   size = os.path.getsize(filepath)
-                  mtime = os.path.getmtime(filepath)
-                  date = datetime.fromtimestamp(mtime).strftime("%Y-%m-%d")
 
-                  # Extract title
-                  title = None
-                  if ext == "html":
-                      title = get_title_from_html(filepath)
-                  elif ext == "md":
-                      title = get_title_from_md(filepath)
+                  if name in existing:
+                      # PRESERVE all existing fields, only update size
+                      entry = existing[name].copy()
+                      entry["size"] = size
+                      existing[name] = entry
+                  else:
+                      # NEW file - extract title and set defaults
+                      mtime = os.path.getmtime(filepath)
+                      date = datetime.fromtimestamp(mtime).strftime("%Y-%m-%d")
 
-                  if not title:
-                      title = name.rsplit(".", 1)[0].replace("-", " ").replace("_", " ").title()
+                      title = None
+                      if ext in ("html", "htm"):
+                          title = get_title_from_html(filepath)
+                      elif ext == "md":
+                          title = get_title_from_md(filepath)
 
-                  files.append({
-                      "name": name,
-                      "title": title,
-                      "ext": ext,
-                      "size": size,
-                      "date": date,
-                  })
+                      if not title:
+                          title = name.rsplit(".", 1)[0].replace("-", " ").replace("_", " ").title()
 
-          # Sort by date descending (newest first)
-          files.sort(key=lambda x: x["date"], reverse=True)
+                      entry = {
+                          "name": name,
+                          "title": title,
+                          "ext": ext if ext != "htm" else "html",
+                          "category": "",
+                          "size": size,
+                          "date": date,
+                          "order": 9999,
+                          "thumbnail": ""
+                      }
+                      existing[name] = entry
+                      new_files.append(name)
 
-          with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+          # Build final list: preserve existing order, append new files at end
+          files = []
+
+          # First: files that existed before, in their original order
+          for name in existing_order:
+              if name in current_files:
+                  files.append(existing[name])
+
+          # Then: newly added files at the end
+          for name in sorted(new_files):
+              entry = existing[name]
+              entry["order"] = len(files)
+              files.append(entry)
+
+          with open(ARCHIVES_JSON, "w", encoding="utf-8") as f:
               json.dump(files, f, ensure_ascii=False, indent=2)
 
-          print(f"Generated {OUTPUT_FILE} with {len(files)} file(s).")
+          # Generate sitemap
+          urls = [f'  <url>\n    <loc>{BASE_URL}/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>']
+          for file in files:
+              urls.append(f'  <url>\n    <loc>{BASE_URL}/archives/{file["name"]}</loc>\n    <lastmod>{file["date"]}</lastmod>\n    <priority>0.8</priority>\n  </url>')
+
+          sitemap = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(urls) + '\n</urlset>\n'
+          with open(SITEMAP_FILE, "w", encoding="utf-8") as f:
+              f.write(sitemap)
+
+          added = len(new_files)
+          removed = len(set(existing_order) - current_files)
+          print(f"Updated {ARCHIVES_JSON}: {len(files)} files (added {added}, removed {removed})")
           SCRIPT
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add archives.json archives/.gitkeep 2>/dev/null || true
-          git add archives.json
-          git diff --cached --quiet || git commit -m "chore: update archives list [skip ci]"
+          git add archives.json sitemap.xml
+          git diff --cached --quiet || git commit -m "chore: update archives list"
           git push
