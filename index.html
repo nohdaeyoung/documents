@@ -62,17 +62,45 @@
       font-size: 0.95rem;
     }
 
-    .stats {
+    /* Filter Tabs */
+    .filters {
       display: flex;
-      gap: 32px;
-      margin-top: 16px;
-      font-size: 0.85rem;
-      color: var(--muted);
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
     }
 
-    .stats span strong {
+    .filter-tab {
+      padding: 6px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .filter-tab:hover {
+      border-color: var(--fg);
       color: var(--fg);
-      font-weight: 600;
+    }
+
+    .filter-tab.active {
+      background: var(--fg);
+      border-color: var(--fg);
+      color: var(--bg);
+    }
+
+    .filter-tab .count {
+      display: inline-block;
+      margin-left: 6px;
+      font-size: 0.72rem;
+      opacity: 0.6;
     }
 
     /* Search */
@@ -245,7 +273,8 @@
       .container { padding: 48px 16px 80px; }
       header { margin-bottom: 40px; }
       .archive-item { padding: 16px; }
-      .stats { gap: 20px; flex-wrap: wrap; }
+      .filters { gap: 6px; }
+      .filter-tab { padding: 5px 12px; font-size: 0.78rem; }
     }
   </style>
 </head>
@@ -253,9 +282,9 @@
   <div class="noise"></div>
   <div class="container">
     <header>
-      <h1>📂Archives</h1>
+      <h1>Archives</h1>
       <p>정적 웹페이지 아카이브 — 파일을 추가하면 자동으로 목록이 업데이트됩니다.</p>
-      <div class="stats" id="stats"></div>
+      <div class="filters" id="filters"></div>
     </header>
 
     <div class="search-bar">
@@ -279,37 +308,71 @@
   <script>
     const contentEl = document.getElementById('content');
     const searchEl = document.getElementById('search');
-    const statsEl = document.getElementById('stats');
+    const filtersEl = document.getElementById('filters');
     let allFiles = [];
+    let activeFilter = 'all';
 
     async function loadArchives() {
       try {
         const res = await fetch('archives.json?' + Date.now());
         if (!res.ok) throw new Error('not found');
         allFiles = await res.json();
-        renderStats(allFiles);
-        renderList(allFiles);
+        renderFilters(allFiles);
+        applyFilters();
       } catch {
         allFiles = [];
-        renderStats([]);
+        renderFilters([]);
         renderEmpty();
       }
     }
 
-    function renderStats(files) {
+    function renderFilters(files) {
       if (files.length === 0) {
-        statsEl.innerHTML = '';
+        filtersEl.innerHTML = '';
         return;
       }
-      const htmlCount = files.filter(f => f.ext === 'html').length;
-      const mdCount = files.filter(f => f.ext === 'md').length;
-      const otherCount = files.length - htmlCount - mdCount;
 
-      let parts = [`<span>전체 <strong>${files.length}</strong>개</span>`];
-      if (htmlCount) parts.push(`<span>HTML <strong>${htmlCount}</strong></span>`);
-      if (mdCount) parts.push(`<span>Markdown <strong>${mdCount}</strong></span>`);
-      if (otherCount) parts.push(`<span>기타 <strong>${otherCount}</strong></span>`);
-      statsEl.innerHTML = parts.join('');
+      const extCounts = {};
+      files.forEach(f => {
+        const ext = f.ext || 'other';
+        extCounts[ext] = (extCounts[ext] || 0) + 1;
+      });
+
+      const exts = Object.keys(extCounts).sort();
+
+      let html = `<button class="filter-tab active" data-filter="all">전체<span class="count">${files.length}</span></button>`;
+      exts.forEach(ext => {
+        html += `<button class="filter-tab" data-filter="${ext}">${ext}<span class="count">${extCounts[ext]}</span></button>`;
+      });
+
+      filtersEl.innerHTML = html;
+
+      filtersEl.querySelectorAll('.filter-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filtersEl.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeFilter = btn.dataset.filter;
+          applyFilters();
+        });
+      });
+    }
+
+    function applyFilters() {
+      const q = searchEl.value.toLowerCase().trim();
+      let filtered = allFiles;
+
+      if (activeFilter !== 'all') {
+        filtered = filtered.filter(f => (f.ext || 'other') === activeFilter);
+      }
+
+      if (q) {
+        filtered = filtered.filter(f =>
+          f.name.toLowerCase().includes(q) ||
+          (f.title && f.title.toLowerCase().includes(q))
+        );
+      }
+
+      renderList(filtered);
     }
 
     function renderList(files) {
@@ -362,19 +425,7 @@
       return (bytes / 1048576).toFixed(1) + ' MB';
     }
 
-    // Search
-    searchEl.addEventListener('input', () => {
-      const q = searchEl.value.toLowerCase().trim();
-      if (!q) {
-        renderList(allFiles);
-        return;
-      }
-      const filtered = allFiles.filter(f =>
-        f.name.toLowerCase().includes(q) ||
-        (f.title && f.title.toLowerCase().includes(q))
-      );
-      renderList(filtered);
-    });
+    searchEl.addEventListener('input', () => applyFilters());
 
     loadArchives();
   </script>
