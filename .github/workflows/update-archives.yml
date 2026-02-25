@@ -78,7 +78,9 @@ jobs:
                   files.append({
                       "name": name,
                       "title": title,
-                    
+                      "ext": ext,
+                      "size": size,
+                      "date": date,
                   })
 
           files.sort(key=lambda x: x["date"], reverse=True)
