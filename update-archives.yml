@@ -1,0 +1,107 @@
+name: Update Archives List
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'archives/**'
+
+  # 수동 실행 가능
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-list:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure archives directory exists
+        run: mkdir -p archives
+
+      - name: Generate archives.json
+        run: |
+          python3 << 'SCRIPT'
+          import os, json, re
+          from datetime import datetime
+
+          ARCHIVES_DIR = "archives"
+          OUTPUT_FILE = "archives.json"
+
+          def get_title_from_html(filepath):
+              """Extract <title> from HTML files."""
+              try:
+                  with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+                      content = f.read(4096)
+                      match = re.search(r"<title[^>]*>(.*?)</title>", content, re.IGNORECASE | re.DOTALL)
+                      if match:
+                          return match.group(1).strip()
+              except:
+                  pass
+              return None
+
+          def get_title_from_md(filepath):
+              """Extract first # heading from Markdown files."""
+              try:
+                  with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+                      for line in f:
+                          line = line.strip()
+                          if line.startswith("# "):
+                              return line[2:].strip()
+                          if line and not line.startswith("---"):
+                              break
+              except:
+                  pass
+              return None
+
+          files = []
+          if os.path.isdir(ARCHIVES_DIR):
+              for name in sorted(os.listdir(ARCHIVES_DIR)):
+                  filepath = os.path.join(ARCHIVES_DIR, name)
+                  if not os.path.isfile(filepath):
+                      continue
+                  if name.startswith("."):
+                      continue
+
+                  ext = name.rsplit(".", 1)[-1].lower() if "." in name else ""
+                  size = os.path.getsize(filepath)
+                  mtime = os.path.getmtime(filepath)
+                  date = datetime.fromtimestamp(mtime).strftime("%Y-%m-%d")
+
+                  # Extract title
+                  title = None
+                  if ext == "html":
+                      title = get_title_from_html(filepath)
+                  elif ext == "md":
+                      title = get_title_from_md(filepath)
+
+                  if not title:
+                      title = name.rsplit(".", 1)[0].replace("-", " ").replace("_", " ").title()
+
+                  files.append({
+                      "name": name,
+                      "title": title,
+                      "ext": ext,
+                      "size": size,
+                      "date": date,
+                  })
+
+          # Sort by date descending (newest first)
+          files.sort(key=lambda x: x["date"], reverse=True)
+
+          with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+              json.dump(files, f, ensure_ascii=False, indent=2)
+
+          print(f"Generated {OUTPUT_FILE} with {len(files)} file(s).")
+          SCRIPT
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add archives.json archives/.gitkeep 2>/dev/null || true
+          git add archives.json
+          git diff --cached --quiet || git commit -m "chore: update archives list [skip ci]"
+          git push
