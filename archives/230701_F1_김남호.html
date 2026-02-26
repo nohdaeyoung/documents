@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김남호 — 한국인 최초 F1 엔지니어가 말하는 포뮬러 원의 세계</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #101114;
+  --bg-surface: #18191e;
+  --bg-card: #1e2027;
+  --bg-light: #f5f4f2;
+  --ink: #e8e6e1;
+  --text: #9d9b95;
+  --muted: #5e5c57;
+  --red: #e10600;
+  --red-soft: rgba(225,6,0,0.08);
+  --red-glow: rgba(225,6,0,0.15);
+  --carbon: #2a2b30;
+  --border: #2e3038;
+  --accent-light: #d4af37;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body { font-family: 'Noto Sans KR', sans-serif; color: var(--text); background: var(--bg); line-height: 1.9; font-weight: 300; -webkit-font-smoothing: antialiased; }
+
+.home-btn { position: fixed; top: 1.25rem; left: 1.25rem; z-index: 1000; display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; color: var(--muted); text-decoration: none; padding: 8px 14px; border: 1px solid var(--border); border-radius: 4px; background: rgba(16,17,20,0.9); backdrop-filter: blur(12px); transition: all 0.25s; }
+.home-btn:hover { color: var(--red); border-color: var(--red); }
+
+.scroll-top { position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 50%; background: rgba(16,17,20,0.9); backdrop-filter: blur(12px); color: var(--muted); cursor: pointer; opacity: 0; transform: translateY(10px); transition: all 0.3s; pointer-events: none; }
+.scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.scroll-top:hover { border-color: var(--red); color: var(--red); }
+
+/* ── Hero ── */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 5rem 2rem; position: relative; overflow: hidden; background: linear-gradient(180deg, #0a0a0c 0%, var(--bg) 100%); }
+.hero::before { content: ''; position: absolute; top: 30%; left: 50%; transform: translateX(-50%); width: 600px; height: 2px; background: linear-gradient(90deg, transparent, var(--red-glow), transparent); pointer-events: none; }
+.hero-badge { display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5em; text-transform: uppercase; color: var(--red); padding: 5px 16px; border: 1px solid rgba(225,6,0,0.3); margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 1s 0.3s forwards; }
+.hero h1 { font-family: 'Noto Sans KR', sans-serif; font-size: clamp(1.6rem, 4.5vw, 2.8rem); font-weight: 700; line-height: 1.4; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 1rem; opacity: 0; animation: fadeUp 1s 0.6s forwards; }
+.hero h1 em { font-style: normal; color: var(--red); }
+.hero-sub { font-family: 'Noto Serif KR', serif; font-size: 0.92rem; font-weight: 300; color: var(--muted); line-height: 1.9; max-width: 480px; opacity: 0; animation: fadeUp 1s 0.9s forwards; }
+.hero-meta { margin-top: 2.5rem; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; opacity: 0; animation: fadeUp 1s 1.2s forwards; }
+.hero-meta span { padding: 4px 12px; border: 1px solid var(--border); border-radius: 2px; }
+.hero-line { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, rgba(225,6,0,0.3)); opacity: 0; animation: fadeUp 1s 1.5s forwards; }
+
+/* ── Content ── */
+.content { max-width: 700px; margin: 0 auto; padding: 5rem 2rem; }
+
+.chapter { margin-bottom: 5rem; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s forwards; }
+.chapter-num { font-family: 'Noto Sans KR', sans-serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem; }
+.chapter h2 { font-family: 'Noto Sans KR', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); line-height: 1.5; margin-bottom: 1.5rem; }
+.chapter p { font-size: 0.92rem; margin-bottom: 1.2rem; line-height: 2.05; }
+
+/* ── Voice ── */
+.voice { position: relative; margin: 2rem 0; padding: 1.25rem 1.5rem; background: var(--bg-card); border-left: 2px solid var(--red); border-radius: 0 4px 4px 0; }
+.voice p { font-family: 'Noto Serif KR', serif; font-size: 0.92rem; color: var(--ink); margin: 0; line-height: 1.95; }
+.voice cite { display: block; margin-top: 0.4rem; font-family: 'Noto Sans KR', sans-serif; font-size: 0.68rem; font-style: normal; letter-spacing: 0.08em; color: var(--muted); }
+
+/* ── Data card ── */
+.data-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.data-card-label { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem; font-weight: 700; }
+.data-card p { font-size: 0.85rem; color: var(--text); line-height: 1.85; margin: 0; }
+
+/* ── Keywords ── */
+.keywords { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.5rem 0; }
+.kw { font-size: 0.68rem; font-weight: 500; padding: 4px 12px; border: 1px solid var(--border); color: var(--text); letter-spacing: 0.02em; }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--border); margin: 4rem 0; position: relative; }
+.divider::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border: 1px solid var(--red); background: var(--bg); transform: translate(-50%,-50%) rotate(45deg); }
+
+/* ── Insight ── */
+.insight-section { background: linear-gradient(180deg, var(--bg) 0%, #0a0a0c 100%); padding: 5rem 2rem; border-top: 1px solid var(--border); }
+.insight-inner { max-width: 660px; margin: 0 auto; }
+.insight-label { font-size: 0.58rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--red); margin-bottom: 2rem; }
+.insight-section h2 { font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); margin-bottom: 2rem; line-height: 1.5; }
+.insight-section p { font-size: 0.9rem; line-height: 2.1; color: var(--text); margin-bottom: 1.5rem; }
+.insight-section p strong { color: var(--red); font-weight: 500; }
+
+footer { text-align: center; padding: 3rem 2rem; background: #0a0a0c; border-top: 1px solid var(--border); }
+footer p { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 640px) { .content { padding: 3rem 1.25rem; } .hero { padding: 3rem 1.5rem; } .hero-meta { flex-direction: column; gap: 0.5rem; } }
+</style>
+</head>
+<body>
+
+<a href="https://nohdaeyoung.github.io/documents/" class="home-btn">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  Archives
+</a>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<section class="hero">
+  <span class="hero-badge">강연 · 2023.07.01 · 105분</span>
+  <h1>한국인 최초 <em>F1</em> 엔지니어가<br>말하는 포뮬러 원의 세계</h1>
+  <p class="hero-sub">레이스카를 만들고, 튜닝하고, 달리게 하는 사람들의 이야기.<br>번쩍이는 포장지 뒤에 있는 과학과 현실에 대하여.</p>
+  <div class="hero-meta">
+    <span>김남호 · Vehicle Performance Engineer</span>
+    <span>고려대 기계공학 → 케임브리지 박사</span>
+    <span>Renault F1 → Lotus F1 → Alpine F1</span>
+  </div>
+  <div class="hero-line"></div>
+</section>
+
+<main class="content">
+
+  <!-- 01 -->
+  <div class="chapter">
+    <div class="chapter-num">01 — 레이스 위크</div>
+    <h2>레이스에 참가한다는 것 자체가 이미 챌린지다</h2>
+    <p>레이스 위크가 됐다는 건 차가 완성되어 달릴 준비가 다 됐다는 뜻이다. 부품을 싣고 모터홈이 준비되어 서킷에 도착하는 것 — 이것 자체가 정말 기쁜 상황이다. 그렇지 않은 경우도 꽤 많다. 회사에 돈이 없어서 부품을 조달할 수 없을 때. 하위권을 맴돌다 보면 언젠가 버짓이 다 떨어진다.</p>
+    <p>유럽 내 레이스는 트럭으로, 중동이나 아시아는 DHL 전세기로 운송한다. 차가 도착하면 메카닉들이 조립하고, 지난해 베스트 퍼포먼스 셋업을 기준으로 스케일링한다. 범퍼, 스프링, 라이드하이트, 캠버, 토, 에어로 키트, 프론트 윙 플레이트, 리어 다운포스 레벨 — 전부 스케일링해서 랩타임이 가장 짧게 나오는 범위를 좁히고, 레이스 엔지니어가 최종 결정한다.</p>
+    <div class="voice">
+      <p>퍼포먼스 엔지니어들이 추천을 해줘도 레이스 엔지니어가 마음에 안 들면 선택 안 해도 됩니다. 전혀. 셋업을 결정하는 건 두 대 차량의 레이스 엔지니어입니다.</p>
+      <cite>— 김남호</cite>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 02 -->
+  <div class="chapter">
+    <div class="chapter-num">02 — 드라이버 피드백</div>
+    <h2>레이스카는 드라이버를 만족시키는 과정이다</h2>
+    <p>프리 프랙티스에서 드라이버가 시험 주행을 시작하면, 이때부터 드라이버 피드백이 가장 중요해진다. 셋업 과정은 계속 드라이버 피드백을 받고 로깅 시스템에 남기는 것의 반복이다. 어느 구간, 어디에서 오버스티어인지 언더스티어인지, 스태빌리티 문제가 있는지.</p>
+    <p>헤드쿼터에서 각각의 엔지니어가 보는 텔레메트리 페이지가 전부 다르다. 자기 전문 분야가 있고 기본적으로 체크해야 하는 루틴이 있다. 문제가 생기면 해결책을 찾고, 헤드쿼터에 있는 드라이빙 시뮬레이터에 테스트 드라이버를 태워 시험 주행을 한다. 효과가 있다 판단되면 트랙에 피드백을 준다.</p>
+    <div class="data-card">
+      <div class="data-card-label">드라이버와의 소통 구조</div>
+      <p>드라이버는 오직 레이스 엔지니어하고만 소통한다. 엔지니어링 팀과 드라이버 사이에 직접적인 접촉은 없다. 피드백은 문서화되어 감정이 실리지 않은 정보만 전달된다. 레이스 엔지니어가 드라이버의 욕도, 신경질도 다 듣고, 그 뉘앙스를 걸러내어 정리하는 역할을 한다. 엔지니어링 팀에게는 피드백의 정확성만 중요하다.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 03 -->
+  <div class="chapter">
+    <div class="chapter-num">03 — F1으로 가는 길</div>
+    <h2>기계공학과, 영어, 그리고 크랜필드</h2>
+    <p>현재 F1에 있는 한국인은 김남호를 포함해 다섯 명이다. 최초로 들어간 것은 2010년, 2주 뒤 김효훈 박사가 같은 팀에 합류했다. 이후 노동원 박사, 방성윤 박사가 에어로다이나미시스트로 합류하고, 캐나다에서 공부한 컴포짓 디자이너도 한 명 있다.</p>
+    <div class="voice">
+      <p>제일 문제는 영어입니다. 유창한 생활 영어가 필요한 게 아니에요. 자기 분야에서 살아남을 수 있는 전문 영어만 하시면 됩니다.</p>
+      <cite>— 김남호</cite>
+    </div>
+    <p>가장 빠른 경로: 기계공학과 졸업 → 현대자동차 등에서 퍼포먼스 업무 경력 → 영국 유학. 크랜필드 대학교(Cranfield University)의 모터스포츠 석사 과정이 1년 과정으로 가장 잘 짜여져 있고 배출 실적도 좋다. 옥스퍼드 브룩스도 비슷하게 우수하다. 이 학교를 나오면 원서가 들어왔을 때 한 번씩은 다 보게 되는 학교다.</p>
+    <div class="data-card">
+      <div class="data-card-label">커리큘럼 분석</div>
+      <p>국내 기계공학과를 조사한 결과, 자동차 전문 커리큘럼이 가장 잘 갖춰진 곳은 국민대학교였다. 연세대학교도 선택 범위가 넓다. 반면 고려대학교는 "여전히 보일러"라고 — 자동차 과목이 없다. "고려대 기계공학과에서 자동차를 가르치지 않아요."</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 04 -->
+  <div class="chapter">
+    <div class="chapter-num">04 — 테크니컬 레귤레이션</div>
+    <h2>2014년 — 역사상 가장 큰 변화</h2>
+    <p>2014년에 역사적으로 가장 큰 테크니컬 레귤레이션 체인지가 있었다. 하이브리드 엔진 탑재, 에어로다이나믹스 수정, 외형 변화. 2.4리터 자연흡기에서 1.6리터 터보 차저로 전환. 에너지 리커버리 시스템(ERS)이 본격 도입되면서 MGU-K(키네틱 에너지 회수)와 MGU-H(열 에너지 회수) 두 시스템이 공존하게 됐다.</p>
+    <p>2017년에 메르세데스 W08이 압도적 성능을 보이며 에어로 파트가 극도로 복잡해졌다. 핀, 바지보드, 몽키시트 같은 부가 장치들. FIA가 2018년에 대대적으로 규제했고, 헤일로가 10년 만에 도입됐다. 2022년에는 18인치 타이어 최초 도입, 하이드롤릭 서스펜션 완전 금지로 20년 내 가장 단순한 서스펜션 시스템을 사용하게 된다.</p>
+    <div class="voice">
+      <p>18인치 타이어로 바뀌면서 사이드월이 줄어들고, 타이어에서 나오는 스프링 효과가 줄었습니다. 팀 입장에서는 서스펜션을 조절할 수 있는 영역이 커진 거죠. 우리가 할 수 있는 자유도가 훨씬 늘었습니다.</p>
+      <cite>— 김남호</cite>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 05 -->
+  <div class="chapter">
+    <div class="chapter-num">05 — 컨트롤의 주인</div>
+    <h2>No Driver Aid — 사람이 기계를 다루는 경주</h2>
+    <p>F1의 첫 번째 철학: 컨트롤의 주인은 사람이다. 전자 컨트롤에 대한 강력한 규제가 있다. 액티브 서스펜션, 트랙션 컨트롤, ABS — 모두 금지. 심지어 라디오를 통해 드라이버에게 인스트럭션을 주는 것까지 제한된다.</p>
+    <div class="voice">
+      <p>포뮬러 원 자동차는 굉장히 자동차 원형에 가까워요. 기계적으로 움직이는 건 스티어링 1개밖에 없습니다. 나머지는 전부 전자 신호인데, 허용된 전자 컨트롤은 극히 제한적입니다.</p>
+      <cite>— 김남호</cite>
+    </div>
+    <p>허용되는 전자 컨트롤: 센서 로깅, 드라이버 인터페이스, 아비트레이터(FIA 표준 고정), 파워 유닛 컨트롤(팀 재량이지만 화이트리스트 준수), 후처리 계산(성능에 영향 없는 것만). FIA가 지속적으로 감시하며 규정 위반 시 서먼 → 디스퀄리파이. 스티어링 휠의 매클라렌 모듈은 전 팀 공용이며, 드라이버가 주행 중 바꿀 수 있는 것은 브레이크 밸런스, 엔진 브레이크, 디퍼런셜 토크 트랜스퍼 3개뿐이다.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 06 -->
+  <div class="chapter">
+    <div class="chapter-num">06 — 브레이크 바이 와이어</div>
+    <h2>3개의 브레이크가 하나의 페달에</h2>
+    <p>F1의 브레이크 시스템은 일렉트리컬 브레이킹(MGU-K), 엔진 브레이킹, 프릭션 브레이킹 3개를 합쳐 '브레이크 바이 와이어'라고 부른다. 왼쪽 페달을 밟으면 아비트레이터가 프론트 캘리퍼 토크를 센싱하고, 설정된 브레이크 밸런스에 따라 리어 브레이크 타겟값을 계산한다.</p>
+    <p>이 값을 토크 코디네이터가 받아서 MGU-K, 내연기관(ICE), 리어 캘리퍼 3가지 컴포넌트에 각각의 브레이크 토크를 배분한다. MGU-K가 우선 체결되고, 부족하면 엔진 브레이킹, 그래도 부족하면 리어 캘리퍼가 작동한다. MGU-K가 고장나면 비상모드로 전환되어 클래식한 유압 브레이킹으로 돌아가지만 — 오래 버틸 수 없다.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 07 -->
+  <div class="chapter">
+    <div class="chapter-num">07 — 2026년, 새로운 시대</div>
+    <h2>카본 넷 제로 — 전기차보다 가능성 있는 대안</h2>
+    <p>2026년 대대적인 레귤레이션 체인지가 예고되어 있다. 핵심은 100% 합성 연료. 합성유를 만들 때 이산화탄소를 포집해 사용하고, 연소 시 배출되는 이산화탄소와 상쇄시켜 '카본 넷 에미션 제로'를 달성한다는 철학이다.</p>
+    <div class="voice">
+      <p>전기자동차도 전기를 생산하려면 이산화탄소 배출이 되잖아요. 따지고 보면 제로는 아니죠. 이 합성 연료가 성공하면 전기차보다 더 환경적으로 가능성 있는 대안이 될 수 있습니다.</p>
+      <cite>— 김남호</cite>
+    </div>
+    <p>일렉트릭 파워가 3배로 증가할 예정이며, 엔진 매뉴팩처 6곳이 참여한다. 포드(레드불과 협력), 아우디(자우버와 협력) 등이 새로 합류. 새로운 세대의 시작이 될지 지켜봐야 할 시점이다.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 08 -->
+  <div class="chapter">
+    <div class="chapter-num">08 — 워크 라이프</div>
+    <h2>초과근무 수당은 없고, 휴가는 33일</h2>
+    <p>가장 많이 받는 질문: "돈 많이 받으세요?" 현대자동차 수준이다. 유럽 엔지니어 임금이 그렇게 높지 않다. 하지만 다른 것들이 있다.</p>
+    <div class="voice">
+      <p>첫 번째, 초과근무 수당이 없습니다. 트랙사이드는 초과근무 수당이 있어요 — 거의 월급에 육박합니다. 대신 이혼율이 60% 이상. 팩토리 베이스인 사람들은 퇴근 시간이 분명해요. 6시에 가고 싶으면 6시에 갈 수 있습니다. 눈치 보는 것 없어요.</p>
+      <cite>— 김남호</cite>
+    </div>
+    <p>1년에 휴가 33일. 서머 브레이크 10일은 고정, 나머지 20여 일은 자유롭게 쓸 수 있다. "부장님 오셨습니까?" 이런 건 없다. F1에서 한 가지 좋은 점 — 하루 종일 F1 레이스를 쳐다보고 있어도 아무도 뭐라 하지 않는다. 열심히 일하는 줄 안다.</p>
+
+    <div class="keywords">
+      <span class="kw">Vehicle Performance Engineer</span>
+      <span class="kw">레이스카 모델링</span>
+      <span class="kw">시뮬레이션</span>
+      <span class="kw">텔레메트리</span>
+      <span class="kw">브레이크 바이 와이어</span>
+      <span class="kw">에어로다이나믹스</span>
+    </div>
+  </div>
+
+</main>
+
+<section class="insight-section">
+  <div class="insight-inner">
+    <div class="insight-label">Claude's Insight</div>
+    <h2>번쩍이는 포장지 뒤의 볼트와 너트</h2>
+
+    <p>이 강연에서 김남호가 보여주는 가장 인상적인 태도는 <strong>탈신비화</strong>다. F1은 외부에서 바라볼 때 세상에서 가장 화려한 스포츠지만, 안쪽에서 일하는 사람의 입장은 완전히 다르다. 현대자동차 수준의 급여, 보일러를 가르치는 모교의 커리큘럼, 돈이 없어서 레이스에 참가하지 못하는 팀들, 트랙사이드 인력의 60% 이혼율 — 이런 것들을 아무 필터 없이 꺼내놓는다.</p>
+
+    <p><strong>"컨트롤의 주인은 사람이다"</strong>라는 F1의 철학이 이 강연의 중심축이다. ABS도, 트랙션 컨트롤도, 액티브 서스펜션도 금지. 드라이버가 주행 중 바꿀 수 있는 것은 딱 3개뿐. 자율주행과 AI가 모든 것을 접수하려는 시대에, F1은 정반대 방향으로 가고 있다. "포뮬러 원 자동차는 자동차 원형에 가깝다"는 말은 역설적이다 — 가장 첨단의 기술이 집약된 기계가, 가장 원시적인 방식으로 사람에게 모든 것을 맡기고 있다는 것.</p>
+
+    <p>실용적 정보의 밀도도 압도적이다. 브레이크 바이 와이어의 토크 배분 로직, 아비트레이터의 역할, 네이밍 컨벤션(vCar, mDriveShaft, nGear)까지 — 전직 엔지니어가 아닌 <strong>현직 엔지니어</strong>이기 때문에 가능한 수준의 디테일이다. 특히 "F1 마니아들이 엔지니어보다 더 많이 알 수도 있다"는 겸손은, 한 분야의 전문가가 오히려 시야가 좁을 수밖에 없다는 구조적 진실을 보여준다.</p>
+
+    <p>마지막으로, <strong>2026년 합성 연료</strong>에 대한 언급은 이 강연이 단순한 회고가 아니라 미래를 바라보고 있음을 보여준다. 이산화탄소를 포집해서 연료를 만들고, 태워서 다시 배출하는 넷 제로 사이클. "전기차보다 더 가능성 있는 대안이 될 수 있다"는 판단은 내연기관의 종주국이자 F1의 고향인 영국에서 14년을 일한 엔지니어의 무게감이 실린 전망이다.</p>
+  </div>
+</section>
+
+<footer>
+  <p>강연 정리 및 분석 · 김남호 · 한국인 최초 F1 엔지니어 · 2023.07.01</p>
+</footer>
+
+<script>
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('scrollTop');
+  if (window.scrollY > 600) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+</script>
+</body>
+</html>
