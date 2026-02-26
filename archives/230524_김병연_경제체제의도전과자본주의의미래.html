@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김병연 — 경제 체제의 도전과 자본주의의 미래</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8;
+  --bg-deep: #ede7db;
+  --surface: #faf7f2;
+  --card: #fff;
+  --ink: #1a1510;
+  --text: #4a4035;
+  --muted: #8a7e6f;
+  --navy: #1b2a4a;
+  --navy-light: rgba(27,42,74,.06);
+  --navy-mid: rgba(27,42,74,.12);
+  --rust: #9c3a1a;
+  --rust-soft: rgba(156,58,26,.07);
+  --border: #d6cfc3;
+  --serif: 'Noto Serif KR', serif;
+  --sans: 'Noto Sans KR', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  font-family: var(--sans); color: var(--text); line-height: 1.95;
+  font-weight: 300; -webkit-font-smoothing: antialiased;
+}
+
+.home-btn {
+  position: fixed; top: 1.25rem; left: 1.25rem; z-index: 1000;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .80rem; font-weight: 500; letter-spacing: .06em;
+  color: var(--muted); text-decoration: none; padding: 8px 14px;
+  border: 1px solid var(--border); border-radius: 3px;
+  background: rgba(245,240,232,.95); backdrop-filter: blur(12px);
+  transition: all .25s;
+}
+.home-btn:hover { color: var(--navy); border-color: var(--navy); }
+
+.scroll-top {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: rgba(245,240,232,.95); backdrop-filter: blur(12px);
+  color: var(--muted); cursor: pointer;
+  opacity: 0; transform: translateY(10px);
+  transition: all .3s; pointer-events: none;
+}
+.scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.scroll-top:hover { border-color: var(--navy); color: var(--navy); }
+
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 5rem 2rem; position: relative;
+  background: var(--navy);
+  color: #e8e2d6;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 120px; background: linear-gradient(0deg, var(--bg) 0%, transparent 100%);
+}
+.hero-inst {
+  font-size: .72rem; font-weight: 500; letter-spacing: .35em;
+  text-transform: uppercase; color: rgba(232,226,214,.45);
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .3s forwards;
+}
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(1.64rem, 4.4vw, 2.56rem);
+  font-weight: 700; line-height: 1.55; color: #f5f0e8;
+  margin-bottom: .75rem;
+  opacity: 0; animation: fadeUp .8s .6s forwards;
+}
+.hero h1 em { font-style: normal; color: #c8a96e; }
+.hero-sub {
+  font-size: 1.0rem; font-weight: 300; color: rgba(232,226,214,.6);
+  line-height: 1.95; max-width: 520px; margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .9s forwards;
+}
+.hero-speaker {
+  display: flex; flex-direction: column; align-items: center; gap: .35rem;
+  opacity: 0; animation: fadeUp .8s 1.1s forwards;
+}
+.hero-speaker .name {
+  font-family: var(--serif); font-size: 1.11rem;
+  font-weight: 600; color: #f5f0e8;
+}
+.hero-speaker .title {
+  font-size: .80rem; color: rgba(232,226,214,.5); letter-spacing: .04em;
+}
+.hero-date {
+  margin-top: 1.75rem; font-size: .80rem; letter-spacing: .15em;
+  color: rgba(232,226,214,.35);
+  opacity: 0; animation: fadeUp .8s 1.3s forwards;
+}
+
+/* Content */
+.content { max-width: 680px; margin: 0 auto; padding: 4.5rem 2rem; }
+
+.chapter { margin-bottom: 4.5rem; opacity: 0; transform: translateY(18px); }
+.chapter.visible { animation: fadeUp .7s forwards; }
+
+.chapter-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--navy);
+  margin-bottom: .6rem; opacity: .6;
+}
+.chapter h2 {
+  font-family: var(--serif); font-size: 1.28rem;
+  font-weight: 700; color: var(--ink); line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+.chapter p { font-size: 1.0rem; margin-bottom: 1.15rem; line-height: 2.05; }
+
+/* Voice */
+.voice {
+  position: relative; margin: 1.75rem 0; padding: 1.15rem 1.4rem;
+  background: var(--surface); border-left: 3px solid var(--navy);
+  border-radius: 0 3px 3px 0;
+}
+.voice p {
+  font-family: var(--serif); font-size: 1.0rem;
+  color: var(--ink); margin: 0; line-height: 2;
+}
+.voice cite {
+  display: block; margin-top: .35rem;
+  font-family: var(--sans); font-size: .80rem;
+  font-style: normal; letter-spacing: .06em; color: var(--muted);
+}
+
+/* Thesis card */
+.thesis-card {
+  background: var(--navy); color: #e8e2d6;
+  border-radius: 4px; padding: 1.25rem 1.5rem; margin: 1.75rem 0;
+}
+.thesis-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .25em;
+  text-transform: uppercase; color: #c8a96e;
+  margin-bottom: .5rem;
+}
+.thesis-card p {
+  font-size: .98rem; color: rgba(232,226,214,.85); line-height: 1.95; margin: 0;
+}
+
+/* Data card */
+.data-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1.15rem 1.4rem; margin: 1.75rem 0;
+  position: relative;
+}
+.data-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--rust);
+  margin-bottom: .5rem;
+}
+.data-card p { font-size: .9rem; color: var(--text); line-height: 1.9; margin: 0; }
+
+/* Debate card */
+.debate-card {
+  background: var(--rust-soft); border: 1px solid rgba(156,58,26,.12);
+  border-radius: 4px; padding: 1.15rem 1.4rem; margin: 1.75rem 0;
+}
+.debate-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--rust);
+  margin-bottom: .5rem;
+}
+.debate-card p { font-size: .9rem; color: var(--text); line-height: 1.9; margin: 0; }
+
+/* Divider */
+.divider {
+  height: 1px; background: var(--border); margin: 3.5rem 0;
+  position: relative;
+}
+.divider::after {
+  content: '§'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif); font-size: .7rem;
+  color: var(--muted); background: var(--bg); padding: 0 12px;
+}
+
+/* Insight */
+.insight-section {
+  background: var(--navy); padding: 5rem 2rem;
+  border-top: 1px solid rgba(232,226,214,.1);
+}
+.insight-inner { max-width: 640px; margin: 0 auto; }
+.insight-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .5em;
+  text-transform: uppercase; color: #c8a96e; margin-bottom: 1.75rem;
+}
+.insight-section h2 {
+  font-family: var(--serif); font-size: 1.28rem;
+  font-weight: 700; color: #f5f0e8; margin-bottom: 1.75rem; line-height: 1.55;
+}
+.insight-section p {
+  font-size: .98rem; line-height: 2.1; color: rgba(232,226,214,.7); margin-bottom: 1.4rem;
+}
+.insight-section p strong { color: #c8a96e; font-weight: 500; }
+.counterpoint {
+  border-top: 1px solid rgba(232,226,214,.1);
+  margin-top: 2rem; padding-top: 2rem;
+}
+.counter-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: #b85c3a; margin-bottom: 1rem;
+}
+.counterpoint p { color: rgba(232,226,214,.65); }
+
+footer {
+  text-align: center; padding: 2.5rem 2rem;
+  background: #111827; border-top: 1px solid rgba(232,226,214,.06);
+}
+footer p { font-size: .80rem; color: rgba(232,226,214,.3); letter-spacing: .06em; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media(max-width:640px) {
+  .content { padding: 3rem 1.25rem; }
+  .hero { padding: 3rem 1.5rem; min-height: 90vh; }
+}
+</style>
+</head>
+<body>
+
+<a href="https://nohdaeyoung.github.io/documents/" class="home-btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+Archives
+</a>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<section class="hero">
+<div class="hero-inst">제웅산 시민 인문학 강좌 · 자본주의의 미래 · 제1강</div>
+<h1>경제 체제의 도전과<br><em>자본주의의 미래</em></h1>
+<p class="hero-sub">자본주의는 지속 가능한가. 공유 경제, 로봇, AI 중앙 계획,<br>기후 위기, 불평등 — 다섯 가지 도전에 대한 체제론적 답변.</p>
+<div class="hero-speaker">
+  <span class="name">김병연</span>
+  <span class="title">서울대학교 경제학부 교수 · 국가미래전략원 원장</span>
+  <span class="title">Oxford Ph.D. · 경제 체제와 체제 이행 전공</span>
+</div>
+<div class="hero-date">2023. 05. 24 · 59분</div>
+</section>
+
+<main class="content">
+
+<div class="chapter">
+<div class="chapter-label">서론</div>
+<h2>체제란 무엇인가 — 사슴을 어떻게 나눌 것인가</h2>
+<p>경제 체제란 공동체의 생산, 소비, 분배를 규율하는 제도의 집합이다. 인류가 공동체를 만든 순간부터 존재했다. 수렵 부족이 사슴을 잡았을 때 연장자에게 많이 주면 젊은 사냥꾼의 인센티브가 줄고 파이가 줄어든다. 성과에 따라 분배하는 부족은 인구가 늘고 힘이 커진다. 이 단순한 원리가 체제의 본질이다.</p>
+<p>자본주의는 자연스럽게 형성된 체제다. 아담 스미스는 이것을 만든 것이 아니라 해석한 사람이다. 스미스 자신은 "자연적 자유의 체계"라고 불렀다. 반면 사회주의는 인간이 설계한 체제 — 마르크스가 아이디어를 내고 레닌이 1917년에 실행에 옮겼다. 김병연 교수의 비유: 회를 좋아하면 자연산과 양식의 차이. 자본주의는 수백 년간 버틴 자연산이고, 사회주의는 70여 년 만에 붕괴한 양식이다.</p>
+<div class="thesis-card">
+<div class="thesis-label">핵심 전제</div>
+<p>자본주의 대 사회주의의 경쟁은 이미 끝났다. 체제의 본질은 다르지만 추구하는 목적 — 성장, 분배, 사회적 공정, 지속 가능성 — 은 동일하다. 문제는 자본주의가 이 목적들을 얼마나 잘 달성하고 있는가이다.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">도전 1 — 공유 경제</div>
+<h2>"공유"라는 이름의 오해</h2>
+<p>에어비앤비, 우버 같은 공유 경제(Sharing Economy)가 사유를 대체할 것이라는 주장에 대해. 김병연 교수의 지적: 이들은 사기업이 온라인 플랫폼을 통해 개인이 사유하는 자산(집, 차)을 더 효율적으로 활용하게 돕는 것이지, 사유가 공유로 전환된 것이 아니다. "공유"라는 이름이 잘못 붙은 것이며, 본질은 여분의 사유 재산을 활용한 자본주의적 효율화다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">도전 2 — 로봇 경제</div>
+<h2>로봇에게는 인센티브가 필요 없다, 그러나</h2>
+<p>사회주의가 실패한 근본 원인은 인센티브 문제다. 북한 협동농장에서 농민이 대충 일하고 자기 집 텃밭에서만 열심히 일하는 것, 소련의 텃밭(전체 경작 면적 10%)이 감자 생산의 40~50%를 담당한 것이 증거다. 로봇은 인센티브가 필요 없으니 사회주의적 생산도 가능하지 않을까?</p>
+<p>김병연 교수의 답: 불가능하다. 로봇을 만들고 AI를 프로그래밍하는 것은 여전히 사람이다. 완벽하게 인간 노동을 대체할 수 없는 한, 일하는 사람에게 인센티브는 반드시 필요하다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">도전 3 — AI 중앙 계획</div>
+<h2>완벽한 계획은 왜 불가능한가</h2>
+<p>사회주의 중앙 계획이 실패한 것은 데이터 부족과 속도 문제 때문이었다. AI가 실시간으로 완벽한 계획을 수립하면 시장 없이도 경제를 운영할 수 있지 않을까?</p>
+<p>김병연 교수의 답: 시장은 가격을 통해 극도로 유연하게(flexible) 조정(adjust)한다. 중앙 계획은 변화를 감지하고, 데이터를 모으고, 다시 계획을 수정해서 내려보내는 시간이 걸린다. AI가 이것을 실시간으로 한다 해도, 글로벌 공급망 전체를 대상으로 계획을 짜는 것은 불가능하다. 러시아-우크라이나 전쟁처럼 예측 불가능한 사건이 벌어졌을 때, 시장은 가격이 폭등하며 즉시 반응하지만 중앙 계획은 구조적으로 지연될 수밖에 없다.</p>
+<div class="voice">
+<p>아무리 기술이 발전하더라도, 옛날 사회주의식의 중앙 계획이나 국유로 돌아가기는 힘들다.</p>
+<cite>— 김병연</cite>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">도전 4 — 불평등</div>
+<h2>귀족 정치 시대보다 불평등한 민주주의</h2>
+<p>강연에서 가장 무게감 있게 다뤄진 주제. 1820년 영국에서 하위 50% 소득의 전체 비중이 14%였다. 당시는 성인 남성 일부만 참정권을 가진 귀족 정치 시대. 현재 민주주의 하에서 그 비중은 13%로, 200년 전보다 더 낮아졌다.</p>
+<div class="data-card">
+<div class="data-label">불평등이 성장을 해치는 메커니즘</div>
+<p>① 자본시장 불완전 → 똑똑하지만 가난한 사람이 교육 투자를 못 함 → 인적 자본 손실. ② 불평등 심화 → 중위 투표자의 소득 하락 → 재분배 요구 증가 → 성장 둔화. ③ 불평등 → 계층 간 갈등 → 사회적 합의 불가능 → 개혁 지체. 러시아(불평등 급증 → 합의 실패 → 성장 실패) vs 체코·슬로바키아(분배 유지 → 합의 용이 → 이행 성공)가 증거.</p>
+</div>
+<p>그런데 해결이 극도로 어렵다. 그 이유는 구조적이다. 글로벌화로 인해 부자와 대기업에 세금을 매기면 해외로 이탈한다. 지식 경제의 도래로 고학력·고숙련 노동자와 저학력·저숙련 노동자의 격차가 자연스럽게 벌어진다. 이 둘 다 자본주의를 효율적으로 만드는 요인이 동시에 불평등을 심화시킨다는 역설이다.</p>
+<div class="voice">
+<p>한국이 이 트랩에 빠진 것 같습니다. IMF 때 금 모으기를 다시 할 수 있겠습니까? 사회 갈등이 심한 것이고, 그 뿌리는 불평등이 심한 것입니다.</p>
+<cite>— 김병연</cite>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">도전 5 — 기후 환경</div>
+<h2>불평등보다 낙관하는 이유</h2>
+<p>김병연 교수는 기후 문제를 불평등보다 풀기 쉽다고 본다. 불평등은 분열적(divisive)이다 — 너에게 좋은 것이 나에게 나쁠 수 있다. 그러나 환경 문제는 부자든 서민이든 같은 공기를 마신다. 하나로 묶을 수 있는 이슈다. 진짜 갈등은 현 세대와 미래 세대 사이에 있다.</p>
+<div class="thesis-card">
+<div class="thesis-label">제안 — 세대별 차등 투표권</div>
+<p>환경 문제에 한해, 기대 수명에서 현재 나이를 뺀 만큼의 투표권을 부여한다. 60대는 기대 수명 84에서 61을 뺀 23의 가중치를, 20대는 64의 가중치를 갖는다. 미래를 더 오래 살아야 하는 세대에게 더 많은 결정권을 주자는 것. 또한 태어나지 않은 미래 세대의 권리를 대변할 변호사를 선임하는 방안도 제시.</p>
+</div>
+<p>시장 친화적 해결책으로는 개인별 양도 가능 할당량(Individual Transferable Quotas) — 미국 어업에서 도입된 방식으로, 총량은 유지하되 더 잡고 싶은 사람은 권리를 사오고, 덜 잡는 사람은 시장에서 권리를 파는 구조. 탄소 배출권 거래도 같은 원리다. 시장을 죽이지 않으면서 환경을 보호할 수 있다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">결론</div>
+<h2>아담 스미스는 보이지 않는 손만 말하지 않았다</h2>
+<p>강연의 결론은 아담 스미스의 복원이다. 스미스가 "보이지 않는 손이 작동해서 사익이 공익이 된다"고 말했다는 통념은 왜곡이다. 스미스는 《도덕감정론》에서 동감(sympathy), 역지사지, 양심을 말했다. 인간의 네 가지 덕 중 자기 통제와 인내심은 성인급에게나 기대할 수 있고, 보통 사람에게 기대할 수 있는 것은 정의(justice)를 준수하는 것과 신중함(prudence) — 자기 이익을 추구하되 다른 사람에게 해를 끼치지 않는 문명화된 자기 이익 추구다.</p>
+<div class="voice">
+<p>자본주의가 2.0은 될지언정, 자본주의가 붕괴하고 다른 체제가 오지는 않겠습니다. 그러나 자본주의를 없애야 한다고 생각하는 분이라면, 반드시 고민해야 합니다 — 어떤 체제로 대체할 것인가. 인간이 이 거대한 제도를 설계할 능력이 있는가. 마르크스가 설계할 수 있다고 생각한 순간, 적어도 수천만 명이 죽었습니다.</p>
+<cite>— 김병연</cite>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">Q&A 핵심</div>
+<h2>북유럽 모델은 왜 이식이 어려운가</h2>
+<p>"덴마크, 스웨덴 체제가 가장 나은데, 왜 다 같이 그걸 쓰지 않는가?"라는 질문에 대해. 김병연 교수의 답: 제도에는 출발선이 있다. 핀란드의 지니 계수가 0.24에서 0.25로 올랐을 때 국가적 난리가 났다. 한국은 지니 계수 0.3 중반. 북유럽은 인구가 작고, 좌파 전통이 길고, 오랜 사회적 합의의 역사가 있다. 미국처럼 땅이 넓고 인종이 다양하거나, 한국처럼 인구가 적지 않은 나라가 갑자기 북유럽 제도를 도입하면 기존 제도가 흔들린다.</p>
+<p>핵심은 "이행"이다. 여기서 저기로 바로 가면 난리가 난다. 어떻게 잘 갈 것인가, 다리를 놓고 단계적으로 옮기는 것이 체제 이행 전문가의 전문성이다. 이것이 김병연 교수의 전공이기도 하다.</p>
+<div class="voice">
+<p>공공성을 처음부터 모티브로 삼으면 어렵습니다. 정책 결정자가 자기도 하지 않을 일을 다른 사람이 할 것을 기대하는 정치는 실패합니다. 보통 사람에게 기대할 수 있는 것은, 정의를 지키면서 자기 이익을 신중하게 추구할 때 다른 사람의 이익을 해치는 것은 아닌가를 살피는 것입니다.</p>
+<cite>— 김병연</cite>
+</div>
+</div>
+
+</main>
+
+<section class="insight-section">
+<div class="insight-inner">
+<div class="insight-label">Claude's Insight</div>
+<h2>체제론자의 보수적 낙관 — 그리고 그 균열</h2>
+
+<p>이 강연의 구조는 매우 명확하다. <strong>다섯 가지 도전을 순서대로 제시하고, 하나씩 기각한 뒤, "자본주의 2.0"이라는 결론에 도착한다.</strong> 공유 경제 — 이름만 공유지 사유 기반이다. 로봇 경제 — 인간 노동은 사라지지 않는다. AI 중앙 계획 — 글로벌 공급망에서 불가능하다. 불평등 — 심각하지만 구조적이라 해법이 없다. 기후 위기 — 시장 친화적으로 풀 수 있다. 결론: 자본주의는 문제가 있지만 대안이 없다.</p>
+
+<p>이 논증의 힘은 체제 비교론자의 경험에서 나온다. 소련의 텃밭, 북한 협동농장, 러시아와 체코의 이행 경로 차이 — 김병연 교수의 전공인 구 사회주의 경제 연구가 모든 논증의 뼈대를 이룬다. "사회주의의 실패를 가장 잘 아는 사람"이 자본주의를 옹호하는 것이므로, <strong>"그래도 사회주의가 낫지 않겠느냐"는 질문은 이 강연 안에서 설 자리가 없다.</strong></p>
+
+<p><strong>아담 스미스 복원</strong>이 인상적이다. "보이지 않는 손"으로 왜곡된 스미스를 《도덕감정론》의 스미스로 되돌려놓는 것. 스미스가 말한 것은 이기심의 자유가 아니라 "문명화된 자기 이익 추구" — 정의를 지키며, 역지사지하며, 타인에게 해를 끼치지 않는 범위 안에서의 이기심이다. 이 복원은 강연 전체의 윤리적 기반을 제공한다.</p>
+
+<div class="counterpoint">
+<div class="counter-label">반론 — 이 프레임이 놓치는 것들</div>
+
+<p>그러나 이 강연의 논증 구조에는 몇 가지 균열이 있다.</p>
+
+<p><strong>첫째, "대안 부재"를 "현 체제의 정당성"과 등치시키는 논리.</strong> "자본주의를 없애려면 어떤 체제로 대체할 것인가?"라는 질문은 강력하지만, 이것은 현 체제의 문제를 축소하는 수사적 기능도 수행한다. 대안이 없다는 것이 현 상태가 충분히 좋다는 의미는 아니다. 마르크스의 실패가 자본주의 비판 자체를 무효화하지는 않는다. 실제로 강연 내에서도 불평등 문제에 대해 "답이 없다"고 인정하면서, 결론에서는 "동감의 능력을 회복하면 된다"로 착지하는데, 이 간극이 상당히 크다. 구조적 문제에 대해 도덕적 해법을 제시하는 것은, 교수 자신이 비판한 "공공성을 모티브로 삼는 정치"와 같은 구조 아닌가.</p>
+
+<p><strong>둘째, AI 중앙 계획에 대한 기각이 2023년 시점에서 너무 빠르다.</strong> "글로벌 공급망 전체를 계획하는 것은 불가능하다"는 주장은 현재 기준으로 옳지만, AI의 발전 속도를 과소평가하고 있을 수 있다. 실제로 아마존, 월마트 같은 기업은 이미 수백만 SKU의 수요 예측·재고 배분·물류 최적화를 AI로 수행하고 있으며, 이것은 사실상 기업 내부의 중앙 계획이다. 문제는 "완벽한 계획이 가능한가"가 아니라 "시장보다 나은 수준의 조정이 가능한 영역이 점점 넓어지고 있는가"이며, 이 질문에 대한 답은 "예"에 가깝다. 물론 이것이 국가 수준의 중앙 계획으로 직결되지는 않지만, "시장 vs. 계획"이라는 이분법 자체가 점점 흐려지고 있다는 점은 인정할 필요가 있다.</p>
+
+<p><strong>셋째, 기후 위기를 불평등보다 낙관하는 근거가 약하다.</strong> "환경은 모두에게 영향을 미치니까 합의가 쉽다"는 논리는 이론적으로 아름답지만, 현실과 맞지 않는다. 기후 위기의 피해는 극도로 불균등하게 분배된다 — 방글라데시 농민과 뉴욕 펜트하우스 거주자가 같은 공기를 마시더라도 해수면 상승의 피해는 전혀 다르다. 선진국과 개발도상국 사이의 탄소 배출 책임 논쟁이 30년째 교착 상태인 것이 증거다. "세대별 차등 투표권"은 사고실험으로는 흥미롭지만, 현실 정치에서 기존 유권자가 자신의 투표 가중치를 줄이는 법안에 동의할 확률은 극히 낮다. 기후 문제가 합의 가능하다는 전제 자체를 다시 검토해야 한다.</p>
+
+<p><strong>마지막으로, "이행의 전문성"이라는 프레임.</strong> "여기서 저기로 바로 가면 난리가 난다, 다리를 놓아야 한다"는 주장은 설득력 있지만, 동시에 이것은 현 상태를 유지하는 쪽에 구조적으로 유리한 프레임이다. 모든 급진적 변화를 "난리가 난다"로 기각할 수 있기 때문이다. 역사적으로 점진적 이행만이 성공한 것도 아니다 — 한국 자체가 1960~80년대에 국가 주도의 급진적 산업화를 통해 체제를 전환한 사례다.</p>
+
+<p>그럼에도 이 강연의 가치는 분명하다. <strong>체제를 바꾸자고 말하기 전에, 그 체제가 어떤 메커니즘으로 작동하는지 정확히 이해하라는 요구.</strong> 자본주의를 비판하려면 사회주의가 왜 실패했는지부터 공부하라는 요구. 이것은 어떤 정치적 입장보다 먼저 와야 하는, 학자의 정직한 태도다.</p>
+</div>
+</div>
+</section>
+
+<footer>
+<p>강연 정리 및 분석 · 김병연 · 서울대학교 경제학부 · 제웅산 시민 인문학 강좌 · 2023.05.24</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){var b=document.getElementById('scrollTop');if(window.scrollY>600)b.classList.add('visible');else b.classList.remove('visible')});
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(function(el){observer.observe(el)});
+</script>
+</body>
+</html>
