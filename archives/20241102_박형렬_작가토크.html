@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>박형렬 — 산-잇기: Being a Mountain</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f1ec;
+  --bg-dark: #0c0b09;
+  --surface: #eae5dc;
+  --ink: #1c1a16;
+  --text: #4a453b;
+  --muted: #8a8377;
+  --earth: #8b6914;
+  --earth-soft: rgba(139,105,20,0.08);
+  --earth-light: #f0e8d4;
+  --stone: #6b6560;
+  --stone-light: rgba(107,101,96,0.1);
+  --border: #d5cfc5;
+  --ochre: #c4960a;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; color: var(--text); background: var(--bg); line-height: 1.9; font-weight: 300; -webkit-font-smoothing: antialiased; }
+
+/* ── Navigation ── */
+.home-btn { position: fixed; top: 1.25rem; left: 1.25rem; z-index: 1000; display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; color: rgba(28,26,22,0.4); text-decoration: none; padding: 8px 14px; border: 1px solid var(--border); border-radius: 6px; background: rgba(244,241,236,0.85); backdrop-filter: blur(12px); transition: all 0.25s; }
+.home-btn:hover { color: var(--earth); border-color: var(--earth); }
+
+.scroll-top { position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 50%; background: rgba(244,241,236,0.9); backdrop-filter: blur(12px); color: var(--stone); cursor: pointer; opacity: 0; transform: translateY(10px); transition: all 0.3s; pointer-events: none; }
+.scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.scroll-top:hover { background: var(--earth-light); border-color: var(--earth); color: var(--earth); }
+
+/* ── Hero: Dark like the 2F exhibition space ── */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 5rem 2rem; position: relative; overflow: hidden; background: var(--bg-dark); }
+.hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 50% 80%, rgba(139,105,20,0.06) 0%, transparent 60%); pointer-events: none; }
+.hero-badge { display: inline-block; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.4em; text-transform: uppercase; color: var(--ochre); border: 1px solid rgba(196,150,10,0.25); padding: 6px 18px; border-radius: 2px; margin-bottom: 3rem; opacity: 0; animation: fadeUp 1s 0.3s forwards; }
+.hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.4; color: #e8e2d8; letter-spacing: -0.01em; margin-bottom: 0.75rem; opacity: 0; animation: fadeUp 1s 0.6s forwards; }
+.hero h1 em { font-style: normal; color: var(--ochre); font-weight: 700; }
+.hero-en { font-family: 'Noto Sans KR', sans-serif; font-size: 0.85rem; font-weight: 300; letter-spacing: 0.15em; color: rgba(232,226,216,0.35); margin-bottom: 2rem; opacity: 0; animation: fadeUp 1s 0.8s forwards; }
+.hero-sub { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; font-weight: 300; color: rgba(232,226,216,0.5); line-height: 1.9; max-width: 500px; opacity: 0; animation: fadeUp 1s 1s forwards; }
+.hero-meta { margin-top: 3rem; font-size: 0.72rem; color: rgba(232,226,216,0.3); letter-spacing: 0.06em; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; opacity: 0; animation: fadeUp 1s 1.3s forwards; }
+.hero-line { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, rgba(196,150,10,0.3)); opacity: 0; animation: fadeUp 1s 1.6s forwards; }
+
+/* ── Transition strip ── */
+.transition { height: 120px; background: linear-gradient(to bottom, var(--bg-dark), var(--bg)); position: relative; }
+.transition::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 4px; height: 4px; background: var(--ochre); border-radius: 50%; }
+
+/* ── Content ── */
+.content { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; }
+
+.chapter { margin-bottom: 5rem; opacity: 0; transform: translateY(25px); animation: fadeUp 0.8s forwards; }
+.chapter-num { font-family: 'Noto Serif KR', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--earth); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+.chapter-num::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--earth); opacity: 0.4; }
+.chapter h2 { font-family: 'Noto Serif KR', serif; font-size: 1.35rem; font-weight: 700; color: var(--ink); line-height: 1.5; margin-bottom: 1.5rem; }
+.chapter p { font-size: 0.93rem; margin-bottom: 1.2rem; line-height: 2; }
+
+/* ── Voice blocks ── */
+.voice { position: relative; margin: 2.25rem 0; padding: 1.5rem 1.5rem 1.5rem 2rem; background: var(--stone-light); border-radius: 2px; }
+.voice::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--earth); }
+.voice p { font-family: 'Noto Serif KR', serif; font-size: 0.93rem; color: var(--ink); margin: 0; line-height: 1.9; }
+.voice cite { display: block; margin-top: 0.5rem; font-family: 'Noto Sans KR', sans-serif; font-size: 0.7rem; font-style: normal; letter-spacing: 0.08em; color: var(--muted); }
+
+/* curator voice */
+.voice.curator::before { background: var(--stone); }
+
+/* ── Aside / context note ── */
+.aside { background: var(--earth-soft); border: 1px solid rgba(139,105,20,0.12); border-radius: 3px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+.aside-label { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--earth); margin-bottom: 0.4rem; font-weight: 500; }
+.aside p { font-size: 0.85rem; color: var(--stone); line-height: 1.85; margin: 0; }
+
+/* ── Keywords ── */
+.keywords { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.5rem 0; }
+.kw { font-size: 0.7rem; font-weight: 500; padding: 4px 12px; border-radius: 2px; background: var(--surface); color: var(--stone); border: 1px solid var(--border); letter-spacing: 0.02em; }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--border); margin: 4rem 0; position: relative; }
+.divider::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 6px; height: 6px; border: 1px solid var(--border); background: var(--bg); }
+
+/* ── Dark Insight Section ── */
+.insight-section { background: var(--bg-dark); padding: 5rem 2rem; }
+.insight-inner { max-width: 660px; margin: 0 auto; }
+.insight-label { font-size: 0.62rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--ochre); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
+.insight-label::after { content: ''; flex: 1; height: 1px; background: rgba(196,150,10,0.2); }
+.insight-section h2 { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; color: #e8e2d8; margin-bottom: 2rem; line-height: 1.5; }
+.insight-section p { font-size: 0.9rem; line-height: 2.1; color: rgba(232,226,216,0.6); margin-bottom: 1.5rem; }
+.insight-section p strong { color: var(--ochre); font-weight: 500; }
+
+footer { text-align: center; padding: 3rem 2rem; background: var(--bg-dark); border-top: 1px solid rgba(196,150,10,0.1); }
+footer p { font-size: 0.7rem; color: rgba(232,226,216,0.25); letter-spacing: 0.05em; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 640px) { .content { padding: 3rem 1.25rem; } .hero { padding: 3rem 1.5rem; } .hero-meta { flex-direction: column; gap: 0.5rem; } }
+</style>
+</head>
+<body>
+
+<a href="https://nohdaeyoung.github.io/documents/" class="home-btn">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  Archives
+</a>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<section class="hero">
+  <span class="hero-badge">아티스트 토크 · 뮤지엄한미 삼청별관 · 2024.11.02</span>
+  <h1><em>산-잇기</em></h1>
+  <div class="hero-en">Being a Mountain</div>
+  <p class="hero-sub">사라진 산을 복원하는 작가.<br>인간이 파헤친 땅의 얼굴을 마주하고,<br>그 흔적을 다시 잇는 15년의 작업에 대하여.</p>
+  <div class="hero-meta">
+    <span>박형렬 · 사진작가 / 계원예술대학교 교수</span>
+    <span>대담: 김선영 · 학예연구관</span>
+    <span>70분</span>
+  </div>
+  <div class="hero-line"></div>
+</section>
+
+<div class="transition"></div>
+
+<main class="content">
+
+  <!-- 01 -->
+  <div class="chapter">
+    <div class="chapter-num">01</div>
+    <h2>포획된 자연 — 소유할 수 없는 것을 소유하려는 역설</h2>
+    <p>박형렬의 작업은 세 가지 큰 프로젝트로 이루어져 있다. 〈포획된 자연 Captured Nature〉, 〈형상 연구 Figure Project〉, 그리고 〈산 Mountain〉 시리즈. 가장 초기 작업인 〈포획된 자연〉은 2010년경 시작됐다. 도시에 살면서 자연을 대하는 인간의 아이러니한 태도 — 소유할 수 없는 것을 소유하려 하고, 지배할 수 없는 것을 지배하려는 모습에서 출발했다.</p>
+    <p>눈을 커다란 구 형태로 만들어 어딘가를 떠나려 하는 사람들의 모습을 연출하거나, 흙덩어리를 뭉쳐 쇠똥구리 같은 형상을 만들었다. 현장에서 직접 흙을 뭉쳤는데 불가능했다. 2미터짜리 비닐을 물에 적셔 붙이는 방식으로 해결했다. 끈, 천, 비닐 같은 일상 소재로 자연을 '캡처'하는 실험들.</p>
+    <div class="voice">
+      <p>제 작업의 가장 큰 특징이 있다면 — 규모를 알 수 없다는 점입니다. 사진이 가진 특성 때문에 프레임의 방식에 따라 이 작업이 큰지 작은지 모호하게 만들어놓는 거죠.</p>
+      <cite>— 박형렬</cite>
+    </div>
+    <p>투명 아크릴 원기둥에 흙을 넣어 설치한 작업은 시각적으로 굉장히 높고 커 보이지만 실제로는 50cm 정도밖에 되지 않는다. 원근법의 왜곡을 적극적으로 이용한 것이다. 이 초기의 스케일 실험은 이후 작업 전반을 관통하는 핵심 전략이 된다.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 02 -->
+  <div class="chapter">
+    <div class="chapter-num">02</div>
+    <h2>형상 연구 — 땅의 얼굴을 위에서 마주하다</h2>
+    <p>〈형상 연구 Figure Project〉에서 작업은 완전히 부감(俯瞰) 작업으로 전환된다. 드론이 아닌 크레인을 타고 올라가서 내려다보는 방식. 드론과의 차이는 명확하다 — "작가가 주체적으로 본다"는 것. 우리의 시점에서 땅을 볼 때는 우리의 시각으로 바라보는 것이지만, 땅의 얼굴을 마주하려면 정면에서 위에서 바라보는 것이 될 수 있다.</p>
+    <p>땅을 조각해서 위에서 촬영하면 흥미로운 현상이 생긴다. 사진의 평면성 때문에 음각(파낸 것)이 양각(돌출된 것)처럼 보이는 것이다. 밑에 있는 지층 — 우리가 서서는 볼 수 없는 구조 — 을 다시 위로 올리는 작업.</p>
+    <div class="aside">
+      <div class="aside-label">물성의 발견</div>
+      <p>같은 위치의 같은 땅이 비 온 다음 날과 메마른 날 완전히 다른 모습을 보여준다. 봄여름가을겨울에 따라 톤이 달라지고, 수분기에 따라 색과 질감이 변한다. "우리가 알고 있는 '땅'이라는 것에서 굉장히 다양한 모습들이 존재한다는 걸 경험을 통해 파악하게 되는 부분들이죠."</p>
+    </div>
+    <p>겨울에 땅을 파면 얼어 있어서 표면만 뜯어내는 식이 된다. 바닷가 작업에서는 수압이라는 변수를 계산하지 못해 구조물이 찌그러지기도 했고, 갯벌에 빠지기도 했다. 세 번째 시도 만에 완성한 바다 작업은 그래서 특별한 의미가 있다.</p>
+    <div class="voice">
+      <p>작업을 설치하는 데 굉장히 오래 걸리고 힘든데, 촬영 끝나면 바로 복귀시키잖아요. 같이 도와준 친구들이 너무 허무해하는 거예요. "내가 어떻게 했는데 이걸 다 없애는 거야?" 근데 그 과정의 경험이 더 중요한 거죠.</p>
+      <cite>— 박형렬</cite>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 03 -->
+  <div class="chapter">
+    <div class="chapter-num">03</div>
+    <h2>풍경화되기 직전의 땅</h2>
+    <p>박형렬이 작업하는 공간은 대부분 "별로 의미 없는 땅"이다. 김선영 학예연구관의 표현으로는 "풍경화되기 직전의 땅." 여러분이 차를 타고 오다가 옆에 있는 땅들이기도 하고, 어디에나 존재하는 공간이다. 멀리 있는 곳이 아니다.</p>
+    <p>왜 우리가 그 땅에 주목하지 못하는가? 무언가 볼만한 요소가 없거나, 관심을 끄는 것이 없기 때문이다. 그런데 그 안에서도 굉장히 많은 것들을 볼 수 있다. 작업 중 50~60% 정도의 장소가 새롭게 풍경이 바뀌었다. 경제적 이익에 의해 언젠가 다시 바뀔 그 '틈'에서 작업하는 것이다.</p>
+    <div class="voice">
+      <p>간척지에 처음 갔을 때 돌들이 바닥에 있는데, 뭔가 어색한 거예요. 파괴됐다기보다 강력한 힘에 의해 쪼개진 것 같은 — 도심에서는 볼 수 없는 형태. 땅을 압축기로 간척할 때 생긴 흔적입니다. 저는 이걸 또 다른 폭력의 흔적이라고 보고, 그것들을 현장에서 다시 드러냄과 동시에 치유하는 퍼포먼스를 진행했습니다.</p>
+      <cite>— 박형렬</cite>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 04 -->
+  <div class="chapter">
+    <div class="chapter-num">04</div>
+    <h2>넓어지는 땅, 낮아지는 산</h2>
+    <p>작업의 전환점이 된 발견이 있다. 영종도에서 작업할 때 수많은 트럭들이 산에서 내려오는 걸 봤다. 어디서 내려오는 걸까 궁금해서 따라갔더니 땅을 메우는 쪽으로 가더라. 간척을 위해 주변의 산을 깎아 옮기는 것이었다.</p>
+    <div class="voice">
+      <p>사람들은 넓어지는 땅에는 되게 관심이 많죠. 근데 반대로 그로 인해 낮아진 산에는 관심이 없어요. 거기서 시작된 작업입니다.</p>
+      <cite>— 박형렬</cite>
+    </div>
+    <p>영종도의 '산맹이'라는 이름을 가진 땅이 잘려나가고, 주변의 수많은 섬들이 사라졌다. 2013년부터 2022년까지 꾸준히 위성 사진을 아카이빙했다. 위성 사진에서 보이는 산들의 형태와 색깔은 폭력적이면서도 기묘하게 조형적이다.</p>
+
+    <div class="aside">
+      <div class="aside-label">등고선의 오류</div>
+      <p>위성 사진에서 산의 형태가 등고선처럼 보여서 "이건 등고선이에요"라고 설명했었다. 성곡미술관 전시 때까지만 해도. 그런데 실제로 산 안에 들어가보니 등고선이 아니었다. 땅을 깊게 파기 위해 계단을 내놓은 것이었다. "저의 오류였던 거죠."</p>
+    </div>
+
+    <p>위성 사진 속 산들을 현재 시점에서 다시 찾아보면 — 이미 사라지고 없다. 다른 풍경으로 완전히 바뀌어버린 것이다. 이 비교를 도록에 담았다.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 05 -->
+  <div class="chapter">
+    <div class="chapter-num">05</div>
+    <h2>산으로 존재하기 — 사라진 산의 복원</h2>
+    <p>사라진 산의 모습을 다시 드러내고 싶다는 생각에서 작업이 확장됐다. 옛 지도를 통해 원래 산의 형태를 조사하고, 그 윤곽선을 목탄으로 다시 그리는 퍼포먼스. 하나의 행위 자체가 사라진 산을 복원시키는 작업이다.</p>
+    <p>이번 전시 3층에서는 이 작업이 입체로 확장된다. 영종도의 '산목도'라는 섬 — 예전 형태가 나무 설치물로 공간 안에 세워져 있다. 정면에서 보는 것과 측면에서 보는 것, 이동할 때 보이는 것이 모두 다르다. 산의 윤곽선을 콜라주해 실제 산처럼 보이게 만든 설치물과, 위성 사진을 필름 반전시킨 듯한 이미지들이 함께 전시된다.</p>
+    <div class="voice curator">
+      <p>작가가 얘기하고자 하는 건 사라진 산을 복원하는 거예요. 우리가 인지도 하지 않았던, 간척 사업에 의해 사라진 산. 그 산들을 다시 복원시키는 거예요. 우리의 오감으로, 머리뿐만 아니라 마음으로, 몸과 총체적으로 여러 가지 감각 채널을 통해서 다시 한 번 생각하게끔.</p>
+      <cite>— 김선영 학예연구관</cite>
+    </div>
+    <p>전시 제목 '산-잇기'의 쌍시옷 — 산으로 존재하게 하고(있게 하고), 동시에 잇는(연결하는) 이중적 의미다.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 06 -->
+  <div class="chapter">
+    <div class="chapter-num">06</div>
+    <h2>운석처럼 떠도는 돌들 — 2층의 우주</h2>
+    <p>간척지에서 수집한 돌들이 있다. 산에서 쪼개져 간척지로 옮겨진 뒤, 다시 아스팔트와 콘크리트 밑으로 사라질 운명의 돌들. 박형렬은 이 돌들을 오랫동안 수집했다. 하나하나 초상 사진을 찍듯 기록했다. 이 돌들이 가진 표면의 색깔은 대부분 굴착기의 소날이 그어가면서 만들어낸 것이다. 마치 오래된, 사연 있는 색감처럼 보이지만.</p>
+    <div class="voice">
+      <p>이 돌들이 목소리를 내면 좋겠다고 생각했어요. 어차피 콘크리트 밑, 아스팔트 밑으로 사라지는 애들이잖아요. 산에 있던 애들이 땅에 들어왔고, 다시는 표면 위로 올라오지 못하는. 목적지 없이 부유하며 떠다니는 운석처럼 보였으면 좋겠다고.</p>
+      <cite>— 박형렬</cite>
+    </div>
+    <p>2층 전시 공간은 굉장히 어둡다. 블랙홀 같은 느낌. 그 어둠 속에 돌들이 우주 공간에 부유하듯 설치되어 있다. 3층의 밝은 공간과 완전한 대비를 이룬다.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 07 -->
+  <div class="chapter">
+    <div class="chapter-num">07</div>
+    <h2>매체의 확장 — 사진을 넘어서되, 사진이기 때문에</h2>
+    <p>이번 전시에는 사진 평면 이미지, 현장에서 수집한 돌, 콜라주 설치물, 나무 커팅 조각, 영상이 한 자리에 있다. 하지만 모든 확장은 사진의 특성에 대한 깊은 이해에서 출발한다.</p>
+    <div class="voice curator">
+      <p>사진이라는 매체를 염두에 두지 않으면 사실 확장이 일어날 수 없다고 생각해요. 확장은 사진이 아닌 것으로의 점핑이 아니라, 매체에 대한 고민이 있기 때문에 그 가운데를 넘어설 수 있는 거죠. 박형렬 작가는 사진이 가진 특성 — 평면성, 관점, 규모의 모호함 — 을 전략적으로 활용하면서 사진의 수용 방식을 뒤집는 분입니다.</p>
+      <cite>— 김선영 학예연구관</cite>
+    </div>
+    <p>박형렬은 사진의 장르 구분 — 다큐멘터리, 콜라주, 디지털 아트 — 이 사진을 너무 획일화시킨다고 본다. 유럽에서는 다큐멘터리 장르가 이미 모호하게 확장되어 있다. 한국에서는 왜 그런 질문을 하지 않는가.</p>
+    <div class="voice">
+      <p>형식적 자유는 반드시 맥락과 연결되어야 합니다. 그 맥락이 어떻게 이어져서 이런 형태들이 나오고, 건강하게 이어질 수 있게 하는가에 대한 고민. 단 한 번에 나오는 게 아니라 계속 실험하는 거죠. 종이도 해보고, 철도 해보고, 나무도 해보고 — 결국 찾아가는 과정입니다.</p>
+      <cite>— 박형렬</cite>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 08 -->
+  <div class="chapter">
+    <div class="chapter-num">08</div>
+    <h2>하나의 시점으로는 올바르게 이해할 수 없다</h2>
+    <p>관객의 질문이 있었다. "사전 정보 없이 작품을 보면 무엇인지 알기 어렵다. 작가로서 어떻게 해소하는가?" 박형렬의 답은 단호하다.</p>
+    <div class="voice">
+      <p>전시장에서 시각적 정보가 너무 친절할 필요는 없어요. 그러면 내가 본 대로 다 그냥 긁어나갈 뿐이잖아요. 메시지가 너무 정확한 영화 — 저는 그게 재미없는 것 같아요. 내가 상상하게 돼, 그러면 저는 그게 재미있는 것 같아요.</p>
+      <cite>— 박형렬</cite>
+    </div>
+    <p>그렇다고 단서가 전혀 없는 것은 아니다. 기획 노트, 인터뷰 영상이 준비되어 있다. 1차 관람 후 영상을 보고 다시 올라가 보는 관객들이 있다. 처음 느낌과 알고 나서의 차이를 경험하는 것 자체가 중요하다.</p>
+
+    <div class="keywords">
+      <span class="kw">규모의 모호함</span>
+      <span class="kw">복수의 시점</span>
+      <span class="kw">지속 가능한 관계</span>
+      <span class="kw">풍경화되기 직전</span>
+      <span class="kw">설치 후 복귀</span>
+    </div>
+
+    <p>마지막 질문은 다음 세대를 향한 것이었다. "자연을 작업하는 사람들에게 어떤 방향이 의미 있을까?" 박형렬은 대상의 문제가 아니라 시점의 문제라고 답한다.</p>
+    <div class="voice">
+      <p>이 컵도 여기서 볼 때는 이런 모습이지만, 여러 시점에서 보면 다른 모습이에요. 하나의 대상을 이해하고 파악할 때는 여러 시점이 존재해야 되고, 여러 위치에서 바라볼 수 있어야 됩니다. 괜히 다르게 보는 게 아니라, 그것이 기본 전제가 돼야 한다고 생각합니다.</p>
+      <cite>— 박형렬</cite>
+    </div>
+  </div>
+
+</main>
+
+<section class="insight-section">
+  <div class="insight-inner">
+    <div class="insight-label">Claude's Insight</div>
+    <h2>지표 아래의 초상화</h2>
+
+    <p>이 토크에서 가장 놀라운 것은 박형렬이라는 작가의 <strong>신체성</strong>이다. 사진작가라는 직함이 무색하게, 그의 작업 과정은 조각가나 대지미술가의 그것에 가깝다. 35도 폭염 속에서 5일간 땅을 파고, 1톤 트럭에 구조물을 싣고 바닷가로 가서 수압에 찌그러지는 철판과 싸우고, 갯벌에 빠지고, 인천공항공사와 분쟁이 붙어 쫓겨나고, 그래도 다시 간다. 이 모든 과정 끝에 촬영이 끝나면 — 모든 것을 원래대로 복귀시킨다.</p>
+
+    <p><strong>"설치 후 복귀"</strong>라는 원칙이 이 작업의 윤리적 핵심이다. 자연을 소재로 쓰면서 그것을 방치해버리면 "자연을 작업으로서 이용하고 훼손시키는 것"이 된다. 경험하고, 기록하고, 다시 되돌리는 퍼포먼스 자체가 지속 가능한 관계에 대한 답을 찾아가는 과정이라는 것. 작업을 도운 사람들이 "이걸 왜 다 없애는 거야"라고 허무해할 때, 그 허무함 자체가 작업의 일부다.</p>
+
+    <p>가장 인상적인 전환점은 <strong>"넓어지는 땅에 관심은 많지만, 낮아지는 산에 관심은 없다"</strong>는 발견이다. 간척이라는 행위의 이면을 본 것이다. 트럭들이 산에서 내려와 땅을 메우는 현장을 목격하고, 그 산들을 위성 사진으로 아카이빙하고, 실제로 들어가보고, 10년에 걸쳐 사라지는 과정을 기록한다. 그리고 사라진 산의 윤곽선을 공간에 다시 세운다. '잇기'라는 이름 그대로 — 끊어진 것을 다시 잇는 행위.</p>
+
+    <p>마지막으로 박형렬의 <strong>"규모의 모호함"</strong>이라는 전략은 단순한 시각적 트릭이 아니다. 50cm 원기둥을 거대한 구조물처럼 보이게 하고, 광활한 간척지를 손바닥만한 사진으로 압축하는 것은 — 우리가 대상을 하나의 시점으로만 이해한다는 착각을 깨뜨리기 위한 장치다. 등고선이라고 믿었던 것이 계단이었다는 자기 오류의 고백까지 포함해서, 이 작가는 '보는 것'에 대한 겸손을 실천하고 있다.</p>
+  </div>
+</section>
+
+<footer>
+  <p>아티스트 토크 정리 및 분석 · 박형렬 개인전 《산-잇기: Being a Mountain》 · 뮤지엄한미 삼청별관 · 2024.10.25 — 2025.01.19</p>
+</footer>
+
+<script>
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('scrollTop');
+  if (window.scrollY > 600) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+</script>
+</body>
+</html>
