@@ -80,13 +80,23 @@
     "thumbnail": ""
   },
   {
+    "name": "230607_한준_자본주의와기업의미래.html",
+    "title": "04. 자본주의와 기업의 미래",
+    "ext": "html",
+    "category": "md",
+    "size": 23083,
+    "date": "2023-06-07",
+    "order": 8,
+    "thumbnail": ""
+  },
+  {
     "name": "230607_김재섭_ICT기업의워라벨.html",
     "title": "03. 김재섭 — ICT 기업의 워라벨",
     "ext": "html",
     "category": "md",
     "size": 22750,
     "date": "2023-06-07",
-    "order": 16,
+    "order": 9,
     "thumbnail": ""
   },
   {
@@ -96,7 +106,7 @@
     "category": "md",
     "size": 24641,
     "date": "2026-02-26",
-    "order": 8,
+    "order": 10,
     "thumbnail": ""
   },
   {
@@ -106,7 +116,7 @@
     "category": "md",
     "size": 24993,
     "date": "2023-05-24",
-    "order": 9,
+    "order": 11,
     "thumbnail": ""
   },
   {
@@ -116,7 +126,7 @@
     "category": "note",
     "size": 25916,
     "date": "2023-05-11",
-    "order": 10,
+    "order": 12,
     "thumbnail": ""
   },
   {
@@ -126,7 +136,7 @@
     "category": "note",
     "size": 34012,
     "date": "2023-05-11",
-    "order": 11,
+    "order": 13,
     "thumbnail": ""
   },
   {
@@ -136,7 +146,7 @@
     "category": "note",
     "size": 29548,
     "date": "2023-05-11",
-    "order": 12,
+    "order": 14,
     "thumbnail": ""
   },
   {
@@ -146,7 +156,7 @@
     "category": "note",
     "size": 27890,
     "date": "2023-05-11",
-    "order": 13,
+    "order": 15,
     "thumbnail": ""
   },
   {
@@ -156,7 +166,7 @@
     "category": "note",
     "size": 26431,
     "date": "2025-05-11",
-    "order": 14,
+    "order": 16,
     "thumbnail": ""
   },
   {
@@ -166,16 +176,6 @@
     "category": "note",
     "size": 22507,
     "date": "2023-05-11",
-    "order": 15,
-    "thumbnail": ""
-  },
-  {
-    "name": "230607_한준_자본주의와기업의미래.html",
-    "title": "04. 자본주의와 기업의 미래",
-    "ext": "html",
-    "category": "md",
-    "size": 23083,
-    "date": "2023-06-07",
     "order": 17,
     "thumbnail": ""
   }
