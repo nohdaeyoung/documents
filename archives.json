@@ -80,13 +80,23 @@
     "thumbnail": ""
   },
   {
+    "name": "230524_02_민주주의와자본주의.html",
+    "title": "02. 민주주의와 자본주의 — 균형, 불균형, 그리고 한국의 경험",
+    "ext": "html",
+    "category": "md",
+    "size": 24641,
+    "date": "2026-02-26",
+    "order": 8,
+    "thumbnail": ""
+  },
+  {
     "name": "230524_김병연_경제체제의도전과자본주의의미래.html",
     "title": "01.  경제 체제의 도전과 자본주의의 미래",
     "ext": "html",
     "category": "md",
     "size": 24993,
     "date": "2023-05-24",
-    "order": 8,
+    "order": 9,
     "thumbnail": ""
   },
   {
@@ -96,7 +106,7 @@
     "category": "note",
     "size": 25916,
     "date": "2023-05-11",
-    "order": 9,
+    "order": 10,
     "thumbnail": ""
   },
   {
@@ -106,7 +116,7 @@
     "category": "note",
     "size": 34012,
     "date": "2023-05-11",
-    "order": 10,
+    "order": 11,
     "thumbnail": ""
   },
   {
@@ -116,7 +126,7 @@
     "category": "note",
     "size": 29548,
     "date": "2023-05-11",
-    "order": 11,
+    "order": 12,
     "thumbnail": ""
   },
   {
@@ -126,7 +136,7 @@
     "category": "note",
     "size": 27890,
     "date": "2023-05-11",
-    "order": 12,
+    "order": 13,
     "thumbnail": ""
   },
   {
@@ -136,7 +146,7 @@
     "category": "note",
     "size": 26431,
     "date": "2025-05-11",
-    "order": 13,
+    "order": 14,
     "thumbnail": ""
   },
   {
@@ -146,16 +156,6 @@
     "category": "note",
     "size": 22507,
     "date": "2023-05-11",
-    "order": 14,
-    "thumbnail": ""
-  },
-  {
-    "name": "230524_02_민주주의와자본주의.html",
-    "title": "02. 민주주의와 자본주의 — 균형, 불균형, 그리고 한국의 경험",
-    "ext": "html",
-    "category": "md",
-    "size": 24641,
-    "date": "2026-02-26",
     "order": 15,
     "thumbnail": ""
   }
