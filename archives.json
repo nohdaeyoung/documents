@@ -50,13 +50,23 @@
     "thumbnail": ""
   },
   {
+    "name": "230701_F1_김남호.html",
+    "title": "김남호 — 한국인 최초 F1 엔지니어가 말하는 포뮬러 원의 세계",
+    "ext": "html",
+    "category": "blog",
+    "size": 21925,
+    "date": "2023-07-01",
+    "order": 5,
+    "thumbnail": ""
+  },
+  {
     "name": "06_뜨는_브랜드의_비밀.html",
     "title": "06. 뜨는 브랜드의 비밀 — 브랜드 관측소가 발견한 확산의 공식",
     "ext": "html",
     "category": "note",
     "size": 25916,
     "date": "2023-05-11",
-    "order": 5,
+    "order": 6,
     "thumbnail": ""
   },
   {
@@ -66,7 +76,7 @@
     "category": "note",
     "size": 34012,
     "date": "2023-05-11",
-    "order": 6,
+    "order": 7,
     "thumbnail": ""
   },
   {
@@ -76,7 +86,7 @@
     "category": "note",
     "size": 29548,
     "date": "2023-05-11",
-    "order": 7,
+    "order": 8,
     "thumbnail": ""
   },
   {
@@ -86,7 +96,7 @@
     "category": "note",
     "size": 27890,
     "date": "2023-05-11",
-    "order": 8,
+    "order": 9,
     "thumbnail": ""
   },
   {
@@ -96,7 +106,7 @@
     "category": "note",
     "size": 26431,
     "date": "2025-05-11",
-    "order": 9,
+    "order": 10,
     "thumbnail": ""
   },
   {
@@ -106,16 +116,6 @@
     "category": "note",
     "size": 22507,
     "date": "2023-05-11",
-    "order": 10,
-    "thumbnail": ""
-  },
-  {
-    "name": "230701_F1_김남호.html",
-    "title": "김남호 — 한국인 최초 F1 엔지니어가 말하는 포뮬러 원의 세계",
-    "ext": "html",
-    "category": "blog",
-    "size": 21925,
-    "date": "2023-07-01",
     "order": 11,
     "thumbnail": ""
   }
