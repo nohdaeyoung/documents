@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://nohdaeyoung.github.io/documents/archives/20250111_김남호_북토크.html</loc>
+    <lastmod>2025-01-11</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://nohdaeyoung.github.io/documents/archives/20241102_박형렬_작가토크.html</loc>
     <lastmod>2024-11-02</lastmod>
     <priority>0.8</priority>
@@ -63,11 +68,6 @@
   <url>
     <loc>https://nohdaeyoung.github.io/documents/archives/우리삶과죽음은_이대로_괜찮은가_요약.html</loc>
     <lastmod>2023-05-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nohdaeyoung.github.io/documents/archives/20250111_김남호_북토크.html</loc>
-    <lastmod>2025-01-11</lastmod>
     <priority>0.8</priority>
   </url>
 </urlset>
