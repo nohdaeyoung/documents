@@ -16,67 +16,7 @@
     "category": "blog",
     "size": 12195,
     "date": "2023-12-07",
-    "order": 7,
-    "thumbnail": ""
-  },
-  {
-    "name": "06_뜨는_브랜드의_비밀.html",
-    "title": "06. 뜨는 브랜드의 비밀 — 브랜드 관측소가 발견한 확산의 공식",
-    "ext": "html",
-    "category": "note",
-    "size": 25916,
-    "date": "2023-05-11",
     "order": 1,
-    "thumbnail": ""
-  },
-  {
-    "name": "05_케어닥터_박재병.html",
-    "title": "05. 에이징 라이프, 새로운 역사의 시작",
-    "ext": "html",
-    "category": "note",
-    "size": 34012,
-    "date": "2023-05-11",
-    "order": 2,
-    "thumbnail": ""
-  },
-  {
-    "name": "노년에_대한_공상과_외면_정진웅교수_요약.html",
-    "title": "04. 노년에 대한 공상과 외면 — 정진웅 교수",
-    "ext": "html",
-    "category": "note",
-    "size": 29548,
-    "date": "2023-05-11",
-    "order": 3,
-    "thumbnail": ""
-  },
-  {
-    "name": "03_어떻게_살아가는가_공존하는가.html",
-    "title": "03. 어떻게 살아가는가, 공존하는가 — 심현보",
-    "ext": "html",
-    "category": "note",
-    "size": 27890,
-    "date": "2023-05-11",
-    "order": 4,
-    "thumbnail": ""
-  },
-  {
-    "name": "01_Opening_Korea_society_changed.html",
-    "title": "02. 한국 사회의 인구 변동 — 이도훈 교수",
-    "ext": "html",
-    "category": "note",
-    "size": 26431,
-    "date": "2025-05-11",
-    "order": 5,
-    "thumbnail": ""
-  },
-  {
-    "name": "우리삶과죽음은_이대로_괜찮은가_요약.html",
-    "title": "01 . 우리 삶과 죽음은 이대로 괜찮은가?",
-    "ext": "html",
-    "category": "note",
-    "size": 22507,
-    "date": "2023-05-11",
-    "order": 6,
     "thumbnail": ""
   },
   {
@@ -86,6 +26,66 @@
     "category": "blog",
     "size": 23090,
     "date": "2023-12-07",
+    "order": 2,
+    "thumbnail": ""
+  },
+  {
+    "name": "06_뜨는_브랜드의_비밀.html",
+    "title": "06. 뜨는 브랜드의 비밀 — 브랜드 관측소가 발견한 확산의 공식",
+    "ext": "html",
+    "category": "note",
+    "size": 25916,
+    "date": "2023-05-11",
+    "order": 3,
+    "thumbnail": ""
+  },
+  {
+    "name": "05_케어닥터_박재병.html",
+    "title": "05. 에이징 라이프, 새로운 역사의 시작",
+    "ext": "html",
+    "category": "note",
+    "size": 34012,
+    "date": "2023-05-11",
+    "order": 4,
+    "thumbnail": ""
+  },
+  {
+    "name": "노년에_대한_공상과_외면_정진웅교수_요약.html",
+    "title": "04. 노년에 대한 공상과 외면 — 정진웅 교수",
+    "ext": "html",
+    "category": "note",
+    "size": 29548,
+    "date": "2023-05-11",
+    "order": 5,
+    "thumbnail": ""
+  },
+  {
+    "name": "03_어떻게_살아가는가_공존하는가.html",
+    "title": "03. 어떻게 살아가는가, 공존하는가 — 심현보",
+    "ext": "html",
+    "category": "note",
+    "size": 27890,
+    "date": "2023-05-11",
+    "order": 6,
+    "thumbnail": ""
+  },
+  {
+    "name": "01_Opening_Korea_society_changed.html",
+    "title": "02. 한국 사회의 인구 변동 — 이도훈 교수",
+    "ext": "html",
+    "category": "note",
+    "size": 26431,
+    "date": "2025-05-11",
+    "order": 7,
+    "thumbnail": ""
+  },
+  {
+    "name": "우리삶과죽음은_이대로_괜찮은가_요약.html",
+    "title": "01 . 우리 삶과 죽음은 이대로 괜찮은가?",
+    "ext": "html",
+    "category": "note",
+    "size": 22507,
+    "date": "2023-05-11",
     "order": 8,
     "thumbnail": ""
   }
