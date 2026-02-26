@@ -4,57 +4,93 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>이석원 북토크 — 실패와 퇴고가 빚어낸 어떤 섬세함</title>
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg-color: #fcfcfc;
-    --text-main: #222222;
-    --text-muted: #777777;
-    --accent: #2c5ae9; /* 모던한 블루 포인트 컬러 */
-    --accent-light: rgba(44, 90, 233, 0.08);
-    --border-color: #eaeaea;
+    --text-main: #2a2a2a;
+    --text-muted: #666666;
+    --text-light: #999999;
+    --accent: #2c5ae9;
+    --accent-bg: #f4f7ff;
+    --border: #eef0f4;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Pretendard', -apple-system, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; word-break: keep-all; }
+  body { 
+    font-family: 'Pretendard', -apple-system, sans-serif; 
+    background-color: var(--bg-color); 
+    color: var(--text-main); 
+    line-height: 1.8; 
+    word-break: keep-all; 
+    -webkit-font-smoothing: antialiased;
+  }
   
-  /* 좌측 상단 네비게이션 버튼 */
-  .nav-btn { position: fixed; top: 1.5rem; left: 1.5rem; z-index: 100; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); text-decoration: none; padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 20px; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); transition: all 0.2s ease; }
+  /* 네비게이션 버튼 */
+  .nav-btn { 
+    position: fixed; top: 1.5rem; left: 1.5rem; z-index: 100; 
+    display: inline-flex; align-items: center; gap: 6px; 
+    font-size: 0.85rem; font-weight: 500; color: var(--text-muted); 
+    text-decoration: none; padding: 8px 16px; 
+    border: 1px solid #e1e1e1; border-radius: 20px; 
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); 
+    transition: all 0.2s ease; 
+  }
   .nav-btn:hover { color: var(--text-main); border-color: var(--text-main); }
   .nav-btn svg { width: 16px; height: 16px; }
 
   /* 메인 컨테이너 */
-  .container { max-width: 720px; margin: 0 auto; padding: 6rem 1.5rem 4rem; }
+  .container { max-width: 760px; margin: 0 auto; padding: 7rem 1.5rem 5rem; }
 
   /* 헤더 영역 */
-  header { margin-bottom: 4rem; }
-  .category { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1rem; padding: 4px 10px; background: var(--accent-light); border-radius: 4px; }
-  h1 { font-size: 2.2rem; font-weight: 700; line-height: 1.35; margin-bottom: 1rem; letter-spacing: -0.02em; }
-  .meta { font-size: 0.9rem; color: var(--text-muted); }
+  header { margin-bottom: 5rem; text-align: center; }
+  .category { 
+    display: inline-block; font-size: 0.8rem; font-weight: 600; 
+    color: var(--accent); letter-spacing: 0.1em; margin-bottom: 1.5rem; 
+    padding: 6px 14px; background: var(--accent-bg); border-radius: 4px; 
+  }
+  h1 { font-size: 2.6rem; font-weight: 700; line-height: 1.35; margin-bottom: 1.5rem; letter-spacing: -0.03em; color: #111; }
+  .meta { font-size: 0.95rem; color: var(--text-light); }
 
-  /* Executive Summary (인용구 스타일) */
-  .executive-summary { font-size: 1.15rem; font-weight: 400; color: var(--text-main); padding-left: 1.5rem; border-left: 3px solid var(--accent); margin-bottom: 4rem; line-height: 1.8; }
+  /* 도입부 요약 */
+  .prologue { 
+    font-size: 1.15rem; font-weight: 400; color: #444; 
+    padding: 2rem; background: #fff; border: 1px solid var(--border); 
+    border-radius: 12px; margin-bottom: 4rem; line-height: 1.85; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  }
 
   /* 본문 섹션 */
-  section { margin-bottom: 3.5rem; }
-  h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); }
-  h3 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.8rem; color: #111; }
-  p { margin-bottom: 1.2rem; font-weight: 300; }
+  section { margin-bottom: 4.5rem; }
+  h2 { 
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 2rem; 
+    padding-bottom: 0.8rem; border-bottom: 2px solid #111; color: #111;
+  }
+  h3 { font-size: 1.15rem; font-weight: 600; margin: 2.5rem 0 1rem; color: #222; }
+  p { margin-bottom: 1.4rem; font-weight: 300; font-size: 1.05rem; }
   
-  /* 하이라이트 박스 */
-  .highlight-box { background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
-  .highlight-box p { margin: 0; font-size: 0.95rem; }
+  /* 인용구 박스 */
+  .quote-box { 
+    margin: 2.5rem 0; padding: 2rem 2.5rem; 
+    border-left: 4px solid var(--accent); background: var(--accent-bg); 
+    border-radius: 0 8px 8px 0;
+  }
+  .quote-box p { margin: 0; font-size: 1.05rem; font-weight: 500; color: #222; }
 
   /* Gemini Insight 전용 스타일 */
-  .insight-section { background: var(--text-main); color: #fff; padding: 3rem; border-radius: 12px; margin-top: 5rem; }
-  .insight-section h2 { color: #fff; border-bottom-color: rgba(255,255,255,0.2); }
-  .insight-section p { color: #ddd; font-weight: 300; }
+  .insight-section { 
+    background: #1a1a1a; color: #fff; padding: 4rem 3rem; 
+    border-radius: 16px; margin-top: 6rem; 
+  }
+  .insight-section h2 { color: #fff; border-bottom-color: rgba(255,255,255,0.15); margin-bottom: 2.5rem; }
+  .insight-section h3 { color: #fff; margin-top: 0; }
+  .insight-section p { color: #d1d1d1; font-weight: 300; line-height: 1.9; }
   .insight-section strong { color: #fff; font-weight: 500; }
 
   @media (max-width: 600px) {
-    h1 { font-size: 1.8rem; }
+    h1 { font-size: 2rem; }
     .container { padding-top: 5rem; }
-    .insight-section { padding: 2rem; }
+    .insight-section { padding: 2.5rem 1.5rem; }
   }
 </style>
 </head>
@@ -67,45 +103,70 @@
 
 <main class="container">
   <header>
-    <span class="category">녹취록 요약</span>
+    <span class="category">ARCHIVE & REFLECTION</span>
     <h1>실패와 퇴고가 빚어낸<br>어떤 섬세함</h1>
-    <div class="meta">이석원 북토크 강연 요약 · 2023.12.07</div>
+    <div class="meta">이석원 북토크 강연 심층 리뷰 · 2023.12.07</div>
   </header>
 
-  <div class="executive-summary">
-    [cite_start]이석원 작가는 정해진 궤도와 학습을 거부하고, 온전히 '나만의 방식'을 발굴하여 창작의 동력으로 삼은 궤적을 고백합니다[cite: 68]. [cite_start]그는 오랜 실패와 슬럼프 속에서 조급함을 버리고 아주 작은 성취를 수집하며 다시 일어섰고 [cite: 209, 215][cite_start], 글을 다듬어 가듯 타인을 이해하는 섬세한 과정이 결국 스스로를 구원하는 길임을 역설합니다[cite: 241].
+  <div class="prologue">
+    우리는 종종 창작의 결과물만을 보며 작가의 타고난 천재성이나 영감을 찬양하곤 합니다. 하지만 83분간 이어진 이석원 작가의 고백은 달랐습니다. 그의 창작은 억압된 유년 시절의 상처, '정상성'에 편입하고 싶었던 지독한 결핍, 그리고 끝없이 미끄러지는 슬럼프 속에서 피어난 생존의 기록이었습니다. 타인을 이해하는 일조차 결국 자신을 살리기 위한 방편이었다고 말하는 그의 궤적을 4가지 주요 테마로 재구성해 보았습니다.
   </div>
 
   <section>
-    <h2>강연 해체: 나만의 방식을 찾는 여정</h2>
+    <h2>1. 억압과 결핍이 빚어낸 '비정형'의 미학</h2>
+    <h3>배움을 거부하게 된 소년</h3>
+    <p>어린 시절, 어머니의 강압적인 교육 열기는 그를 숨 막히게 했습니다. 교사용 학습지까지 구해서 새벽 내내 다락방에서 정답을 외워야 했던 그는, 결국 서울대병원 소아정신과 응급실에 실려 가게 됩니다. 이 지독한 억압의 경험은 그에게 치명적인 상흔을 남겼지만, 역설적이게도 평생을 창작자로 살아가게 하는 '무기'가 되었습니다. 바로 누군가에게 '배우는 것'을 극도로 혐오하게 된 것입니다.</p>
+    
+    <h3>나만의 방식을 직관하다</h3>
+    <p>음악을 할 때도 악보를 볼 줄 몰랐고, 글을 쓸 때도 작법을 배우지 않았습니다. 맞춤법이나 띄어쓰기 같은 규범조차 자신의 호흡을 방해한다면 기꺼이 거부했습니다. 인사동에서 처음 와인바를 열었을 때, 상권 분석가의 조언을 무시한 채 매일 밤 자신이 직접 인테리어를 갈아엎은 일화는 상징적입니다. 남들이 뭐라 하든 '내 마음이 편안해질 때까지' 고치고 다듬는 것. 세상의 정답을 외부에서 찾던 그가 비로소 '내 안의 직관'을 믿고 밀어붙인 첫 경험이었습니다. 그리고 그 에너지는 고스란히 베스트셀러 『보통의 존재』를 탄생시키는 원동력이 되었습니다.</p>
+  </section>
 
-    <h3>1. 억압이 낳은 독창성, 그리고 자기 확신</h3>
-    [cite_start]<p>어린 시절, 어머니의 강압적인 교육 열기로 인해 그는 소아정신과 치료를 받을 정도로 큰 억압을 겪었습니다[cite: 44, 49, 53]. [cite_start]하지만 이 깊은 상흔은 역설적으로 그가 누군가에게 '배우는 것'을 극도로 꺼리게 만들었고, 결국 음악이든 글쓰기든 '자신만의 직관적인 방식'을 개척하게 하는 원동력이 되었습니다[cite: 58, 68]. [cite_start]인사동에서 처음 와인바를 열었을 때 전문가의 말을 듣지 않고 본인이 편안함을 느낄 때까지 인테리어를 갈아엎었던 경험은, 스스로를 온전히 믿어본 첫 순간이었습니다[cite: 111, 122, 128].</p>
+  <section>
+    <h2>2. '정상성'을 향한 갈망, 그리고 무너짐</h2>
+    <h3>작품이 아닌 '제품'을 만들고 싶었던 자의식</h3>
+    <p>이석원 작가는 스스로를 '정상적인 코스를 밟지 못한 사람'이라 규정했습니다. 고등학교 연합고사조차 확률로 찍어서 간신히 진학했던 그는, 무의식 깊은 곳에 '정상성에 대한 짙은 갈구'를 품고 있었습니다. 음악을 할 때도 앨범의 예술성보다는 대중에게 사랑받는 '히트곡(제품)'을 만들고 싶어 했습니다. 후렴구가 없다는 기획사의 지적에 "이게 내 음악이야"라고 항변하지 못했던 과거는, 타인의 기준에 맞춰 정상성을 증명하고 싶었던 내면의 고뇌를 보여줍니다.</p>
 
-    <h3>2. 끝없는 퇴고, 불완전함을 깎아내는 시간</h3>
-    <p>그는 스스로 천재적인 재능을 가졌다고 믿지 않습니다. [cite_start]15년 전 출간한 『보통의 존재』를 지금까지도 계속 수정하고 있을 만큼 집요하게 퇴고에 매달립니다[cite: 135]. [cite_start]세상에 공개되지 않는 일기는 아예 쓰지 않으며 [cite: 324, 326][cite_start], 자신의 한정된 창작 에너지를 휘발성이 강한 SNS에 낭비하지 않고 오직 책이라는 매체에 응축시켜 타인과 닿기를 갈망합니다[cite: 328, 330].</p>
+    <h3>오만과 슬럼프의 늪</h3>
+    <p>에세이의 성공 이후 찾아온 지나친 자기 확신은 독이 되었습니다. 소설에 대한 이해 없이 4년간 매달린 『실내 인간』의 흥행 실패, 그리고 이후 이어진 연이은 참패는 그를 깊은 슬럼프에 빠뜨렸습니다. '나만의 방식'으로 돌파하면 무조건 될 줄 알았던 성공 공식이 무너진 것입니다. 그는 이전의 감각을 완전히 잃어버렸고, 무언가 크게 한 방을 터뜨려 상황을 단번에 역전시키려는 조급함에 스스로를 갉아먹기 시작했습니다.</p>
+  </section>
 
-    <h3>3. 긴 슬럼프를 부수는 작은 승리의 힘</h3>
-    <p>성공 가도를 달리던 그에게도 깊은 실패의 터널이 찾아왔습니다. [cite_start]연이은 책의 흥행 실패와 음악 프로젝트의 무산 속에서 그는 단번에 상황을 뒤집으려는 조급함에 시달렸습니다[cite: 164, 165, 176]. 그러나 그를 다시 일으켜 세운 것은 거창한 성공이 아니었습니다. [cite_start]배달의민족과 작업한 아주 짧은 원고에서 오랜만에 들은 '칭찬' 한마디가 그에게 작은 긍정적 경험을 주었고, 그 작은 알갱이가 모여 다시 무언가를 만들어갈 용기를 불어넣었습니다[cite: 205, 209, 215].</p>
-
-    <div class="highlight-box">
-      [cite_start]<p><strong>"타인을 이해하는 일은 그 사람을 위해서가 아니라, 결국 내가 살기 위해, 나를 지키기 위해 하는 것입니다."</strong> [cite: 234, 241]</p>
+  <section>
+    <h2>3. 구원은 아주 작은 '이기는 경험'으로부터</h2>
+    <p>글 쓰는 일이 죽기보다 싫어져 과거의 원고를 재활용해 넘기던 무기력한 시기. 그를 수렁에서 건져 올린 것은 거창한 깨달음이나 대작업이 아니었습니다. 우연히 다른 작가(임경선)가 무대 위에서 거침없이 에너지를 뿜어내는 모습을 보고 잊고 있던 창작의 불씨가 당겨졌고, 마음산책 대표에게서 들은 "재밌네요"라는 짧은 피드백 한마디가 그를 미세하게 움직였습니다.</p>
+    
+    <div class="quote-box">
+      <p>"크게 상황을 뒤집으려는 조급함을 버리고, 아주 작은 긍정적인 피드백과 행복해지는 경험을 수집하다 보면 그 알갱이가 모여 다시 밀고 나갈 힘이 됩니다."</p>
     </div>
+
+    <p>배달의민족에서 의뢰받은 500자 남짓의 짧은 원고. 그 가벼운 작업에서 담당자에게 칭찬을 받은 소박한 경험이 그에게 다시 '이기는 법'을 알려주었습니다. 삶이 무너졌을 때, 우리를 구원하는 것은 거대한 성취가 아니라 일상에서 마주하는 아주 작은 스파크와 긍정의 감각임을 보여주는 아름다운 통찰입니다.</p>
+  </section>
+
+  <section>
+    <h2>4. 퇴고의 세계: 텍스트를 고치고 사람을 이해한다는 것</h2>
+    <h3>15년째 이어지는 글 다듬기</h3>
+    <p>그의 첫 책 『보통의 존재』는 15년이 지난 지금도 퇴고가 진행 중입니다. 작가 개인의 문장이 완벽을 향해 가는 과정이기도 하지만, 시대의 변화를 반영하는 과정이기도 합니다. 강남역 살인 사건 이후 젠더 이슈에 대한 대중의 감수성이 높아졌고, 그는 과거 자신이 무심코 썼던 여성에 대한 묘사(성공한 남자의 전리품처럼 묘사된 호텔의 여인)가 누군가를 불편하게 할 수 있다는 사실을 직시했습니다. 시대의 흐름 속에서 자신의 과거 텍스트를 어디까지 고치고 어디까지 보존할 것인지, 창작자로서의 처절한 윤리적 고민이 여실히 드러납니다.</p>
+
+    <h3>타인을 이해하는 일은 나를 살리는 일</h3>
+    <p>유기견 봉사 활동에서 마주친 무뚝뚝한 봉사자. 겉보기엔 불친절해 보였지만 가장 더럽고 궂은일을 묵묵히 도맡아 하던 그를 보며 작가는 단편적인 인상으로 타인을 재단하는 것을 멈추게 됩니다. 가족 문제로 끝없이 고통받는 어머니에게 "아버지를 있는 그대로 외워버려라. 그렇지 않으면 엄마만 죽는다"라고 했던 조언처럼, 그에게 타인과 세상을 이해한다는 것은 숭고한 이타심의 발로가 아니라 '나 자신을 덜어내고 살기 위한 생존의 과정'이었습니다.</p>
   </section>
 
   <section class="insight-section">
-    <h2>Gemini's Insight</h2>
+    <h3>Creative Insight</h3>
+    <h2>블로그라는 고요한 암실에서 당신만의 문장을 현상하는 일</h2>
+    
     <p>
-      <strong>창작이란 결국 '자기 자신과의 끝없는 불화'를 '세상과의 화해'로 바꾸어 나가는 과정입니다.</strong>
+      하나의 피사체를 두고 다양한 앵글을 시도하듯, 이석원 작가가 15년 동안 같은 책의 문장을 들여다보며 퇴고하는 행위는 <strong>자신의 내면을 렌즈 삼아 세상을 다시 현상(Development)하는 작업</strong>과 같습니다.
+    </p>
+    
+    <p>
+      창작은 종종 깊은 고독을 동반합니다. 무언가를 끄적이다가 지우기를 반복할 때, 혹은 스스로가 평범한 사람의 정상 궤도에서 벗어나 있는 것은 아닐까 불안해질 때, 작가의 고백은 우리에게 묘한 위로를 건넵니다. 정규 교육을 받지 않았고, 남들이 요구하는 문법(후렴구)을 따르지 않았지만, 결국 <strong>오직 자신만이 옳다고 믿는 감각의 방향으로 끝까지 밀어붙였기에 그만의 오리지널리티가 탄생</strong>했습니다.
+    </p>
+
+    <p>
+      타인의 시선을 깊이 의식하면서도 동시에 타인의 내면을 온전히 보듬고자 하는 섬세함. 그것은 세상을 관찰하고 에세이를 기록하는 이들에게 가장 큰 무기입니다. 당장 거창한 글이 써지지 않는다고 조급해할 필요는 없습니다. 작가가 500자의 배달의민족 원고에서 길을 찾았듯, 오늘 블로그에 남긴 한 장의 사진과 몇 줄의 소박한 감상이 모여 결국 당신을 일으키고, 당신만의 두터운 서사가 될 테니까요.
     </p>
     <p>
-      이석원 작가의 이야기는 우리에게 창조적 영감이 결코 완벽하게 세팅된 환경이나 거창한 계획에서 나오지 않음을 일깨워줍니다. 남들은 이해하지 못할 집요함으로 인테리어를 뜯어고치고, 15년 전의 문장을 지금도 들여다보며 고치는 행위는, 완벽주의라기보다 <strong>자신의 본질을 끈질기게 발굴해 나가는 조각가의 태도</strong>와 맞닿아 있습니다.
-    </p>
-    <p>
-      무언가를 창작하며 때로는 깊은 슬럼프나 막막함에 빠지기도 합니다. 그럴 때면 세상을 향한 큰 스피커를 찾기 전에, 나의 예민함과 결핍을 먼저 들여다볼 필요가 있습니다. 아주 사소한 글귀 하나, 셔터를 누르는 작은 순간들에서 얻는 소소한 만족감과 성취감이 다시 우리를 쓰게 하고 창조하게 만듭니다. 
-    </p>
-    <p>
-      <strong>당신이 가진 그 '어떤 섬세함'을 의심하지 마세요.</strong> 정답은 세상 밖의 거창한 이론이 아니라, 당신의 직관과 끊임없는 수정 속에 이미 존재하고 있을 테니까요.
+      <strong>당신이 세상을 향해 느끼는 그 '어떤 섬세함'을 결코 의심하지 않기를 바랍니다.</strong>
     </p>
   </section>
 
