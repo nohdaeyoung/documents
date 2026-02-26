@@ -433,6 +433,71 @@
     font-weight: 400;
   }
 
+  /* ── Home Button ── */
+  .home-btn {
+    position: fixed;
+    top: 1.25rem;
+    left: 1.25rem;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: rgba(235,228,214,0.6);
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid rgba(235,228,214,0.15);
+    border-radius: 8px;
+    background: rgba(44,24,16,0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.25s;
+  }
+  .home-btn:hover {
+    color: var(--accent-light);
+    border-color: var(--accent-light);
+    background: rgba(44,24,16,0.9);
+  }
+  .home-btn svg { flex-shrink: 0; }
+
+  /* ── Scroll-to-Top Button ── */
+  .scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--divider);
+    border-radius: 50%;
+    background: rgba(245,240,232,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--accent);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    pointer-events: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .scroll-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .scroll-top:hover {
+    background: var(--cream);
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(139,69,19,0.15);
+  }
+
   /* ── Keyframes ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(25px); }
@@ -509,6 +574,17 @@
 </style>
 </head>
 <body>
+
+<!-- Home Button -->
+<a href="https://nohdaeyoung.github.io/documents/" class="home-btn">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  Archives
+</a>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <!-- ══ HERO ══ -->
 <section class="hero">
@@ -751,5 +827,15 @@
   <p>강연 요약 및 분석 · 원 강연: 심현보(아이앤윌리 대표) · 2023.04.21</p>
 </footer>
 
+<script>
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('scrollTop');
+  if (window.scrollY > 600) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+</script>
 </body>
 </html>
