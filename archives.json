@@ -108,5 +108,15 @@
     "date": "2023-05-11",
     "order": 10,
     "thumbnail": ""
+  },
+  {
+    "name": "230701_F1_김남호.html",
+    "title": "김남호 — 한국인 최초 F1 엔지니어가 말하는 포뮬러 원의 세계",
+    "ext": "html",
+    "category": "blog",
+    "size": 21925,
+    "date": "2023-07-01",
+    "order": 11,
+    "thumbnail": ""
   }
 ]
