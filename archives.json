@@ -10,13 +10,23 @@
     "thumbnail": ""
   },
   {
+    "name": "장류진_북토크.html",
+    "title": "장류진 작가의 신작 에세이 《우리가 반짝이는 계절》북토크",
+    "ext": "html",
+    "category": "blog",
+    "size": 25610,
+    "date": "2025-03-20",
+    "order": 1,
+    "thumbnail": ""
+  },
+  {
     "name": "이석원_20231207.html",
     "title": "이석원 북토크 — 실패와 퇴고가 빚어낸 어떤 섬세함",
     "ext": "html",
     "category": "blog",
     "size": 12195,
     "date": "2023-12-07",
-    "order": 1,
+    "order": 2,
     "thumbnail": ""
   },
   {
@@ -26,7 +36,7 @@
     "category": "blog",
     "size": 23090,
     "date": "2023-12-07",
-    "order": 2,
+    "order": 3,
     "thumbnail": ""
   },
   {
@@ -36,7 +46,7 @@
     "category": "note",
     "size": 25916,
     "date": "2023-05-11",
-    "order": 3,
+    "order": 4,
     "thumbnail": ""
   },
   {
@@ -46,7 +56,7 @@
     "category": "note",
     "size": 34012,
     "date": "2023-05-11",
-    "order": 4,
+    "order": 5,
     "thumbnail": ""
   },
   {
@@ -56,7 +66,7 @@
     "category": "note",
     "size": 29548,
     "date": "2023-05-11",
-    "order": 5,
+    "order": 6,
     "thumbnail": ""
   },
   {
@@ -66,7 +76,7 @@
     "category": "note",
     "size": 27890,
     "date": "2023-05-11",
-    "order": 6,
+    "order": 7,
     "thumbnail": ""
   },
   {
@@ -76,7 +86,7 @@
     "category": "note",
     "size": 26431,
     "date": "2025-05-11",
-    "order": 7,
+    "order": 8,
     "thumbnail": ""
   },
   {
@@ -86,16 +96,6 @@
     "category": "note",
     "size": 22507,
     "date": "2023-05-11",
-    "order": 8,
-    "thumbnail": ""
-  },
-  {
-    "name": "장류진_북토크.html",
-    "title": "장류진 작가의 신작 에세이 《우리가 반짝이는 계절》북토크",
-    "ext": "html",
-    "category": "blog",
-    "size": 25610,
-    "date": "2025-03-20",
     "order": 9,
     "thumbnail": ""
   }
