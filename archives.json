@@ -200,22 +200,22 @@
     "thumbnail": ""
   },
   {
-    "name": "인류세_새로운_이야기가_필요한_시대.html",
-    "title": "인류세 — 새로운 이야기가 필요한 시대",
-    "ext": "html",
-    "category": "blog",
-    "size": 37575,
-    "date": "2022-08-27",
-    "order": 20,
-    "thumbnail": ""
-  },
-  {
     "name": "김영하_당신은_이미_한_편의_소설이다.html",
     "title": "김영하 — 당신은 이미 한 편의 소설이다",
     "ext": "html",
     "category": "blog",
     "size": 22298,
     "date": "2023-04-23",
+    "order": 20,
+    "thumbnail": ""
+  },
+  {
+    "name": "인류세_새로운_이야기가_필요한_시대.html",
+    "title": "인류세 — 새로운 이야기가 필요한 시대",
+    "ext": "html",
+    "category": "blog",
+    "size": 37575,
+    "date": "2022-08-27",
     "order": 21,
     "thumbnail": ""
   }
