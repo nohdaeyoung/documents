@@ -158,4 +158,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add archives.json sitemap.xml
           git diff --cached --quiet || git commit -m "chore: update archives list"
+          git pull --rebase origin main
           git push
