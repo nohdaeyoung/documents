@@ -210,22 +210,22 @@
     "thumbnail": ""
   },
   {
-    "name": "인류세_새로운_이야기가_필요한_시대.html",
-    "title": "인류세 — 새로운 이야기가 필요한 시대",
-    "ext": "html",
-    "category": "blog",
-    "size": 37575,
-    "date": "2022-08-27",
-    "order": 21,
-    "thumbnail": ""
-  },
-  {
     "name": "박웅현_인생은_공책이다.html",
     "title": "박웅현 — 인생은 공책이다",
     "ext": "html",
     "category": "blog",
     "size": 26458,
     "date": "2022-12-23",
+    "order": 21,
+    "thumbnail": ""
+  },
+  {
+    "name": "인류세_새로운_이야기가_필요한_시대.html",
+    "title": "인류세 — 새로운 이야기가 필요한 시대",
+    "ext": "html",
+    "category": "blog",
+    "size": 37575,
+    "date": "2022-08-27",
     "order": 22,
     "thumbnail": ""
   }
