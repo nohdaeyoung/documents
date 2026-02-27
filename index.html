@@ -39,33 +39,25 @@
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #f5f0e8;
-      --bg-card: #fffdf9;
-      --fg: #2c1810;
-      --muted: #6b5b4e;
-      --dim: #a0927f;
-      --accent: #8b4513;
-      --border: rgba(44,24,16,0.08);
-      --border-strong: rgba(44,24,16,0.15);
-      --tag-bg: rgba(139,69,19,0.08);
-      --font-serif: 'Noto Serif KR', serif;
-      --font-sans: 'Noto Sans KR', sans-serif;
-      --font-mono: 'DM Mono', monospace;
-      --transition: 0.25s ease;
+      --bg: #f8f6f1;
+      --fg: #1a1a18;
+      --muted: #8a8780;
+      --accent: #c4450a;
+      --card-bg: #ffffff;
+      --border: #e5e2db;
     }
 
     body {
-      font-family: var(--font-sans);
+      font-family: 'Instrument Sans', sans-serif;
       background: var(--bg);
       color: var(--fg);
       min-height: 100vh;
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     .noise {
@@ -76,331 +68,282 @@
 
     .container {
       position: relative; z-index: 1;
-      max-width: 780px;
+      max-width: 720px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 80px 24px 120px;
     }
 
-    /* ── Header ── */
-    .site-header {
-      padding: 72px 0 0;
-      margin-bottom: 0;
+    header {
+      margin-bottom: 64px;
+      border-bottom: 2px solid var(--fg);
+      padding-bottom: 24px;
     }
-    .site-header h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.8rem, 5vw, 2.6rem);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      line-height: 1.25;
+
+    header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
     }
-    .site-header p {
-      margin-top: 8px;
+
+    header p {
+      margin-top: 12px;
       color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.6;
+      font-size: 0.95rem;
     }
 
-    /* ── Sticky Toolbar ── */
-    .toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--bg);
-      padding: 16px 0 12px;
-      margin-bottom: 4px;
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow 0.3s;
-    }
-    .toolbar.scrolled {
-      box-shadow: 0 4px 20px rgba(44,24,16,0.06);
-    }
-
-    .search-wrap {
-      position: relative;
-      margin-bottom: 10px;
-    }
-    .search-input {
-      width: 100%;
-      padding: 10px 16px 10px 40px;
-      border: 1px solid var(--border-strong);
-      border-radius: 8px;
-      background: var(--bg-card);
-      font-family: var(--font-sans);
-      font-size: 0.88rem;
-      color: var(--fg);
-      outline: none;
-      transition: border-color var(--transition);
-    }
-    .search-input::placeholder { color: var(--dim); }
-    .search-input:focus { border-color: var(--accent); }
-    .search-icon {
-      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-      color: var(--dim); pointer-events: none;
-    }
-    .search-clear {
-      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-      background: none; border: none; color: var(--dim); cursor: pointer;
-      font-size: 1.1rem; display: none; padding: 2px 4px;
-    }
-    .search-clear.show { display: block; }
-    .search-clear:hover { color: var(--accent); }
-
-    .filter-row {
+    /* Filter Tabs */
+    .filters {
       display: flex;
-      gap: 6px;
+      gap: 8px;
+      margin-top: 20px;
       flex-wrap: wrap;
-      align-items: center;
     }
-    .filter-btn {
-      padding: 4px 12px;
-      border: 1px solid var(--border-strong);
+
+    .filter-tab {
+      padding: 6px 16px;
+      border: 1.5px solid var(--border);
       border-radius: 100px;
       background: transparent;
-      font-family: var(--font-sans);
-      font-size: 0.76rem;
-      font-weight: 400;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
       color: var(--muted);
       cursor: pointer;
-      transition: all var(--transition);
-      white-space: nowrap;
-    }
-    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .filter-btn.active { background: var(--fg); border-color: var(--fg); color: var(--bg); font-weight: 500; }
-    .filter-btn .cnt {
-      font-family: var(--font-mono);
-      font-size: 0.64rem;
-      opacity: 0.55;
-      margin-left: 4px;
-    }
-    .filter-count {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--dim);
-      margin-left: auto;
-      flex-shrink: 0;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
     }
 
-    /* ── Year Groups ── */
-    .year-group { margin-bottom: 2px; }
-    .year-header {
+    .filter-tab:hover {
+      border-color: var(--fg);
+      color: var(--fg);
+    }
+
+    .filter-tab.active {
+      background: var(--fg);
+      border-color: var(--fg);
+      color: var(--bg);
+    }
+
+    .filter-tab .count {
+      display: inline-block;
+      margin-left: 6px;
+      font-size: 0.72rem;
+      opacity: 0.6;
+    }
+
+    /* Search */
+    .search-bar {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: var(--card-bg);
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-bar input:focus {
+      border-color: var(--fg);
+    }
+
+    .search-bar svg {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+
+    /* Archive List */
+    .archive-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .archive-item {
+      background: var(--card-bg);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s, padding-left 0.2s;
+      cursor: pointer;
+    }
+
+    .archive-item:hover {
+      background: #faf9f6;
+      padding-left: 32px;
+    }
+
+    .archive-item .tag {
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .archive-item .info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .archive-item .title-row {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 0;
-      cursor: pointer;
-      user-select: none;
-      border-bottom: 1px solid var(--border);
-      transition: border-color var(--transition);
     }
-    .year-header:hover { border-color: var(--accent); }
-    .year-label {
-      font-family: var(--font-mono);
-      font-size: 0.84rem;
+
+    .archive-item .title {
       font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.02em;
-    }
-    .year-cnt {
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      color: var(--dim);
-    }
-    .year-chevron {
-      margin-left: auto;
-      color: var(--dim);
-      transition: transform 0.3s ease;
-      flex-shrink: 0;
-    }
-    .year-group.open .year-chevron { transform: rotate(180deg); }
-    .year-items {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.45s ease;
-    }
-    .year-group.open .year-items { max-height: 8000px; }
-
-    /* ── Archive Item ── */
-    .archive-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 0;
-      text-decoration: none;
-      color: inherit;
-      border-bottom: 1px solid var(--border);
-      transition: all 0.2s;
-      cursor: pointer;
-      animation: fadeUp 0.3s ease both;
-    }
-    .archive-item:last-child { border-bottom: none; }
-    .archive-item:hover { padding-left: 8px; }
-    .archive-item:hover .item-title { color: var(--accent); }
-
-    .item-date {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--dim);
-      letter-spacing: 0.01em;
-      flex-shrink: 0;
-      width: 72px;
-      text-align: right;
-    }
-
-    .item-tag {
-      flex-shrink: 0;
-      font-size: 0.64rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      padding: 3px 8px;
-      border-radius: 4px;
-    }
-
-    .item-body { flex: 1; min-width: 0; }
-    .item-title-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .item-title {
-      font-family: var(--font-serif);
-      font-weight: 700;
-      font-size: 0.98rem;
-      line-height: 1.45;
+      font-size: 1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       flex: 1;
       min-width: 0;
-      transition: color var(--transition);
-    }
-    .item-meta {
-      font-size: 0.74rem;
-      color: var(--dim);
-      margin-top: 1px;
     }
 
     .new-tab-btn {
       flex-shrink: 0;
       display: inline-flex; align-items: center; justify-content: center;
       width: 22px; height: 22px;
-      color: var(--dim);
-      transition: color 0.15s;
+      color: var(--muted);
+      transition: all 0.15s;
+      text-decoration: none;
       cursor: pointer;
     }
-    .new-tab-btn:hover { color: var(--fg); }
 
-    /* ── States ── */
+    .new-tab-btn:hover {
+      color: var(--fg);
+    }
+
+    .archive-item .meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Empty State */
     .empty {
       text-align: center;
-      padding: 72px 24px;
-      color: var(--dim);
+      padding: 80px 24px;
+      color: var(--muted);
     }
-    .empty .icon { font-size: 2.2rem; margin-bottom: 14px; opacity: 0.4; }
-    .empty p { font-size: 0.92rem; }
-    .empty code { background: rgba(44,24,16,0.06); padding: 2px 8px; border-radius: 4px; font-size: 0.82rem; }
 
+    .empty .icon {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    .empty p { font-size: 0.95rem; }
+
+    .empty code {
+      background: #e5e2db;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* Loading */
     .loading {
       text-align: center;
       padding: 60px;
-      color: var(--dim);
-      font-size: 0.88rem;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
-    .loading .dot { display: inline-block; animation: pulse 1.2s ease-in-out infinite; }
+
+    .loading .dot {
+      display: inline-block;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
     .loading .dot:nth-child(2) { animation-delay: 0.15s; }
     .loading .dot:nth-child(3) { animation-delay: 0.3s; }
-
-    .no-results {
-      display: none;
-      text-align: center;
-      padding: 60px 24px;
-      color: var(--dim);
-      font-size: 0.88rem;
-    }
-    .no-results.show { display: block; }
-    .no-results .nr-icon { font-size: 1.8rem; margin-bottom: 10px; opacity: 0.35; }
 
     @keyframes pulse {
       0%, 80%, 100% { opacity: 0.3; }
       40% { opacity: 1; }
     }
+
+    .archive-item {
+      animation: fadeUp 0.35s ease both;
+    }
+
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Footer ── */
     footer {
-      margin-top: 64px;
-      padding-bottom: 48px;
+      margin-top: 80px;
       text-align: center;
-      font-size: 0.76rem;
-      color: var(--dim);
+      font-size: 0.8rem;
+      color: var(--muted);
     }
-    footer a { color: var(--muted); text-decoration: none; }
-    footer a:hover { color: var(--accent); }
 
     @media (max-width: 480px) {
-      .container { padding: 0 16px; }
-      .site-header { padding-top: 48px; }
-      .item-date { width: 56px; font-size: 0.66rem; }
-      .item-title { font-size: 0.9rem; }
-      .archive-item { gap: 10px; padding: 12px 0; }
+      .container { padding: 48px 16px 80px; }
+      header { margin-bottom: 40px; }
+      .archive-item { padding: 16px; gap: 12px; }
+      .filters { gap: 6px; }
+      .filter-tab { padding: 5px 12px; font-size: 0.78rem; }
     }
   </style>
 </head>
 <body>
   <div class="noise"></div>
   <div class="container">
-
-    <header class="site-header">
-      <h1>324 Lecture &<br>Study Archives</h1>
+    <header>
+      <h1>324 Lecture & Study Archives</h1>
       <p>324가 보고 듣고 경험한 타인의 언어와 연구 아카이브</p>
+      <div class="filters" id="filters"></div>
     </header>
 
-    <div class="toolbar" id="toolbar">
-      <div class="search-wrap">
-        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input class="search-input" id="searchInput" type="text" placeholder="제목으로 검색..." autocomplete="off">
-        <button class="search-clear" id="searchClear">×</button>
-      </div>
-      <div class="filter-row" id="filterRow">
-        <button class="filter-btn active" data-filter="all">전체</button>
-        <span class="filter-count" id="filterCount"></span>
-      </div>
+    <div class="search-bar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="search" placeholder="파일 이름으로 검색…" autocomplete="off">
     </div>
 
-    <main id="content">
+    <div id="content">
       <div class="loading">
         <span class="dot">●</span> <span class="dot">●</span> <span class="dot">●</span>
       </div>
-    </main>
-
-    <div class="no-results" id="noResults">
-      <div class="nr-icon">∅</div>
-      검색 결과가 없습니다.<br>다른 키워드로 시도해보세요.
     </div>
 
     <footer>
       324(dy) · claude Opus4.6 · GitHub Pages · vercel · <a href="colophon.html">Colophon</a>
     </footer>
-
   </div>
 
   <script>
-    // ── Elements ──
-    const contentEl   = document.getElementById('content');
-    const searchInput = document.getElementById('searchInput');
-    const searchClear = document.getElementById('searchClear');
-    const filterRow   = document.getElementById('filterRow');
-    const filterCount = document.getElementById('filterCount');
-    const noResults   = document.getElementById('noResults');
-    const toolbar     = document.getElementById('toolbar');
-
-    let allFiles   = [];
+    const contentEl = document.getElementById('content');
+    const searchEl = document.getElementById('search');
+    const filtersEl = document.getElementById('filters');
+    let allFiles = [];
     let categories = [];
     let activeFilter = 'all';
 
-    // ── Load Data ──
     async function loadData() {
       try {
         const [archivesRes, catsRes] = await Promise.all([
@@ -415,14 +358,14 @@
           categories = await catsRes.json();
         }
 
-        // Sort: order first, then date descending
+        // Sort by order field if present, then by date
         allFiles.sort((a, b) => {
           if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
           return (b.date || '').localeCompare(a.date || '');
         });
 
         renderFilters();
-        renderGrouped(allFiles);
+        applyFilters();
       } catch {
         allFiles = [];
         renderFilters();
@@ -430,205 +373,128 @@
       }
     }
 
-    // ── Filters ──
     function renderFilters() {
       if (allFiles.length === 0) {
-        filterRow.innerHTML = '<button class="filter-btn active" data-filter="all">전체</button><span class="filter-count" id="filterCount"></span>';
+        filtersEl.innerHTML = '';
         return;
       }
 
+      // Count by category
       const catCounts = {};
       allFiles.forEach(f => {
         const cat = f.category || f.ext || 'other';
         catCounts[cat] = (catCounts[cat] || 0) + 1;
       });
 
-      const countEl = filterRow.querySelector('.filter-count');
-      // Remove old dynamic buttons
-      filterRow.querySelectorAll('.filter-btn:not([data-filter="all"])').forEach(b => b.remove());
+      let html = `<button class="filter-tab active" data-filter="all">전체<span class="count">${allFiles.length}</span></button>`;
 
-      // From categories.json
+      // Category-based filters
       categories.forEach(cat => {
         if (catCounts[cat.id]) {
-          const btn = document.createElement('button');
-          btn.className = 'filter-btn';
-          btn.dataset.filter = cat.id;
-          btn.innerHTML = cat.label + '<span class="cnt">' + catCounts[cat.id] + '</span>';
-          filterRow.insertBefore(btn, countEl);
+          html += `<button class="filter-tab" data-filter="${cat.id}">${cat.label}<span class="count">${catCounts[cat.id]}</span></button>`;
         }
       });
 
-      // Uncategorized fallback
-      const catIds = new Set(categories.map(c => c.id));
+      // Ext-based for uncategorized
+      const categorizedIds = new Set(categories.map(c => c.id));
       Object.keys(catCounts).sort().forEach(key => {
-        if (!catIds.has(key)) {
-          const btn = document.createElement('button');
-          btn.className = 'filter-btn';
-          btn.dataset.filter = key;
-          btn.innerHTML = key + '<span class="cnt">' + catCounts[key] + '</span>';
-          filterRow.insertBefore(btn, countEl);
+        if (!categorizedIds.has(key)) {
+          html += `<button class="filter-tab" data-filter="${key}">${key}<span class="count">${catCounts[key]}</span></button>`;
         }
       });
 
-      // Update "전체" count
-      const allBtn = filterRow.querySelector('[data-filter="all"]');
-      allBtn.innerHTML = '전체<span class="cnt">' + allFiles.length + '</span>';
+      filtersEl.innerHTML = html;
 
-      // Bind events
-      filterRow.querySelectorAll('.filter-btn').forEach(btn => {
+      filtersEl.querySelectorAll('.filter-tab').forEach(btn => {
         btn.addEventListener('click', () => {
-          filterRow.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          filtersEl.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           activeFilter = btn.dataset.filter;
           applyFilters();
         });
       });
-
-      filterCount.textContent = allFiles.length + '건';
     }
 
     function applyFilters() {
-      const q = searchInput.value.toLowerCase().trim();
+      const q = searchEl.value.toLowerCase().trim();
       let filtered = allFiles;
 
       if (activeFilter !== 'all') {
-        filtered = filtered.filter(f => (f.category || f.ext || 'other') === activeFilter);
+        filtered = filtered.filter(f => {
+          return (f.category || f.ext || 'other') === activeFilter;
+        });
       }
 
       if (q) {
         filtered = filtered.filter(f =>
-          (f.name || '').toLowerCase().includes(q) ||
-          (f.title || '').toLowerCase().includes(q)
+          f.name.toLowerCase().includes(q) ||
+          (f.title && f.title.toLowerCase().includes(q))
         );
       }
 
-      if (filtered.length === 0) {
-        contentEl.style.display = 'none';
-        noResults.classList.add('show');
-      } else {
-        contentEl.style.display = '';
-        noResults.classList.remove('show');
-        renderGrouped(filtered, !!q);
+      renderList(filtered);
+    }
+
+    function renderList(files) {
+      if (files.length === 0) {
+        renderEmpty();
+        return;
       }
 
-      filterCount.textContent = filtered.length + '건';
-    }
+      const ul = document.createElement('ul');
+      ul.className = 'archive-list';
 
-    // ── Render Grouped by Year ──
-    function renderGrouped(files, forceOpen) {
+      files.forEach((file, i) => {
+        const li = document.createElement('li');
+
+        // Find category info
+        const cat = categories.find(c => c.id === file.category);
+        const tagBg = cat ? cat.color + '18' : '#f0ece4';
+        const tagColor = cat ? cat.color : '#5c5a55';
+        const tagLabel = cat ? cat.label : (file.ext || 'file');
+
+        li.innerHTML = `
+          <div class="archive-item" style="animation-delay:${i * 0.04}s" onclick="location.href='archives/${file.name}'" role="link">
+            <span class="tag" style="background:${tagBg};color:${tagColor}">${tagLabel}</span>
+            <div class="info">
+              <div class="title-row">
+                <div class="title">${file.title || file.name}</div>
+                <span class="new-tab-btn" title="새 탭에서 열기" onclick="event.stopPropagation();window.open('archives/${file.name}')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="meta">${file.size ? formatSize(file.size) : ''}${file.size && file.date ? ' · ' : ''}${file.date || ''}</div>
+            </div>
+          </div>
+        `;
+        ul.appendChild(li);
+      });
+
       contentEl.innerHTML = '';
-
-      // Group by year
-      const grouped = {};
-      files.forEach(f => {
-        const year = (f.date || '').substring(0, 4) || 'Unknown';
-        if (!grouped[year]) grouped[year] = [];
-        grouped[year].push(f);
-      });
-
-      const years = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
-      const openYears = forceOpen ? new Set(years) : new Set(years.slice(0, 2));
-
-      years.forEach(year => {
-        const group = document.createElement('div');
-        group.className = 'year-group' + (openYears.has(year) ? ' open' : '');
-        group.dataset.year = year;
-
-        const header = document.createElement('div');
-        header.className = 'year-header';
-        header.innerHTML =
-          '<span class="year-label">' + year + '</span>' +
-          '<span class="year-cnt">' + grouped[year].length + '건</span>' +
-          '<svg class="year-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-        header.addEventListener('click', () => group.classList.toggle('open'));
-
-        const itemsWrap = document.createElement('div');
-        itemsWrap.className = 'year-items';
-
-        grouped[year].forEach((file, i) => {
-          itemsWrap.appendChild(createItem(file, i));
-        });
-
-        group.appendChild(header);
-        group.appendChild(itemsWrap);
-        contentEl.appendChild(group);
-      });
+      contentEl.appendChild(ul);
     }
 
-    // ── Create Item ──
-    function createItem(file, index) {
-      const cat = categories.find(c => c.id === file.category);
-      const tagBg    = cat ? cat.color + '18' : 'rgba(139,69,19,0.08)';
-      const tagColor = cat ? cat.color : '#8b4513';
-      const tagLabel = cat ? cat.label : (file.ext || 'file');
-
-      const displayDate = (file.date || '').replace(/-/g, '.').substring(5); // MM.DD
-      const href = 'archives/' + file.name;
-
-      const el = document.createElement('div');
-      el.className = 'archive-item';
-      el.style.animationDelay = (index * 0.03) + 's';
-      el.dataset.cat = file.category || file.ext || 'other';
-      el.dataset.title = (file.title || file.name || '').toLowerCase();
-      el.dataset.name = (file.name || '').toLowerCase();
-      el.setAttribute('role', 'link');
-      el.onclick = () => location.href = href;
-
-      el.innerHTML =
-        '<span class="item-date">' + displayDate + '</span>' +
-        '<span class="item-tag" style="background:' + tagBg + ';color:' + tagColor + '">' + tagLabel + '</span>' +
-        '<div class="item-body">' +
-          '<div class="item-title-row">' +
-            '<div class="item-title">' + escHTML(file.title || file.name) + '</div>' +
-            '<span class="new-tab-btn" title="새 탭에서 열기" onclick="event.stopPropagation();window.open(\'' + href + '\')">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-                '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>' +
-                '<polyline points="15 3 21 3 21 9"/>' +
-                '<line x1="10" y1="14" x2="21" y2="3"/>' +
-              '</svg>' +
-            '</span>' +
-          '</div>' +
-       //   (file.size ? '<div class="item-meta">' + formatSize(file.size) + '</div>' : '') +
-        '</div>';
-
-      return el;
-    }
-
-    // ── Empty State ──
     function renderEmpty() {
-      contentEl.innerHTML =
-        '<div class="empty">' +
-          '<div class="icon">📂</div>' +
-          '<p><code>archives/</code> 폴더에 파일을 추가하면<br>이곳에 자동으로 목록이 표시됩니다.</p>' +
-        '</div>';
+      contentEl.innerHTML = `
+        <div class="empty">
+          <div class="icon">📂</div>
+          <p><code>archives/</code> 폴더에 파일을 추가하면<br>이곳에 자동으로 목록이 표시됩니다.</p>
+        </div>
+      `;
     }
 
-    // ── Utilities ──
     function formatSize(bytes) {
       if (bytes < 1024) return bytes + ' B';
       if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
       return (bytes / 1048576).toFixed(1) + ' MB';
     }
-    function escHTML(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-    // ── Events ──
-    searchInput.addEventListener('input', () => {
-      searchClear.classList.toggle('show', searchInput.value.length > 0);
-      applyFilters();
-    });
+    searchEl.addEventListener('input', () => applyFilters());
 
-    searchClear.addEventListener('click', () => {
-      searchInput.value = '';
-      searchClear.classList.remove('show');
-      applyFilters();
-      searchInput.focus();
-    });
-
-    window.addEventListener('scroll', () => {
-      toolbar.classList.toggle('scrolled', window.scrollY > 120);
-    });
-
-    // ── Init ──
     loadData();
   </script>
 </body>
