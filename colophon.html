@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colophon — 324 Lecture & Study Archives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f6f1;
+  --fg: #1a1a18;
+  --muted: #8a8780;
+  --accent: #c4450a;
+  --border: #e5e2db;
+  --display: 'DM Serif Display', serif;
+  --sans: 'Instrument Sans', 'Noto Sans KR', sans-serif;
+  --serif-kr: 'Noto Serif KR', serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  font-family: var(--sans); color: var(--fg);
+  line-height: 1.95; font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Noise texture */
+.noise {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+.container {
+  position: relative; z-index: 1;
+  max-width: 640px; margin: 0 auto;
+  padding: 80px 24px 120px;
+}
+
+/* Back link */
+.back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .88rem; font-weight: 500; color: var(--muted);
+  text-decoration: none; letter-spacing: .02em;
+  margin-bottom: 4rem; transition: color .2s;
+}
+.back:hover { color: var(--fg); }
+
+/* Header */
+header {
+  margin-bottom: 3.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--fg);
+}
+header h1 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 400; letter-spacing: -.02em;
+  line-height: 1.15;
+}
+header p {
+  margin-top: .75rem; color: var(--muted); font-size: .94rem;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 3rem;
+}
+.section-label {
+  font-size: .72rem; font-weight: 600; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: .75rem;
+}
+.section h2 {
+  font-family: var(--serif-kr);
+  font-size: 1.22rem; font-weight: 600;
+  line-height: 1.6; margin-bottom: 1rem;
+  color: var(--fg);
+}
+.section p {
+  font-size: .94rem; line-height: 2.05;
+  color: #4a4845; margin-bottom: 1.2rem;
+  word-break: keep-all;
+}
+.section p strong {
+  font-weight: 500; color: var(--fg);
+}
+
+/* Divider */
+.divider {
+  width: 32px; height: 1px;
+  background: var(--border);
+  margin: 2.5rem 0;
+}
+
+/* Spec list */
+.spec {
+  font-size: .88rem; line-height: 2.2; color: #4a4845;
+}
+.spec-label {
+  display: inline-block; width: 140px;
+  font-weight: 500; color: var(--muted);
+  font-size: .82rem; letter-spacing: .04em;
+}
+
+/* Quote */
+.pull-quote {
+  margin: 2rem 0; padding: 1.25rem 1.5rem;
+  border-left: 2px solid var(--accent);
+  background: rgba(196,69,10,.03);
+}
+.pull-quote p {
+  font-family: var(--serif-kr);
+  font-size: .94rem; font-style: italic;
+  line-height: 2.1; color: var(--fg);
+  margin-bottom: 0;
+}
+
+/* Footer */
+footer {
+  margin-top: 4rem; padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+footer p {
+  font-size: .80rem; color: var(--muted); letter-spacing: .04em;
+}
+
+@media(max-width: 640px) {
+  .container { padding: 60px 20px 80px; }
+  .spec-label { width: 110px; }
+}
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<div class="container">
+
+<a href="https://nohdaeyoung.github.io/documents/" class="back">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+Archives
+</a>
+
+<header>
+<h1>Colophon</h1>
+<p>이 프로젝트가 어떻게 만들어지는가에 대한 기록.</p>
+</header>
+
+<div class="section">
+<div class="section-label">What</div>
+<h2>사라지는 목소리를 남기는 작업</h2>
+<p>이 아카이브는 강연, 북토크, 스터디에서 녹음된 음성을 텍스트로, 텍스트를 구조화된 문서로, 문서를 읽을 만한 웹 페이지로 옮기는 프로젝트다. 원본은 대부분 네이버 클로바노트로 자동 생성된 트랜스크립트 — 오탈자가 많고, 화자 구분이 불완전하며, 전문 용어는 거의 엉망이다. 그 텍스트를 읽고, 강연의 논증 구조를 복원하고, 빠진 맥락을 보충하고, HTML로 옮기는 전 과정을 AI(Claude)와의 대화를 통해 수행한다.</p>
+<p>강연자의 말을 그대로 옮기는 것이 아니다. 90분짜리 강연을 읽는 데 15분이 걸리는 문서로 압축하면서, 논증의 뼈대는 유지하되 반복과 군더더기는 걷어낸다. 편집자의 판단이 개입하고, 그 판단이 어디서 어떻게 이루어졌는지를 가능한 한 드러내려 한다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+<div class="section-label">How</div>
+<h2>프로세스</h2>
+<p>작업 흐름은 대략 이렇다. 클로바노트 트랜스크립트를 Claude에 넘긴다. Claude가 전체 내용을 파악하고, 강연의 핵심 논증 구조를 추출한다. 이 과정에서 강연자의 전공, 저서, 학문적 배경을 참조해서 트랜스크립트의 오류를 바로잡는다. 구조화된 내용을 바탕으로 HTML을 작성하되, 각 강연의 성격에 맞는 디자인 컨셉을 먼저 정하고 코드를 짠다.</p>
+<p>마지막에 <strong>Claude's Insight</strong>를 붙인다. 이것은 AI의 독해다. 강연의 핵심을 어떻게 읽었는지, 그 논증 안에서 가장 날카로운 지점이 어디인지를 쓴다. 그리고 <strong>반론(Counterpoint)</strong>을 단다. 반론은 강연을 부정하기 위해서가 아니라, 하나의 논증이 완결되었을 때 그 옆에 사유의 여지를 남기기 위해 붙인다. 강연자의 프레임 안에서 보이지 않는 것이, 프레임 바깥에서는 어떤 모양인지 보여주려는 시도다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+<div class="section-label">Design</div>
+<h2>디자인 원칙</h2>
+<p>모든 문서는 동일한 기본 구조(Archives 버튼, scroll-to-top, fadeUp 애니메이션, Noto Serif KR + Noto Sans KR)를 공유하되, 각 강연의 성격에 맞게 색상과 톤을 변주한다. 영화 비평 강연은 극장 암실을, 경제학 강연은 학술서적의 종이를, 인류학 강연은 관찰자의 차가움을 디자인 출발점으로 삼는다.</p>
+<p>폰트 사이즈는 기본값에서 약 0.06rem(≈1pt) 크게 설정한다. 긴 텍스트를 읽는 데 필요한 최소한의 여유를 확보하기 위해서다. 카드 구조(Thesis Card, Data Card, Debate Card 등)를 사용해 논증, 데이터, 인용, 논쟁을 시각적으로 분리한다. 본문은 정렬(justify)하고, 리스트 대신 산문으로 쓴다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+<div class="section-label">Why</div>
+<h2>왜 이 작업을 하는가</h2>
+<div class="pull-quote">
+<p>강연은 한 번 듣고 나면 사라진다. 녹음이 있어도 90분을 다시 듣는 사람은 거의 없다. 자동 녹취는 텍스트를 남기지만, 그것은 목소리의 잔해이지 사유의 기록이 아니다. 누군가의 45분짜리 논증을 — 그 사람이 수십 년 공부한 결과를 — 읽을 만한 형태로 남기는 것. 그리고 그 논증에 대해 한 번 더 생각하는 것. 이 작업의 목적은 그것이다.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+<div class="section-label">Spec</div>
+<p class="spec">
+<span class="spec-label">원본</span>네이버 클로바노트 자동 녹취 트랜스크립트<br>
+<span class="spec-label">정리 · 편집</span>Claude (Anthropic) 와의 대화를 통한 협업<br>
+<span class="spec-label">HTML · CSS</span>단일 파일, 외부 의존성 최소화<br>
+<span class="spec-label">서체</span>Noto Serif KR + Noto Sans KR (본문), DM Serif Display (메인페이지)<br>
+<span class="spec-label">호스팅</span>GitHub Pages<br>
+<span class="spec-label">운영</span>324 · nohdaeyoung
+</p>
+</div>
+
+<footer>
+<p>324 Lecture & Study Archives · Colophon</p>
+</footer>
+
+</div>
+</body>
+</html>
