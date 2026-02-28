@@ -23,5 +23,10 @@
     "id": "note",
     "label": "Longblack",
     "color": "#5c5a55"
+  },
+  {
+    "id": "article",
+    "label": "ARTICLE",
+    "color": "#bfc20a"
   }
 ]
