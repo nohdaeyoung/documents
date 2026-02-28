@@ -220,22 +220,22 @@
     "thumbnail": ""
   },
   {
-    "name": "인류세_새로운_이야기가_필요한_시대.html",
-    "title": "인류세 — 새로운 이야기가 필요한 시대",
-    "ext": "html",
-    "category": "blog",
-    "size": 37575,
-    "date": "2022-08-27",
-    "order": 22,
-    "thumbnail": ""
-  },
-  {
     "name": "이슬아_계속_쓰는_사람의_이야기.html",
     "title": "계속 쓰는 사람의 이야기 — 이슬아",
     "ext": "html",
     "category": "blog",
     "size": 25484,
     "date": "2022-12-08",
+    "order": 22,
+    "thumbnail": ""
+  },
+  {
+    "name": "인류세_새로운_이야기가_필요한_시대.html",
+    "title": "인류세 — 새로운 이야기가 필요한 시대",
+    "ext": "html",
+    "category": "blog",
+    "size": 37575,
+    "date": "2022-08-27",
     "order": 23,
     "thumbnail": ""
   }
