@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이슬아 — 계속 쓰는 사람의 이야기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf6f0;
+  --bg-letter: #fff;
+  --bg-warm: #fef3ec;
+  --bg-deep: #2b1f1a;
+  --text: #2b1f1a;
+  --text-sub: #6e5c52;
+  --text-dim: #a89888;
+  --coral: #e8786b;
+  --coral-soft: rgba(232,120,107,0.08);
+  --coral-mid: rgba(232,120,107,0.18);
+  --sage: #7a9a82;
+  --sage-soft: rgba(122,154,130,0.10);
+  --line: rgba(43,31,26,0.08);
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Noto Sans KR', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1.0rem;
+  line-height: 1.88;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Nav ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(250,246,240,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav a {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-sub);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.nav a:hover { color: var(--coral); }
+
+/* ── Hero — 편지/메일함 컨셉 ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px clamp(20px, 5vw, 60px) 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: clamp(200px, 40vw, 500px);
+  height: clamp(200px, 40vw, 500px);
+  background: radial-gradient(circle, rgba(232,120,107,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(20%, -20%);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: clamp(150px, 30vw, 400px);
+  height: clamp(150px, 30vw, 400px);
+  background: radial-gradient(circle, rgba(122,154,130,0.10) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-20%, 20%);
+}
+
+/* 편지 봉투 스타일 히어로 카드 */
+.hero-letter {
+  position: relative; z-index: 2;
+  max-width: 560px; width: 100%;
+  background: var(--bg-letter);
+  padding: clamp(32px, 5vw, 52px) clamp(28px, 5vw, 48px);
+  box-shadow: 0 2px 24px rgba(43,31,26,0.06);
+  border: 1px solid rgba(43,31,26,0.04);
+}
+.hero-stamp {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 58px; height: 68px;
+  background: var(--coral-soft);
+  border: 1.5px dashed var(--coral);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(2deg);
+}
+.hero-stamp .stamp-price {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--coral);
+}
+.hero-stamp .stamp-label {
+  font-family: var(--font-mono);
+  font-size: 0.46rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+.hero-postmark {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+.hero-to {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.hero-title em { font-style: normal; color: var(--coral); }
+.hero-sub {
+  font-size: 0.94rem;
+  color: var(--text-sub);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.hero-from {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  font-style: italic;
+}
+
+/* ── Container ── */
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Chapter ── */
+.chapter {
+  padding: 68px 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.chapter.visible { opacity: 1; transform: translateY(0); }
+.chapter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.chapter-num {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--coral);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--coral-soft);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+.chapter-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 3vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.42;
+  margin-bottom: 24px;
+}
+.chapter p { margin-bottom: 1.3em; font-weight: 300; }
+
+/* ── Voice — 이슬아의 말 ── */
+.voice {
+  margin: 32px 0;
+  padding: 24px 28px;
+  background: var(--bg-warm);
+  border-radius: 6px;
+  position: relative;
+}
+.voice::before {
+  content: '"';
+  position: absolute;
+  top: 10px; left: 14px;
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  color: var(--coral);
+  opacity: 0.25;
+  line-height: 1;
+}
+.voice p {
+  font-family: var(--font-serif);
+  font-size: 1.0rem;
+  line-height: 1.82;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.voice .voice-attr {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  margin-top: 10px;
+  display: block;
+}
+
+/* ── Divider ── */
+.divider {
+  text-align: center;
+  padding: 28px 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5em;
+}
+
+/* ── Aside ── */
+.aside-box {
+  margin: 32px 0;
+  padding: 20px 22px;
+  background: var(--sage-soft);
+  border-radius: 4px;
+  border-left: 3px solid var(--sage);
+}
+.aside-box .aside-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--sage);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.aside-box p { font-size: 0.88rem; color: var(--text-sub); line-height: 1.72; margin-bottom: 0; }
+
+/* ── Keyline ── */
+.keyline {
+  margin: 48px 0;
+  text-align: center;
+  padding: 0 16px;
+}
+.keyline p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+.keyline .kl-dot {
+  display: block;
+  width: 6px; height: 6px;
+  background: var(--coral);
+  border-radius: 50%;
+  margin: 16px auto 0;
+}
+
+/* ── Book Shelf — 책 목록 ── */
+.bookshelf {
+  margin: 40px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.book-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-sub);
+  background: var(--bg-letter);
+  border: 1px solid var(--line);
+  padding: 5px 10px;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+.book-tag.highlight {
+  background: var(--coral-soft);
+  border-color: rgba(232,120,107,0.2);
+  color: var(--coral);
+}
+
+/* ── Closing ── */
+.closing { padding: 72px 0 56px; text-align: center; }
+.closing-wildflower {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+.closing-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.5;
+  max-width: 480px;
+  margin: 0 auto 18px;
+}
+.closing-attr {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+.closing-note {
+  margin-top: 44px;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  line-height: 1.72;
+  max-width: 440px;
+  margin-left: auto; margin-right: auto;
+}
+
+/* ── Scroll to Top ── */
+.scroll-top {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 38px; height: 38px;
+  background: var(--bg-letter);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0;
+  transition: opacity 0.3s, background 0.2s;
+  z-index: 90;
+  box-shadow: 0 2px 10px rgba(43,31,26,0.08);
+}
+.scroll-top.show { opacity: 1; }
+.scroll-top:hover { background: var(--coral); border-color: var(--coral); }
+.scroll-top svg { color: var(--text-sub); }
+.scroll-top:hover svg { color: #fff; }
+
+@media (max-width: 600px) {
+  .hero { padding: 90px 20px 60px; }
+  .hero-letter { padding: 28px 22px; }
+  .hero-stamp { width: 46px; height: 54px; top: 14px; right: 14px; }
+  .hero-stamp .stamp-price { font-size: 0.7rem; }
+  .chapter { padding: 48px 0; }
+  .voice { padding: 20px 22px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="https://nohdaeyoung.github.io/documents/">← Archives</a>
+  <a href="#">324.ing</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-letter">
+    <div class="hero-stamp">
+      <span class="stamp-price">₩500</span>
+      <span class="stamp-label">1편당</span>
+    </div>
+    <div class="hero-postmark">2022.12.08 · 북토크 · 114분</div>
+    <div class="hero-to">From. 이슬아</div>
+    <h1 class="hero-title"><em>계속 쓰는</em><br>사람의 이야기</h1>
+    <p class="hero-sub">어딘글방에서 시작된 글쓰기, 일간 이슬아,<br>헤엄 출판사, 그리고 가녀장의 시대까지.<br>마감과 함께 살아가는 30대 작가의 편지.</p>
+    <div class="hero-from">— 이슬아, 작가·헤엄출판사 대표</div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- Ch.1 -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="chapter-num">01 — 어딘글방</span></div>
+    <h2 class="chapter-title">글 잘 쓰는 애가<br>제일 부러웠다</h2>
+
+    <p>이슬아는 청소년기를 대안학교에서 보냈다. 노래 잘하는 친구, 아름다운 친구, 운동 잘하는 친구가 있었지만 가만히 생각해보면 글 잘 쓰는 애가 제일 부러웠다. 왜 그랬는지는 아직도 잘 모른다고 한다. 다만 확실한 것은, 질투의 불꽃이 가장 활활 타올랐던 대상이 글 잘 쓰는 애였다는 것.</p>
+
+    <p>17살, 시민기자학교 캠프에서 한 여자를 본다. 오연호 대표가 "모든 시민이 기자다"라고 엄중하게 말한 직후, 그 여자가 올라와서 "모든 시민이 기자일 필요는 없어요"라고 말했다. 어딘이라는 사람이었다. 베트남 전쟁과 한국군 민간인 학살을 다루는 르포 작가이자, 전복적인 시를 쓰는 시인. 이슬아는 곧장 그녀를 찾아갔다.</p>
+
+    <div class="voice">
+      <p>지성이 바다처럼 흘러넘치는 스승이어서 사랑하지 않을 수 없었습니다. 18살부터 24살까지 매주 다녔어요.</p>
+    </div>
+
+    <p>어딘글방의 방식은 이랬다. 매주 공통된 글감을 받고, 각자 글을 써오고, 돌려 읽은 뒤 합평한다. 중요한 건 내 글을 잘 써가는 것뿐 아니라 동료의 글을 정확하게 읽고 정확하게 칭찬하고 정확하게 비판하는 훈련이었다. 남에게 잘하라고 했던 말이 자기에게도 돌아오니까.</p>
+
+    <p>거기에 모인 사람들은 소수자 파티 같았다. 성소수자들, 장애인이거나 장애인 가족인 학생들, 탈학교 청소년들. 이슬아는 자신이 얼마나 평범하게 느껴졌는지 모른다고 했다. 이렇다 할 불행이나 이렇다 할 행운이 없는 자신. 친구들의 삶이 우여곡절과 영민함으로 가득 차 있는 동안, 자신의 결핍은 너무나 평범해 보였다.</p>
+
+    <div class="aside-box">
+      <div class="aside-label">어딘글방 동료 — 안담</div>
+      <p>이슬아가 가장 부러워했던 작가. 1년에 두 편만 발표하는 SS 시즌, FW 시즌. 그런데 그게 다 명작이었다. 매주 개근하며 약점을 들키는 이슬아 옆에서, 가끔 나타나 완벽하게 하고 사라지는 안담은 부러움과 질투의 대상이었다. 하지만 바로 그 안담이 마가렛 애트우드의 문장을 보내주며 말했다. 네가 가야 할 방향은 이 계열인 것 같다고.</p>
+    </div>
+
+    <div class="keyline">
+      <p>좋은 글을 쓰려면<br>다시 태어나야 되는 게 아닌가.<br>내가 아닌 남으로.</p>
+      <span class="kl-dot"></span>
+    </div>
+
+    <p>이슬아가 담당한 포지션은 명확했다. 아무도 안 쓴 날에도 이슬아는 썼겠지, 하는 애. 한 번의 합평에서 가장 뛰어난 적은 별로 없었지만, 글쓰기에 관해서만큼은 개근을 했다. 이때의 훈련이 나중에 일간 이슬아를 가능하게 한 거 아니냐고 스스로 말했다.</p>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- Ch.2 -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="chapter-num">02 — 스승의 말</span></div>
+    <h2 class="chapter-title">엉덩이, 손, 허리,<br>결국 온몸으로 쓰는 것</h2>
+
+    <p>어딘이 반복적으로 했던 말들이 있다. 18살의 이슬아에게: 글은 엉덩이로 쓰는 거야. 오래 앉아 있으려면 푹신한 엉덩이를 가져야 한다고. 20살에: 사실 글은 손으로 쓰는 거야. '달궈진 손'이라는 표현을 했다. 써야 할 글감이 왔을 때 바로 쓸 수 있는 훈련된 손.</p>
+
+    <p>그러다가 이슬아가 일간 이슬아를 시작하고, 4개월 연속 매일 글을 쓰고 발표하고 피드백을 받다가 응급실에 갔을 때: 내장이 꼬이는 기분으로 누워 있으면 살 수가 없다. 그리고 최근에는: 글은 정말로 허리로 쓰는 거야.</p>
+
+    <div class="voice">
+      <p>결론은 온몸으로 쓰라는 거겠죠. 작가가 정신적인 일이라고 생각하지만, 사실 엄청난 육체 노동이기도 합니다. 작가가 되기에 필요한 자질은 스쿼트, 푸시업, 그리고 스트레칭이라고 가르치고 있습니다.</p>
+    </div>
+
+    <p>어딘이 가르친 것 중 가장 중요한 것들. 축하를 진짜로 하라. 깨작깨작 하는 게 아니라, 모두가 진짜 축하할 때까지 연습하라. 그리고 — 못 쓴 글을 잘 썼다고 절대 말하지 마라. 서로 좋아하고 사랑해도, 못 쓴 글을 잘 썼다고 하는 것은 있을 수 없는 일이다.</p>
+
+    <p>더 많은 일에 슬퍼하고 기뻐할수록 작가가 쓸 수 있는 세계가 넓어진다고. 타인의 슬픔과 기쁨을 내 것으로 하라고. 슬퍼하는 타인의 자리에 가서 쓰라고. 그것이 얼마나 피곤한 저주인지, 동시에 얼마나 축복인지 점점 더 알게 된다고 했다.</p>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- Ch.3 -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="chapter-num">03 — 태어나 보니 상인</span></div>
+    <h2 class="chapter-title">이야기를 파는 상인</h2>
+
+    <p>이슬아의 첫 책 첫 문장. "태어나 보니 주변에는 온통 상인들뿐이었습니다." 서울 갑석리, 자동차 부품 상가 골목. 기름때가 많은 오래된 블록이 깔린 작은 동네. 할아버지도, 아빠도, 작은아빠도, 삼촌도, 옆집 아저씨도 자동차 부품 상인이었다.</p>
+
+    <p>할아버지가 가르친 것: 비싼 걸 하나 팔려고 하지 마라. 만만한 걸 많이 팔아서 벌어라. 값을 매기고 홍보하는 건 어른들이 그냥 하던 것이어서 자연스럽게 익혔다.</p>
+
+    <div class="voice">
+      <p>이러한 출신이 문학계의 일반적인 작가 분위기와는 다르다는 것을 나중에 알게 됐어요. 마진율에 당연히 관심이 많죠.</p>
+    </div>
+
+    <p>대학에서는 신문방송학과에 갔다. 기자가 되고 싶은 줄 알았다. 그런데 교수님이 자꾸 기사 대신 소설을 써오라고 지적했다. 학생들이 웃었다. 그때 깨달았다. 나는 소설이 좋은데.</p>
+
+    <p>그 깨달음을 위해 학자금 대출 2,500만 원을 낸 셈이다. 너무 비싼 수업료.</p>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- Ch.4 -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="chapter-num">04 — 일간 이슬아</span></div>
+    <h2 class="chapter-title">아무도 청탁하지 않았지만<br>쓴다</h2>
+
+    <p>2018년 봄. 학자금 대출 상환이 시작됐다. 부업이 필요했다. 50명 정도 구독하면 50만 원쯤 모아서 티끌 모아 학자금 갚으려고, 노란색 포스터를 인터넷에 올렸다. "태산 같은 학자금 대출! 티끌 모아 갚는다." 엄마가 핸드폰으로 찍은 오토바이 사진에 눈꼽 떼고 그림판으로 디자인한 것.</p>
+
+    <p>그 사바이 같은 포스터가 대박이 났다. 이전에 없던 방식 — 출판사 없이, 잡지사 없이, 작가가 독자에게 직접 글을 팔겠다는 것. 한 달 만 원, 하루 한 편, 한 편에 500원. 월요일부터 금요일까지 자정에 메일함에 도착하는 에세이.</p>
+
+    <div class="aside-box">
+      <div class="aside-label">문학 직거래의 탄생</div>
+      <p>집에 고구마나 사과 박스가 오면 '직거래'라고 써 있는 경우가 있다. 농부와 소비자 사이에서 중간 유통 없이. 문학도 그렇게 하면 안 되나. 신문방송학과에서 미디어와 매체에 대해 배운 것이 이 아이디어를 가능하게 했다. 대학에 간 게 조금은 좋았다고.</p>
+    </div>
+
+    <p>어딘글방에서 매주 개근은 했지만 매일 쓴 적은 없었다. 일간 이슬아로 돈을 받으면서 처음으로 매일 쓰게 됐다. 선불로 돈을 받은 약속이니까 지켜야 했다. 그렇게 6개월, 학자금 대출 전액을 갚았다.</p>
+
+    <div class="keyline">
+      <p>정말 뭐가 어떻게 될지<br>잘 모르는 것 같아요.</p>
+      <span class="kl-dot"></span>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- Ch.5 -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="chapter-num">05 — 헤엄 출판사</span></div>
+    <h2 class="chapter-title">모녀 기업</h2>
+
+    <p>일간 이슬아를 하다 보니 출판사가 필요해졌다. 작가 인세가 10%라는 것이 마진율을 따지는 상인의 피에 걸렸다. 왜 내가 쓴 글인데 10%밖에 못 받지? 더 많이 남겨야지. 마포구청에 가서 '헤엄 출판사'를 신고했다.</p>
+
+    <p>아버지가 수영 강사이자 산업잠수사였기에 '헤엄'이라 지었다. 기한 식당에 취직하려던 엄마 복희 님을 설득해 출판사로 데려왔다. 모녀 기업의 시작.</p>
+
+    <p>문제는 복희 님이 이메일이라는 개념을 모르셨다는 것이다. 아이디도 없고, 인터넷을 거의 하지 않으셨다. "자기가 컴퓨터를 꺼놔도 메일을 받을 수 있냐?" 온라인이라는 개념 자체가 없는 분이었다. 디지털 리터러시를 주입시키고, 메일 작성법을 가르치고, 50대에 접어들면서 모든 고유명사를 틀리시는 메일을 더블 체크하면서 일을 시작했다.</p>
+
+    <div class="voice">
+      <p>엄마한테 밥을 얻어 먹는 게 공짜여서는 안 된다고 생각해요. 복희 님이 용민 님 월급의 2배를 받고 계세요. 그녀가 부엌일을 하기 때문입니다.</p>
+    </div>
+
+    <p>조직도: 이슬아 대표, 복희(발주·재고·서점 소통·스태프밀 제공), 용민(트럭 운전·책 운반·회계·세무·이슬아 실수 수습). 엄마 아빠가 안방에 들어가서 주로 하는 것은 이슬아 욕이라고 한다.</p>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- Ch.6 -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="chapter-num">06 — 가녀장의 시대</span></div>
+    <h2 class="chapter-title">할아버지의 언어를 배운 손녀가<br>할아버지를 떠나는 이야기</h2>
+
+    <p>11번째 책. 장편소설 《가녀장의 시대》. 홈드라마 시트콤이다. 가부장도 가모장도 아닌 가녀장 — 장녀가 문화으로 가세를 일으켜 작은 집안을 통치하는 이야기.</p>
+
+    <p>가녀장제에서 딸은 엄마에게 정식 월급을 준다. 돌봄 노동에 대한 비용을 역사에서 여자들이 거의 받지 못했으니까. 용돈이 아니라 월급. 아무도 엄마의 노동을 공짜로 누리지 말라고 선포하는 것.</p>
+
+    <div class="voice">
+      <p>가녀장인 쓰라랑의 캐릭터는 전혀 완벽하지 않아요. 과거에 할아버지들, 아버지들이 했던 실수를 자기가 똑같이 한다는 걸 깨닫는 순간이 옵니다. 어떤 젠더가 권위의 자리에 오든, 힘의 속성과 권력의 위험성을 탐구해야만 나쁜 것이 반복되지 않거든요.</p>
+    </div>
+
+    <p>보통 소설에서 실수하면 다시 기회를 안 주는데, 이 소설은 주인공에게 다시 잘해볼 기회를 계속 준다. 시트콤이니까. 시트콤에서 인물들은 회복력이 좋다. 유머를 잃지 않는다.</p>
+
+    <p>첫 책부터 11번째 책까지, 결국 유년기를 계속 다시 쓴 것 같다고 했다. 글을 쓰는 사람은 자기 역사에서 좋은 것만 가지고 갈지 선택할 힘을 갖게 된다. 자신의 이야기에서 해방되고 싶기 때문에 이 모든 일을 한다고.</p>
+
+    <!-- 책 목록 -->
+    <div class="bookshelf">
+      <span class="book-tag">일간 이슬아 수필집 (2018)</span>
+      <span class="book-tag">나는 울 때마다 엄마 얼굴이 된다</span>
+      <span class="book-tag">심신 단련</span>
+      <span class="book-tag">깨끗한 존경</span>
+      <span class="book-tag">너는 다시 태어나려고 기다리고 있어</span>
+      <span class="book-tag">부지런한 사랑</span>
+      <span class="book-tag">우리 사이엔 오해가 있다</span>
+      <span class="book-tag">창작과 농담</span>
+      <span class="book-tag">새 마음으로</span>
+      <span class="book-tag">아무튼, 노래</span>
+      <span class="book-tag highlight">가녀장의 시대 (2022)</span>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- Ch.7 -->
+  <section class="chapter" id="ch7">
+    <div class="chapter-label"><span class="chapter-num">07 — 장래 희망</span></div>
+    <h2 class="chapter-title">쓰면 쓸수록 잘 쓰는<br>작가 할머니가 되고 싶다</h2>
+
+    <p>강연의 마지막 슬라이드. 장래 희망. 가녀장의 시대 드라마 판권을 끝내주게 잘 팔 것. 집 안의 빚을 청소할 것. 12번째 책을 쓸 것. 그리고 그다음 책도.</p>
+
+    <p>마감은 앞에 다가오면 토할 것 같지만, 계속 마감이 없는 날을 생각해보면 마감과 함께 살아가는 삶이 좋다. 그게 아니면 완성할 수 없었던 글들이 너무 많으니까.</p>
+
+    <div class="voice">
+      <p>저는 유머를 잃지 않으면서 쓰는 것이 가장 중요한 목표입니다. 글로 누군가를 울리는 것보다 웃기는 게 사실 더 어려운 것 같거든요. 말로 웃기는 것에는 관심이 없는데, 글로는 왜 이렇게 사람들을 웃기고 싶은지 모르겠어요.</p>
+    </div>
+
+    <p>Q&A에서 진행자가 《부지런한 사랑》의 한 장면을 말했다. 어린 형제가 글 다 쓰면 노래를 불렀다는 에피소드. 이슬아가 그 아이의 노래를 듣고 쓴 문장 — 이 순간이 벌써부터 그립다. 앞으로 살면서 남의 눈치 안 보고 노래 부를 날이 그렇게 많지 않을 것 같아서.</p>
+
+    <p>진행자가 말했다. 그 문장을 읽고 생각했다고. 나는 그동안 타인의 눈치를 보느라 내가 하고 싶었던 일을 놓친 게 뭐지? 지금 뭘 포기하고 있지?</p>
+
+    <div class="keyline">
+      <p>계속 책을 쓰면서<br>할머니가 되고 싶습니다.<br>할머니가 되고 싶다는 건<br>오래 살고 싶다는 뜻이고.</p>
+      <span class="kl-dot"></span>
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <section class="closing">
+    <div class="closing-wildflower">✺</div>
+    <p class="closing-quote">더 많은 일에 슬퍼하고<br>기뻐할수록<br>작가가 쓸 수 있는 세계가<br>넓어지는 거라고.</p>
+    <div class="closing-attr">— 어딘이 이슬아에게, 반복적으로</div>
+
+    <p class="closing-note">
+      이 글은 2022년 12월 8일 이슬아 작가의 북토크(114분)를 재구성한 아티클입니다.
+      어딘글방부터 가녀장의 시대까지, 한 작가의 형성 과정을 따라가며
+      강연 속 핵심 맥락을 보존하되 구어의 반복을 정리하고 배경을 보충했습니다.
+    </p>
+  </section>
+
+</main>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+const chapters = document.querySelectorAll('.chapter');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '-30px' });
+chapters.forEach(ch => observer.observe(ch));
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 600); });
+</script>
+</body>
+</html>
