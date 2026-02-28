@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Don't Flinch — Andrew Reed, Sequoia Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0f0d;
+  --bg-card: #111916;
+  --bg-elevated: #162019;
+  --bg-glass: rgba(22,32,25,0.7);
+  --text: #d4dcd6;
+  --text-bright: #edf2ee;
+  --text-dim: #6b7d71;
+  --text-muted: #3d4f44;
+  --green: #4ade80;
+  --green-dim: rgba(74,222,128,0.12);
+  --green-border: rgba(74,222,128,0.18);
+  --gold: #d4a853;
+  --gold-dim: rgba(212,168,83,0.10);
+  --gold-border: rgba(212,168,83,0.20);
+  --line: rgba(74,222,128,0.06);
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-sans: 'Noto Sans KR', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  line-height: 1.85;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Nav ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(10,15,13,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.nav a {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+.nav a:hover { color: var(--green); }
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px clamp(20px,5vw,60px) 80px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(74,222,128,0.04) 0%, transparent 60%);
+  border-radius: 50%;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -10%; left: -5%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(212,168,83,0.03) 0%, transparent 60%);
+  border-radius: 50%;
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: 620px; width: 100%;
+}
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--text-dim);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.hero-meta .sep { color: var(--text-muted); }
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--green);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 7vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  color: var(--text-bright);
+  letter-spacing: -0.025em;
+  margin-bottom: 28px;
+}
+.hero-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--green);
+}
+.hero-sub {
+  font-size: 0.94rem;
+  color: var(--text-dim);
+  line-height: 1.72;
+  max-width: 480px;
+  margin-bottom: 32px;
+}
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.hero-tag {
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  letter-spacing: 0.04em;
+  background: var(--bg-card);
+}
+.hero-tag.hl {
+  border-color: var(--green-border);
+  color: var(--green);
+  background: var(--green-dim);
+}
+
+/* ── Container ── */
+.container { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Chapter ── */
+.chapter {
+  padding: 72px 0 48px;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.chapter.visible { opacity: 1; transform: translateY(0); }
+.ch-label {
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  color: var(--green);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ch-label::before {
+  content: '';
+  width: 16px; height: 1px;
+  background: var(--green);
+  opacity: 0.4;
+}
+.ch-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 3.5vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-bright);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+.chapter p { margin-bottom: 1.2em; }
+
+/* ── Quote Block ── */
+.quote-block {
+  margin: 36px 0;
+  padding: 28px 28px 28px 32px;
+  background: var(--bg-card);
+  border-left: 2px solid var(--green);
+  position: relative;
+}
+.quote-block p {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--text-bright);
+  margin-bottom: 0;
+}
+.quote-block .q-attr {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--text-dim);
+  margin-top: 12px;
+  display: block;
+  font-style: normal;
+  letter-spacing: 0.06em;
+}
+
+/* ── Stat Card ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 32px 0;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 18px 16px;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--green);
+  line-height: 1.2;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── Case Study Card ── */
+.case-card {
+  margin: 32px 0;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  padding: 24px;
+  position: relative;
+}
+.case-card::before {
+  content: attr(data-company);
+  position: absolute;
+  top: -1px; right: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gold);
+  padding: 4px 10px;
+}
+.case-card .case-title {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 10px;
+}
+.case-card p { font-size: 0.88rem; color: var(--text); margin-bottom: 0.8em; }
+.case-card p:last-child { margin-bottom: 0; }
+
+/* ── Insight Box ── */
+.insight-box {
+  margin: 36px 0;
+  padding: 22px 24px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 2px;
+}
+.insight-box .ins-label {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.insight-box p { font-size: 0.88rem; line-height: 1.72; margin-bottom: 0; }
+
+/* ── Divider ── */
+.divider {
+  padding: 36px 0;
+  text-align: center;
+}
+.divider .line {
+  width: 40px; height: 1px;
+  background: var(--green);
+  opacity: 0.2;
+  margin: 0 auto;
+}
+
+/* ── Keyline ── */
+.keyline {
+  margin: 52px 0;
+  text-align: center;
+  padding: 0 16px;
+}
+.keyline p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-bright);
+}
+.keyline .dot {
+  display: block;
+  width: 4px; height: 4px;
+  background: var(--green);
+  border-radius: 50%;
+  margin: 18px auto 0;
+}
+
+/* ── Closing ── */
+.closing {
+  padding: 80px 0 60px;
+  text-align: center;
+}
+.closing-icon {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  color: var(--green);
+  opacity: 0.3;
+  margin-bottom: 24px;
+}
+.closing-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--text-bright);
+  max-width: 520px;
+  margin: 0 auto 16px;
+}
+.closing-attr {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+.closing-note {
+  margin-top: 48px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 440px;
+  margin-left: auto; margin-right: auto;
+}
+
+/* ── Tenet List ── */
+.tenet-list {
+  margin: 28px 0;
+  display: flex; flex-direction: column; gap: 0;
+}
+.tenet-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex; gap: 14px; align-items: baseline;
+}
+.tenet-item:last-child { border-bottom: none; }
+.tenet-num {
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  color: var(--green);
+  min-width: 18px;
+}
+.tenet-text {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.65;
+}
+.tenet-text strong { color: var(--text-bright); font-weight: 500; }
+
+/* ── Scroll Top ── */
+.scroll-top {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 36px; height: 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0;
+  transition: opacity 0.3s, border-color 0.2s;
+  z-index: 90;
+}
+.scroll-top.show { opacity: 1; }
+.scroll-top:hover { border-color: var(--green); }
+.scroll-top svg { color: var(--text-dim); width: 14px; height: 14px; }
+.scroll-top:hover svg { color: var(--green); }
+
+@media (max-width: 600px) {
+  .hero { padding: 90px 20px 60px; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .case-card { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="https://d.324.ing">← Archives</a>
+  <a href="#">324.ing</a>
+</nav>
+
+<!-- ══ Hero ══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-meta">
+      <span>Dialectic Podcast Ep.39</span>
+      <span class="sep">·</span>
+      <span>2026.02.11</span>
+      <span class="sep">·</span>
+      <span>120 min</span>
+    </div>
+    <div class="hero-eyebrow">Sequoia Capital</div>
+    <h1 class="hero-title"><em>Don't</em> Flinch</h1>
+    <p class="hero-sub">Andrew Reed는 조용히 세대 최고의 그로스 투자자가 되었다. Robinhood, Figma, Vanta — 수십억 달러의 확신 뒤에 있는 직관과 가벼움에 대하여.</p>
+    <div class="hero-tags">
+      <span class="hero-tag hl">Andrew Reed</span>
+      <span class="hero-tag">Robinhood</span>
+      <span class="hero-tag">Figma</span>
+      <span class="hero-tag">Klarna</span>
+      <span class="hero-tag">Vanta</span>
+      <span class="hero-tag">ElevenLabs</span>
+      <span class="hero-tag">Strava</span>
+      <span class="hero-tag">Mubi</span>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- ── 1. Humanity & Competitiveness ── -->
+  <section class="chapter" id="ch1">
+    <div class="ch-label">01 — Humanity</div>
+    <h2 class="ch-title">풋볼 선수이면서<br>뮤지컬에도 선 사람</h2>
+
+    <p>Andrew Reed에게는 쌍둥이 형제 Will이 있다. 둘 다 벤처캐피탈 업계에서 일한다. 평일에는 각자의 펌에서 투자하고, 저녁에는 온라인 체스로 겨루고, 주말에는 산악자전거로 경쟁한다. 이 끊임없는 형제 경쟁이 그의 경쟁심의 뿌리다.</p>
+
+    <p>고등학교 시절 풋볼 선수이면서 동시에 뮤지컬에도 출연했다. 미국 고등학교 문화에서 이 두 세계는 거의 겹치지 않는다. 풋볼은 경쟁과 충돌의 영역, 뮤지컬은 표현과 감수성의 영역이다. Andrew는 이 양쪽을 동시에 가진 사람이다.</p>
+
+    <p>어린 시절 말더듬(stutter)이 있었다. 말하는 대신 관찰했다. 수년간의 불안감이 역설적으로 투자자로서의 초능력이 되었다.</p>
+
+    <div class="quote-block">
+      <p>I have a unique way of seeing the little kid inside people. And I think that helps with trust.</p>
+      <span class="q-attr">— Andrew Reed</span>
+    </div>
+
+    <p>창업자를 만날 때 이력서나 겉의 자신감이 아니라, 그 사람 안에 있는 불안과 열망과 진짜 동기를 읽는다. 말더듬이 소년의 관찰력이 수십억 달러의 판단을 만든다.</p>
+
+    <div class="insight-box">
+      <div class="ins-label">Insight</div>
+      <p>풋볼(경쟁, 팀워크, 물리적 충돌)과 뮤지컬(표현, 공감, 감정의 아크)은 Andrew 투자 스타일의 원형이다. VC 업계에서 경쟁에서 이기면서도 창업자의 내면을 읽을 수 있는 사람은 드물다. 숫자를 읽는 능력은 가르칠 수 있지만, 사람의 내면을 읽는 능력은 가르칠 수 없다.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div></div>
+
+  <!-- ── 2. Investment Philosophy ── -->
+  <section class="chapter" id="ch2">
+    <div class="ch-label">02 — Philosophy</div>
+    <h2 class="ch-title">스프레드시트는<br>항상 한 방향으로 틀린다</h2>
+
+    <p>Goldman Sachs 애널리스트로 시작했다. 헤드폰 끼고 엑셀만 파는 사람. 하지만 Sequoia에서 배운 것은 정반대였다.</p>
+
+    <p>핵심 논리: 위대한 회사는 모델이 예측하는 것보다 항상 더 크게 성장한다. 평범한 회사는 모델보다 항상 더 나쁘다. 스프레드시트의 '중간'을 볼 때, 현실은 극단 중 하나에 있다. 따라서 재무 데이터를 더 모으는 것보다 창업자의 퀄리티를 판단하는 것이 더 정확하다.</p>
+
+    <div class="quote-block">
+      <p>If you have to actually do the math, it's too close.</p>
+      <span class="q-attr">— Charlie Munger, Andrew가 인용</span>
+    </div>
+
+    <p>90번째 백분위 스타트업은 모든 지표가 '괜찮은' 수준이다. 반면 진짜 위대한 회사는 하나의 차원이 기이할 정도로 강하고, 나머지는 엉망일 수 있다. 모든 걸 잘하는 회사를 스크리닝해서는 절대 위대한 회사를 찾을 수 없다.</p>
+
+    <p>10년 전 투자한 그 사람과 지금 회사를 운영하는 사람은 거의 다른 인간이다. 학벌이나 IQ보다, 스테이크와 복잡성이 올라갈수록 계속 성장하는가가 진짜 신호다.</p>
+
+    <div class="insight-box">
+      <div class="ins-label">Insight — 비선형성</div>
+      <p>이것은 단순히 "사람을 봐라"는 조언이 아니다. 위대한 회사의 성장은 비선형적이기 때문에, 선형 모델(엑셀)로는 구조적으로 과소평가할 수밖에 없다는 인식론적 주장이다. 비선형 결과를 만드는 것은 시장 데이터가 아니라 창업자의 의지, 적응력, 실행력이다.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div></div>
+
+  <!-- ── 3. Key Investments ── -->
+  <section class="chapter" id="ch3">
+    <div class="ch-label">03 — Conviction</div>
+    <h2 class="ch-title">세 번의 결정적 순간</h2>
+
+    <div class="case-card" data-company="Robinhood">
+      <div class="case-title">27살의 첫 수표, 그리고 COVID의 첫 주</div>
+      <p>Sequoia에 와서 몇 년을 갈았다. 처음으로 리드 투자를 할 기회가 왔다. 그것이 Robinhood이었다. 첫 번째 성공이 이후의 모든 기대치를 설정한다. 세상을 바꾸는 제품, 폭발적 성장, 극단적 양극화 — 이것이 Andrew의 '정상 기준'이 되었다.</p>
+      <p>그리고 COVID 첫 주. 텅 빈 수영장 옆에서 혼자 걸으며, 시장이 폭락하는 와중에 2억 달러를 송금해야 했다.</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">$200M</div>
+        <div class="stat-label">COVID 주 송금액</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">27</div>
+        <div class="stat-label">첫 리드 투자 나이</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">14초</div>
+        <div class="stat-label">Vanta 확신까지</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>What would the guy you want to be do in this moment?</p>
+      <span class="q-attr">— Andrew Reed, COVID 첫 주 자문</span>
+    </div>
+
+    <div class="case-card" data-company="Figma">
+      <div class="case-title">미쳤다고 불린 가격</div>
+      <p>사람들은 Figma 밸류에이션이 미쳤다고 했다. 전통적 ARR 배수로 '100x ARR'. 하지만 Andrew의 계산법은 달랐다 — 이번 분기에 실제로 얼마를 추가했는가? 2년 후 매출 기준으로 보면 4x에 불과했다. 계산을 해야 할 정도면 이미 너무 아슬아슬한 것. 명백한 것에 투자하라.</p>
+    </div>
+
+    <div class="case-card" data-company="Vanta">
+      <div class="case-title">14초의 확신</div>
+      <p>Christina Cacioppo(Vanta CEO)를 만났을 때, Andrew는 피치를 빠르게 넘겼다. 무례한 게 아니라 이미 결정이 끝났기 때문이다.</p>
+    </div>
+
+    <div class="quote-block">
+      <p>I know it's good. Let's get to the part where we figure out the terms.</p>
+      <span class="q-attr">— Andrew Reed, Vanta 미팅에서</span>
+    </div>
+
+    <div class="insight-box">
+      <div class="ins-label">Insight — 14초의 구조</div>
+      <p>14초의 확신은 충동이 아니라 10년간의 패턴 인식이 압축된 결과다. 핵심은 확신의 비대칭성이다. 진짜 좋은 것을 볼 때는 빠르게 안다. 나쁜 것을 거르는 데는 시간이 걸린다. 이 비대칭이 "14초"를 가능하게 한다.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div></div>
+
+  <!-- ── 4. Double Down ── -->
+  <section class="chapter" id="ch4">
+    <div class="ch-label">04 — Double Down</div>
+    <h2 class="ch-title">팔로온이 진짜 시험이다</h2>
+
+    <p>첫 투자 후 6개월. 누군가 5배 가격에 제안한다. 두 번의 이사회에 참석하며 회사의 단점을 가까이서 봤다. 이 상태에서 다시 투자하는 것 — 이것이 투자에서 가장 어려운 판단이다.</p>
+
+    <p>첫 투자는 열정으로 할 수 있다. 두 번째 투자는 현실을 알면서도 믿음을 유지해야 한다.</p>
+
+    <p>Andrew가 진짜 흥분하면 밤새 메모를 쓴다. 쓰다가 중간에 에너지가 빠지면, 억지로 밀어붙이지 않는다. 글 쓰는 행위 자체가 확신을 테스트하는 과정이다.</p>
+
+    <div class="insight-box">
+      <div class="ins-label">Insight — 메모와 확신</div>
+      <p>쓸 수 없다면 그것은 아직 확신이 아니다. 진짜 확신은 글로 변환될 때 에너지가 유지되거나 증폭된다. 글이 막히면 문장력이 아니라 사고의 문제다. 기획서, 전략 수립, 콘텐츠 제작 어디서나 "쓰면서 확신이 커지는가, 줄어드는가?"를 자기 점검 도구로 쓸 수 있다.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div></div>
+
+  <!-- ── 5. Board & Founders ── -->
+  <section class="chapter" id="ch5">
+    <div class="ch-label">05 — Boards</div>
+    <h2 class="ch-title">타이밍이지,<br>퍼포먼스가 아니다</h2>
+
+    <p>Ravi Gupta의 말이 머릿속에 맴돈다고 했다. 투자자가 창업자에게 "X에 대해 생각해 보셨어요?"라고 물을 때, 솔직한 대답은 이것이다:</p>
+
+    <div class="quote-block">
+      <p>There's nothing you've thought about that I haven't.</p>
+      <span class="q-attr">— Ravi Gupta가 인용한 창업자의 솔직한 대답</span>
+    </div>
+
+    <p>이사회 업무는 화려한 퍼포먼스가 아니다. 먼저 신뢰를 쌓는다. 그 다음 어려운 이야기를 꺼내되, 그것이 아마 새로운 생각은 아닐 거라는 자각을 가지고. 스타트업은 감정적이다. 좋은 조언자는 진심으로 관심을 갖되, 필요할 때 객관적일 수 있는 사람이다.</p>
+
+    <p>Andrew는 항상 묻는다. 지금 기분이 어떤지, 직감이 뭐라고 하는지. 그리고 자신도 먼저 열린다. 일방적으로 열기를 요구할 수 없으니까. 모든 것은 신뢰 위에 있다.</p>
+  </section>
+
+  <div class="divider"><div class="line"></div></div>
+
+  <!-- ── 6. Craft ── -->
+  <section class="chapter" id="ch6">
+    <div class="ch-label">06 — Craft</div>
+    <h2 class="ch-title">장인정신은<br>상업적 인풋이다</h2>
+
+    <p>Figma, Loom, Vanta, Mubi — Andrew가 투자한 회사들에는 공통점이 있다. 제품의 질감이 느껴진다는 것.</p>
+
+    <p>그의 논리: craft(장인정신)은 단순한 미학이 아니라 상업적 인풋이다. 잘 만든 제품은 그 자체로 마케팅이고, 유지율이고, 입소문이다. AI 시대에 소프트웨어의 기능적 차별화가 줄어들수록, 디자인과 경험의 차이가 더 결정적이 된다.</p>
+
+    <p>'아는 것(knowing)'과 '느끼는 것(feeling)'의 차이. 데이터로 알 수 있는 것과 제품을 직접 써보면서 느끼는 것. Andrew는 후자를 더 신뢰한다.</p>
+  </section>
+
+  <div class="divider"><div class="line"></div></div>
+
+  <!-- ── 7. Leadership ── -->
+  <section class="chapter" id="ch7">
+    <div class="ch-label">07 — Leadership</div>
+    <h2 class="ch-title">처음 느끼는 사람을 지켜보는 것이<br>다시 느끼는 것보다 낫다</h2>
+
+    <p>95%로 달리되 5%의 여유를 남겨둔다. 항상 전력 질주할 필요가 없다. 결정적 순간에 쏟을 에너지를 비축해두는 것.</p>
+
+    <p>올림픽 금메달리스트 Kristen Faulkner가 Andrew에게 한 말: 젊은 Sequoia 팀원이 처음으로 포디움에 서는 걸 보는 게 자기가 다시 이기는 것보다 낫다.</p>
+
+    <div class="keyline">
+      <p>승리를 맛본 후에도<br>경기장에 남아 있는 이유를<br>재정의해준 말이었다.</p>
+      <span class="dot"></span>
+    </div>
+
+    <div class="insight-box">
+      <div class="ins-label">Insight — 첫 승리의 기준 세팅</div>
+      <p>첫 리드 투자가 Robinhood이었다는 사실은 이후 Andrew의 모든 내부 기준을 아웃라이어 모드로 세팅했다. 챔피언의 기억처럼, 한번 극단을 경험한 사람은 그것을 '정상'으로 인식한다. 하지만 진짜 리더십은 자기가 다시 이기는 것이 아니라, 다른 사람이 처음으로 그 느낌을 갖게 해주는 것이다.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div></div>
+
+  <!-- ── 8. Sequoia Capital ── -->
+  <section class="chapter" id="ch8">
+    <div class="ch-label">08 — Sequoia</div>
+    <h2 class="ch-title">첫 번째가 없으면<br>나머지 아홉 개는 의미 없다</h2>
+
+    <p>Sequoia에는 10개의 원칙(tenets)이 있다. 첫 번째는 Performance — 성과다.</p>
+
+    <div class="quote-block">
+      <p>If you don't have the first one, the other nine don't matter.</p>
+      <span class="q-attr">— Doug Leone</span>
+    </div>
+
+    <p>문화는 '나'가 아니라 '우리'다. 개인의 영웅담보다 팀의 성과를 강조한다. 샴페인 건배는 5분이면 끝나고, 바로 다음 일로 넘어간다.</p>
+
+    <div class="tenet-list">
+      <div class="tenet-item">
+        <span class="tenet-num">①</span>
+        <div class="tenet-text"><strong>Don Valentine</strong> — Sequoia 창립자. 실리콘밸리 VC의 원형을 만든 사람.</div>
+      </div>
+      <div class="tenet-item">
+        <span class="tenet-num">②</span>
+        <div class="tenet-text"><strong>Mike Moritz</strong> — Andrew가 GOAT라고 부른 사람. 상상할 수 없을 만큼 숫자를 만들어냈다.</div>
+      </div>
+      <div class="tenet-item">
+        <span class="tenet-num">③</span>
+        <div class="tenet-text"><strong>Doug Leone</strong> — 수십 년간 엔터프라이즈 딜을 하다가, 58세에 브라질 핀테크 Nubank에 베팅. 벤처 역사상 가장 큰 리턴 중 하나가 되었다.</div>
+      </div>
+      <div class="tenet-item">
+        <span class="tenet-num">④</span>
+        <div class="tenet-text"><strong>Pat Grady</strong> — 새로 임명된 Co-Steward. Andrew의 멘토이자 지속적 학습의 상징.</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>Being willing to look extraordinarily stupid at that stage of your life and then dominating — that ought to be in the 'how to do this job' books.</p>
+      <span class="q-attr">— Andrew Reed, Doug Leone의 Nubank 베팅에 대해</span>
+    </div>
+
+    <div class="insight-box">
+      <div class="ins-label">Insight — 재발명의 비용</div>
+      <p>Doug Leone이 58세에 전혀 다른 영역에 베팅한 것은 세 가지를 말한다. 자기 정체성에 갇히지 않았다는 것, 바보같아 보일 용기가 있었다는 것, 결과로 증명했다는 것. 커리어가 쌓일수록 과거의 성공 패턴에 갇히기 쉽고, 새로운 것을 시도할 때의 '바보처럼 보이는 비용'이 올라간다. 그것을 감수하는 것이 재발명의 진짜 가격이다.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div></div>
+
+  <!-- ── 9. 10-Year Lessons ── -->
+  <section class="chapter" id="ch9">
+    <div class="ch-label">09 — Lessons</div>
+    <h2 class="ch-title">Sequoia 10년의 레슨</h2>
+
+    <div class="tenet-list">
+      <div class="tenet-item"><span class="tenet-num">01</span><div class="tenet-text">Do great work.</div></div>
+      <div class="tenet-item"><span class="tenet-num">02</span><div class="tenet-text">Tie out your numbers.</div></div>
+      <div class="tenet-item"><span class="tenet-num">03</span><div class="tenet-text">Follow your enthusiasm — you can't manufacture it.</div></div>
+      <div class="tenet-item"><span class="tenet-num">04</span><div class="tenet-text">Find people you admire.</div></div>
+      <div class="tenet-item"><span class="tenet-num">05</span><div class="tenet-text">Embrace change.</div></div>
+      <div class="tenet-item"><span class="tenet-num">06</span><div class="tenet-text"><strong>Don't flinch.</strong></div></div>
+      <div class="tenet-item"><span class="tenet-num">07</span><div class="tenet-text">Do the right thing always. Never disappoint yourself.</div></div>
+    </div>
+  </section>
+
+  <!-- ══ Closing ══ -->
+  <section class="closing">
+    <div class="closing-icon">◆</div>
+    <p class="closing-quote">Learn to do everything lightly.<br>Feel lightly even though<br>you're feeling deeply.</p>
+    <div class="closing-attr">— Aldous Huxley, Andrew Reed의 바이오에서</div>
+
+    <div class="insight-box" style="text-align:left; margin-top:44px;">
+      <div class="ins-label">Insight — 가벼움의 역설</div>
+      <p>움찔하지 않는 방법은 단단해지는 게 아니라 가벼워지는 것이다. 무거운 사람은 충격에 부서지지만, 가벼운 사람은 충격을 통과한다. COVID 때 2억 달러를 보내면서도 텅 빈 수영장 옆을 걸을 수 있었던 것은, 그 순간을 너무 무겁게 만들지 않았기 때문일 것이다. "Don't flinch"와 "Lightly"는 모순이 아니라 같은 말이다.</p>
+    </div>
+
+    <p class="closing-note">
+      이 글은 Dialectic Podcast Ep.39 "Great Investors Don't Flinch: Sequoia Capital's Andrew Reed" (2026.02.11, 120분)를 주제별로 재구성한 아티클입니다. Jackson Dahl 진행, Andrew Reed의 첫 롱폼 인터뷰.
+    </p>
+  </section>
+
+</main>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+const chapters = document.querySelectorAll('.chapter');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '-20px' });
+chapters.forEach(ch => observer.observe(ch));
+const sb = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => { sb.classList.toggle('show', window.scrollY > 600); });
+</script>
+</body>
+</html>
