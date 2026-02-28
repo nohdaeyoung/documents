@@ -35,15 +35,15 @@ jobs:
           ARCHIVES_DIR = "archives"
           ARCHIVES_JSON = "archives.json"
           SITEMAP_FILE = "sitemap.xml"
-          BASE_URL = "https://nohdaeyoung.github.io/documents"
+          BASE_URL = "https://d.324.ing"
 
           def get_title_from_html(filepath):
               try:
                   with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
                       content = f.read(4096)
-                      match = re.search(r"<title[^>]*>(.*?)</title>", content, re.IGNORECASE | re.DOTALL)
-                      if match:
-                          return match.group(1).strip()
+                  match = re.search(r"<title[^>]*>(.*?)</title>", content, re.IGNORECASE | re.DOTALL)
+                  if match:
+                      return match.group(1).strip()
               except:
                   pass
               return None
@@ -63,20 +63,21 @@ jobs:
 
           # Load existing archives.json to preserve ALL user-edited fields
           existing = {}
-          existing_order = []
+          existing_list = []
           if os.path.isfile(ARCHIVES_JSON):
               try:
                   with open(ARCHIVES_JSON, "r", encoding="utf-8") as f:
                       data = json.load(f)
-                      for item in data:
-                          existing[item["name"]] = item
-                          existing_order.append(item["name"])
+                  for item in data:
+                      existing[item["name"]] = item
+                      existing_list.append(item)
               except:
                   pass
 
           # Scan actual files in archives/
           current_files = set()
           new_files = []
+
           if os.path.isdir(ARCHIVES_DIR):
               for name in os.listdir(ARCHIVES_DIR):
                   filepath = os.path.join(ARCHIVES_DIR, name)
@@ -121,19 +122,26 @@ jobs:
                       existing[name] = entry
                       new_files.append(name)
 
-          # Build final list: preserve existing order, append new files at end
+          # Build final list: existing files (still present) + new files
           files = []
 
-          # First: files that existed before, in their original order
-          for name in existing_order:
-              if name in current_files:
-                  files.append(existing[name])
+          # Collect existing files that are still on disk
+          for item in existing_list:
+              if item["name"] in current_files:
+                  files.append(existing[item["name"]])
 
-          # Then: newly added files at the end
+          # Append newly added files at the end
           for name in sorted(new_files):
               entry = existing[name]
               entry["order"] = len(files)
               files.append(entry)
+
+          # *** FIX: Sort by order field to respect admin reordering ***
+          files.sort(key=lambda f: f.get("order", 9999))
+
+          # Re-index order to be contiguous (0, 1, 2, ...)
+          for i, f in enumerate(files):
+              f["order"] = i
 
           with open(ARCHIVES_JSON, "w", encoding="utf-8") as f:
               json.dump(files, f, ensure_ascii=False, indent=2)
@@ -142,13 +150,13 @@ jobs:
           urls = [f'  <url>\n    <loc>{BASE_URL}/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>']
           for file in files:
               urls.append(f'  <url>\n    <loc>{BASE_URL}/archives/{file["name"]}</loc>\n    <lastmod>{file["date"]}</lastmod>\n    <priority>0.8</priority>\n  </url>')
-
           sitemap = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(urls) + '\n</urlset>\n'
+
           with open(SITEMAP_FILE, "w", encoding="utf-8") as f:
               f.write(sitemap)
 
           added = len(new_files)
-          removed = len(set(existing_order) - current_files)
+          removed = len(set(e["name"] for e in existing_list) - current_files)
           print(f"Updated {ARCHIVES_JSON}: {len(files)} files (added {added}, removed {removed})")
           SCRIPT
 
