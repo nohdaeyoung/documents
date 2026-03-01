@@ -28,5 +28,10 @@
     "id": "article",
     "label": "ARTICLE",
     "color": "#bfc20a"
+  },
+  {
+    "id": "f1",
+    "label": "F1",
+    "color": "#ff0000"
   }
 ]
