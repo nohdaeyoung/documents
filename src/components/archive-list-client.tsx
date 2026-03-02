@@ -52,48 +52,38 @@ export default function ArchiveListClient({
   }, [categories]);
 
   return (
-    <>
-      {/* Filter Tabs */}
-      <div className="flex gap-2 mt-5 flex-wrap mb-0 max-[480px]:gap-1.5">
-        <button
-          className={`px-4 py-1.5 border-[1.5px] rounded-full text-[0.82rem] font-medium cursor-pointer transition-all tracking-wide ${
-            activeFilter === "all"
-              ? "bg-[var(--fg)] border-[var(--fg)] text-[var(--bg)]"
-              : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--fg)] hover:text-[var(--fg)]"
-          }`}
-          style={{ fontFamily: "inherit" }}
-          onClick={() => setActiveFilter("all")}
-        >
-          전체
-          <span className="ml-1.5 text-[0.72rem] opacity-60">
-            {archives.length}
-          </span>
-        </button>
-        {categories.map((cat) =>
-          catCounts[cat.id] ? (
-            <button
-              key={cat.id}
-              className={`px-4 py-1.5 border-[1.5px] rounded-full text-[0.82rem] font-medium cursor-pointer transition-all tracking-wide max-[480px]:px-3 max-[480px]:py-1 max-[480px]:text-[0.78rem] ${
-                activeFilter === cat.id
-                  ? "bg-[var(--fg)] border-[var(--fg)] text-[var(--bg)]"
-                  : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--fg)] hover:text-[var(--fg)]"
-              }`}
-              style={{ fontFamily: "inherit" }}
-              onClick={() => setActiveFilter(cat.id)}
-            >
-              {cat.label}
-              <span className="ml-1.5 text-[0.72rem] opacity-60">
-                {catCounts[cat.id]}
-              </span>
-            </button>
-          ) : null
-        )}
-      </div>
+    <div className="archive-container">
+      <header className="archive-header">
+        <h1 className="archive-title">324 Lecture &amp; Study Archives</h1>
+        <p className="archive-subtitle">
+          324가 보고 듣고 경험한 타인의 언어와 연구 아카이브
+        </p>
+        {/* Filter tabs inside header, above the border */}
+        <div className="filters">
+          <button
+            className={`filter-btn${activeFilter === "all" ? " active" : ""}`}
+            onClick={() => setActiveFilter("all")}
+          >
+            전체<span className="count">{archives.length}</span>
+          </button>
+          {categories.map((cat) =>
+            catCounts[cat.id] ? (
+              <button
+                key={cat.id}
+                className={`filter-btn${activeFilter === cat.id ? " active" : ""}`}
+                onClick={() => setActiveFilter(cat.id)}
+              >
+                {cat.label}
+                <span className="count">{catCounts[cat.id]}</span>
+              </button>
+            ) : null
+          )}
+        </div>
+      </header>
 
-      {/* Search Bar */}
-      <div className="relative mt-5 mb-10">
+      {/* Search bar */}
+      <div className="search-bar">
         <svg
-          className="absolute left-[18px] top-1/2 -translate-y-1/2 text-[var(--muted)]"
           width="18"
           height="18"
           viewBox="0 0 24 24"
@@ -111,20 +101,18 @@ export default function ArchiveListClient({
           placeholder="파일 이름으로 검색..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full py-3.5 pl-12 pr-5 border-[1.5px] border-[var(--border)] rounded-xl bg-[var(--card-bg)] text-[0.95rem] text-[var(--fg)] outline-none transition-colors focus:border-[var(--fg)]"
-          style={{ fontFamily: "inherit" }}
           autoComplete="off"
         />
       </div>
 
-      {/* Archive List */}
+      {/* Archive list */}
       {filtered.length === 0 ? (
-        <div className="text-center py-20 text-[var(--muted)]">
-          <div className="text-[2.4rem] mb-4 opacity-40">&#x1F50D;</div>
-          <p className="text-[0.95rem]">검색 결과가 없습니다</p>
+        <div className="empty-state">
+          <div className="empty-icon">🔍</div>
+          <p>검색 결과가 없습니다</p>
         </div>
       ) : (
-        <ul className="list-none flex flex-col gap-px bg-[var(--border)] rounded-xl overflow-hidden">
+        <ul className="archive-list">
           {filtered.map((archive, i) => {
             const cat = catMap[archive.categoryId];
             const tagBg = cat ? cat.color + "18" : "#f0ece4";
@@ -135,23 +123,21 @@ export default function ArchiveListClient({
               <li key={archive.id}>
                 <Link
                   href={`/archives/${archive.slug}`}
-                  className="bg-[var(--card-bg)] flex items-center gap-4 px-6 py-5 no-underline text-inherit transition-all hover:bg-[#faf9f6] hover:pl-8 max-[480px]:px-4 max-[480px]:py-4 max-[480px]:gap-3"
+                  className="archive-item"
                   style={{
                     animation: `fadeUp 0.35s ease both`,
                     animationDelay: `${i * 0.04}s`,
                   }}
                 >
                   <span
-                    className="shrink-0 text-[0.7rem] font-semibold tracking-wider px-2.5 py-1 rounded-md"
+                    className="tag"
                     style={{ background: tagBg, color: tagColor }}
                   >
                     {tagLabel}
                   </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-base whitespace-nowrap overflow-hidden text-ellipsis">
-                      {archive.title}
-                    </div>
-                    <div className="text-[0.8rem] text-[var(--muted)] mt-0.5">
+                  <div className="item-content">
+                    <div className="title">{archive.title}</div>
+                    <div className="meta">
                       {archive.size ? formatSize(archive.size) : ""}
                       {archive.size && archive.date ? " · " : ""}
                       {archive.date || ""}
@@ -163,6 +149,11 @@ export default function ArchiveListClient({
           })}
         </ul>
       )}
-    </>
+
+      <footer className="archive-footer">
+        324(dy) · claude Opus4.6 · Next.js · Firestore ·{" "}
+        <a href="/colophon">Colophon</a>
+      </footer>
+    </div>
   );
 }
