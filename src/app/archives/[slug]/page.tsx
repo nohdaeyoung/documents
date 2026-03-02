@@ -55,16 +55,9 @@ export default async function ArchivePage({
 
   if (!archive) notFound();
 
-  // Inject resize observer and navigation interception script
+  // Intercept back-navigation links inside the iframe
   const injectedScript = `
 <script>
-  new ResizeObserver(() => {
-    parent.postMessage({
-      type: 'resize',
-      height: document.documentElement.scrollHeight
-    }, '*');
-  }).observe(document.documentElement);
-
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a');
     if (a && (a.href.includes('/documents') || a.href.includes('d.324.ing') || a.href.includes('doc.324.ing'))) {
@@ -79,34 +72,5 @@ export default async function ArchivePage({
     injectedScript + "</body>"
   );
 
-  return (
-    <div className="relative z-1 max-w-[960px] mx-auto px-6 pt-8 pb-20">
-      <nav className="mb-6 flex items-center gap-3">
-        <a
-          href="/"
-          className="text-[var(--muted)] hover:text-[var(--fg)] transition-colors text-[0.9rem] no-underline flex items-center gap-1.5"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Archives
-        </a>
-        <span className="text-[var(--border)]">|</span>
-        <span className="text-[0.85rem] text-[var(--muted)] truncate">
-          {archive.title}
-        </span>
-      </nav>
-
-      <ArchiveViewer contentHtml={contentHtml} title={archive.title} />
-    </div>
-  );
+  return <ArchiveViewer contentHtml={contentHtml} title={archive.title} />;
 }

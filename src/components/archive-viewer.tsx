@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 export default function ArchiveViewer({
@@ -10,14 +10,10 @@ export default function ArchiveViewer({
   contentHtml: string;
   title: string;
 }) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   const router = useRouter();
 
   const handleMessage = useCallback(
     (e: MessageEvent) => {
-      if (e.data?.type === "resize" && iframeRef.current) {
-        iframeRef.current.style.height = e.data.height + "px";
-      }
       if (e.data?.type === "navigate") {
         router.push(e.data.url || "/");
       }
@@ -32,11 +28,9 @@ export default function ArchiveViewer({
 
   return (
     <iframe
-      ref={iframeRef}
       srcDoc={contentHtml}
       title={title}
-      className="w-full border-none rounded-lg"
-      style={{ minHeight: "80vh" }}
+      style={{ position: "fixed", inset: 0, width: "100%", height: "100%", border: "none" }}
       sandbox="allow-scripts allow-same-origin allow-popups"
     />
   );
