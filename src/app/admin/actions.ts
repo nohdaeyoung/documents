@@ -2,6 +2,7 @@
 
 import { adminDb } from "@/lib/firebase/admin";
 import { FieldValue } from "firebase-admin/firestore";
+import { revalidatePath } from "next/cache";
 
 // ── READ ──────────────────────────────────────────
 export async function getAdminData() {
@@ -66,6 +67,8 @@ export async function createArchive(data: {
     createdAt: FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),
   });
+  revalidatePath("/");
+  revalidatePath(`/archives/${data.slug}`);
 }
 
 export async function updateArchive(
@@ -86,10 +89,16 @@ export async function updateArchive(
       size: Buffer.byteLength(data.contentHtml, "utf8"),
       updatedAt: FieldValue.serverTimestamp(),
     });
+  revalidatePath("/");
+  revalidatePath(`/archives/${data.slug}`);
 }
 
 export async function deleteArchive(id: string) {
+  const doc = await adminDb.collection("archives").doc(id).get();
+  const slug = doc.data()?.slug as string | undefined;
   await adminDb.collection("archives").doc(id).delete();
+  revalidatePath("/");
+  if (slug) revalidatePath(`/archives/${slug}`);
 }
 
 export async function reorderArchives(
@@ -102,6 +111,7 @@ export async function reorderArchives(
   batch.update(adminDb.collection("archives").doc(id1), { displayOrder: order2 });
   batch.update(adminDb.collection("archives").doc(id2), { displayOrder: order1 });
   await batch.commit();
+  revalidatePath("/");
 }
 
 // ── CATEGORY WRITE ─────────────────────────────────
@@ -114,6 +124,7 @@ export async function createCategory(data: {
     ...data,
     createdAt: FieldValue.serverTimestamp(),
   });
+  revalidatePath("/");
 }
 
 export async function updateCategory(
@@ -121,10 +132,12 @@ export async function updateCategory(
   data: { label: string; color: string }
 ) {
   await adminDb.collection("categories").doc(id).update(data);
+  revalidatePath("/");
 }
 
 export async function deleteCategory(id: string) {
   await adminDb.collection("categories").doc(id).delete();
+  revalidatePath("/");
 }
 
 export async function reorderCategories(
@@ -137,4 +150,5 @@ export async function reorderCategories(
   batch.update(adminDb.collection("categories").doc(id1), { displayOrder: order2 });
   batch.update(adminDb.collection("categories").doc(id2), { displayOrder: order1 });
   await batch.commit();
+  revalidatePath("/");
 }

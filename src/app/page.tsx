@@ -2,7 +2,7 @@ import { adminDb } from "@/lib/firebase/admin";
 import { ArchiveListItem, Category } from "@/lib/types";
 import ArchiveListClient from "@/components/archive-list-client";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 async function getData() {
   const [archivesSnap, categoriesSnap] = await Promise.all([

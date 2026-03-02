@@ -3,7 +3,17 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ArchiveViewer from "@/components/archive-viewer";
 
-export const revalidate = 60;
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const snap = await adminDb
+    .collection("archives")
+    .select("slug")
+    .get();
+  return snap.docs
+    .filter((doc) => doc.data().slug)
+    .map((doc) => ({ slug: doc.data().slug as string }));
+}
 
 async function getArchive(slug: string) {
   const snap = await adminDb
