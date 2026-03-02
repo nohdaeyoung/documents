@@ -18,19 +18,19 @@ export default function FileList({
   onRefresh,
 }: FileListProps) {
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [reordering, setReordering] = useState(false);
 
   const categoryMap = Object.fromEntries(categories.map((c) => [c.id, c]));
 
-  async function handleDelete(id: string, title: string) {
-    if (!confirm(`"${title}" 문서를 삭제하시겠습니까?`)) return;
+  async function handleDelete(id: string) {
     setDeleting(id);
+    setConfirmDeleteId(null);
     try {
       await deleteArchive(id);
       await onRefresh();
     } catch (err) {
       console.error("Delete failed:", err);
-      alert("삭제에 실패했습니다.");
     } finally {
       setDeleting(null);
     }
@@ -106,13 +106,24 @@ export default function FileList({
               <button onClick={() => onEdit(archive)} className="admin-action-btn">
                 수정
               </button>
-              <button
-                onClick={() => handleDelete(archive.id, archive.title)}
-                disabled={deleting === archive.id}
-                className="admin-action-btn danger"
-              >
-                {deleting === archive.id ? "..." : "삭제"}
-              </button>
+              {confirmDeleteId === archive.id ? (
+                <>
+                  <button onClick={() => handleDelete(archive.id)} disabled={deleting === archive.id} className="admin-action-btn danger">
+                    {deleting === archive.id ? "..." : "확인"}
+                  </button>
+                  <button onClick={() => setConfirmDeleteId(null)} className="admin-action-btn muted">
+                    취소
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => setConfirmDeleteId(archive.id)}
+                  disabled={deleting === archive.id}
+                  className="admin-action-btn danger"
+                >
+                  삭제
+                </button>
+              )}
             </div>
           </div>
         );

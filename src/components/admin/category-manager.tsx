@@ -26,6 +26,7 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
   const [showAdd, setShowAdd] = useState(false);
   const [saving, setSaving] = useState(false);
   const [reordering, setReordering] = useState(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   function startEdit(cat: Category) {
     setEditingId(cat.id);
@@ -63,14 +64,13 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
     }
   }
 
-  async function handleDelete(id: string, catLabel: string) {
-    if (!confirm(`"${catLabel}" 카테고리를 삭제하시겠습니까?`)) return;
+  async function handleDelete(id: string) {
+    setConfirmDeleteId(null);
     try {
       await deleteCategory(id);
       await onRefresh();
     } catch (err) {
       console.error("Delete category failed:", err);
-      alert("삭제에 실패했습니다.");
     }
   }
 
@@ -130,7 +130,14 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
                 </div>
                 <div style={{ display: "flex", gap: "8px" }}>
                   <button onClick={() => startEdit(cat)} className="admin-action-btn">수정</button>
-                  <button onClick={() => handleDelete(cat.id, cat.label)} className="admin-action-btn danger">삭제</button>
+                  {confirmDeleteId === cat.id ? (
+                    <>
+                      <button onClick={() => handleDelete(cat.id)} className="admin-action-btn danger">확인</button>
+                      <button onClick={() => setConfirmDeleteId(null)} className="admin-action-btn muted">취소</button>
+                    </>
+                  ) : (
+                    <button onClick={() => setConfirmDeleteId(cat.id)} className="admin-action-btn danger">삭제</button>
+                  )}
                 </div>
               </>
             )}
