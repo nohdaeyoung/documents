@@ -3,17 +3,11 @@
 import { useAuth, signOut } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
-import { db } from "@/lib/firebase/config";
-import {
-  collection,
-  getDocs,
-  orderBy,
-  query,
-} from "firebase/firestore";
 import { Archive, Category } from "@/lib/types";
 import FileList from "@/components/admin/file-list";
 import FileForm from "@/components/admin/file-form";
 import CategoryManager from "@/components/admin/category-manager";
+import { getAdminData } from "./actions";
 
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
@@ -36,24 +30,9 @@ export default function AdminDashboard() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [archivesSnap, categoriesSnap] = await Promise.all([
-        getDocs(query(collection(db, "archives"), orderBy("displayOrder"))),
-        getDocs(query(collection(db, "categories"), orderBy("displayOrder"))),
-      ]);
-
-      setArchives(
-        archivesSnap.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Archive[]
-      );
-
-      setCategories(
-        categoriesSnap.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Category[]
-      );
+      const data = await getAdminData();
+      setArchives(data.archives as unknown as Archive[]);
+      setCategories(data.categories as unknown as Category[]);
     } catch (err) {
       console.error("Failed to fetch data:", err);
     } finally {
@@ -70,60 +49,42 @@ export default function AdminDashboard() {
   if (authLoading || !user) return null;
 
   return (
-    <div className="max-w-[800px] mx-auto px-6 pt-10 pb-20">
-      <header className="flex items-center justify-between mb-10">
-        <h1
-          className="font-normal"
-          style={{
-            fontFamily: "var(--font-serif), serif",
-            fontSize: "1.5rem",
-          }}
-        >
-          Admin
-        </h1>
-        <div className="flex items-center gap-4">
-          <a
-            href="/"
-            className="text-[0.8rem] text-[var(--muted)] underline hover:text-[var(--fg)]"
-          >
-            Archives
-          </a>
-          <button
-            onClick={() => signOut()}
-            className="text-[0.8rem] text-[var(--muted)] underline hover:text-[var(--fg)] cursor-pointer"
-          >
+    <div className="admin-container">
+      <header className="admin-header">
+        <h1 className="admin-title">Admin</h1>
+        <div className="admin-header-actions">
+          <a href="/" className="admin-link">Archives</a>
+          <button onClick={() => signOut()} className="admin-link">
             로그아웃
           </button>
         </div>
       </header>
 
-      <div className="flex gap-1 mb-8 border-b border-[var(--border)]">
+      <div className="admin-tabs">
         {(["archives", "categories"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-[0.85rem] cursor-pointer border-b-2 transition-colors ${
-              activeTab === tab
-                ? "border-[var(--fg)] text-[var(--fg)]"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--fg)]"
-            }`}
+            className={`admin-tab${activeTab === tab ? " active" : ""}`}
           >
-            {tab === "archives" ? `Archives (${archives.length})` : `Categories (${categories.length})`}
+            {tab === "archives"
+              ? `Archives (${archives.length})`
+              : `Categories (${categories.length})`}
           </button>
         ))}
       </div>
 
       {loading ? (
-        <p className="text-[var(--muted)] text-[0.9rem]">로딩 중...</p>
+        <p className="admin-loading">로딩 중...</p>
       ) : activeTab === "archives" ? (
         <>
-          <div className="flex justify-end mb-4">
+          <div className="admin-toolbar">
             <button
               onClick={() => {
                 setEditingArchive(null);
                 setShowForm(true);
               }}
-              className="px-4 py-2 bg-[var(--fg)] text-[var(--bg)] rounded-lg text-[0.85rem] cursor-pointer hover:opacity-90"
+              className="admin-btn-primary"
             >
               + 새 문서
             </button>
@@ -152,10 +113,7 @@ export default function AdminDashboard() {
           )}
         </>
       ) : (
-        <CategoryManager
-          categories={categories}
-          onRefresh={fetchData}
-        />
+        <CategoryManager categories={categories} onRefresh={fetchData} />
       )}
     </div>
   );
