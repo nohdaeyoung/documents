@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://d.324.ing/archives/2026_FIA_F1_Section_A_일반규정_한국어번역.html</loc>
+    <lastmod>2026-03-01</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://d.324.ing/archives/Andrew_Reed_Dont_Flinch.html</loc>
     <lastmod>2026-02-28</lastmod>
     <priority>0.8</priority>
@@ -131,8 +136,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://d.324.ing/archives/2026_FIA_F1_Section_A_일반규정_한국어번역.html</loc>
-    <lastmod>2026-03-01</lastmod>
+    <loc>https://d.324.ing/archives/2026_FIA_F1_Section_B_스포팅규정_한국어번역.html</loc>
+    <lastmod>2026-03-02</lastmod>
     <priority>0.8</priority>
   </url>
 </urlset>
