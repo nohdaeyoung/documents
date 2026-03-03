@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Instrument_Sans } from "next/font/google";
 import "./globals.css";
+import { getSiteSettings } from "@/app/admin/actions";
+import { HeadCodeInjector } from "@/components/code-injector";
 
 const dmSerif = DM_Serif_Display({
   weight: "400",
@@ -41,11 +43,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let headCode = "";
+  let bodyCode = "";
+  try {
+    const settings = await getSiteSettings();
+    headCode = settings.headCode || "";
+    bodyCode = settings.bodyCode || "";
+  } catch (_) {
+    // settings not yet configured — skip injection
+  }
+
   return (
     <html lang="ko">
       <body
@@ -54,6 +66,12 @@ export default function RootLayout({
       >
         <div className="noise" />
         {children}
+        {/* head code injection (client-side, appended to document.head) */}
+        {headCode && <HeadCodeInjector code={headCode} />}
+        {/* body code injection (end of body) */}
+        {bodyCode && (
+          <div dangerouslySetInnerHTML={{ __html: bodyCode }} />
+        )}
       </body>
     </html>
   );

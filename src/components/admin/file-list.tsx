@@ -1,22 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Archive, Category } from "@/lib/types";
 import { deleteArchive, reorderArchives } from "@/app/admin/actions";
+
+function formatDate(dateStr: string) {
+  if (!dateStr) return "";
+  if (dateStr.includes("T")) {
+    const [datePart, timePart] = dateStr.split("T");
+    return `${datePart} ${timePart}`;
+  }
+  return dateStr;
+}
 
 interface FileListProps {
   archives: Archive[];
   categories: Category[];
-  onEdit: (archive: Archive) => void;
   onRefresh: () => Promise<void>;
 }
 
 export default function FileList({
   archives,
   categories,
-  onEdit,
   onRefresh,
 }: FileListProps) {
+  const router = useRouter();
   const [deleting, setDeleting] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [reordering, setReordering] = useState(false);
@@ -97,13 +106,16 @@ export default function FileList({
                 <span className="admin-item-title">{archive.title}</span>
               </div>
               <div className="admin-item-meta">
-                {archive.slug} · {archive.date} ·{" "}
+                {archive.slug} · {formatDate(archive.date)} ·{" "}
                 {(archive.size / 1024).toFixed(1)}KB
               </div>
             </div>
 
             <div className="admin-item-actions">
-              <button onClick={() => onEdit(archive)} className="admin-action-btn">
+              <button
+                onClick={() => router.push(`/admin/edit/${archive.id}`)}
+                className="admin-action-btn"
+              >
                 수정
               </button>
               {confirmDeleteId === archive.id ? (

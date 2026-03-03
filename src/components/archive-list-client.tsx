@@ -10,12 +10,25 @@ function formatSize(bytes: number) {
   return bytes + " B";
 }
 
+function formatDate(dateStr: string) {
+  if (!dateStr) return "";
+  if (dateStr.includes("T")) {
+    const [datePart, timePart] = dateStr.split("T");
+    return `${datePart} ${timePart}`;
+  }
+  return dateStr;
+}
+
 export default function ArchiveListClient({
   archives,
   categories,
+  siteTitle = "324 Lecture & Study Archives",
+  siteSubtitle = "324가 보고 듣고 경험한 타인의 언어와 연구 아카이브",
 }: {
   archives: ArchiveListItem[];
   categories: Category[];
+  siteTitle?: string;
+  siteSubtitle?: string;
 }) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,10 +67,8 @@ export default function ArchiveListClient({
   return (
     <div className="archive-container">
       <header className="archive-header">
-        <h1 className="archive-title">324 Lecture &amp; Study Archives</h1>
-        <p className="archive-subtitle">
-          324가 보고 듣고 경험한 타인의 언어와 연구 아카이브
-        </p>
+        <h1 className="archive-title">{siteTitle}</h1>
+        <p className="archive-subtitle">{siteSubtitle}</p>
         {/* Filter tabs inside header, above the border */}
         <div className="filters">
           <button
@@ -72,11 +83,27 @@ export default function ArchiveListClient({
                 key={cat.id}
                 className={`filter-btn${activeFilter === cat.id ? " active" : ""}`}
                 onClick={() => setActiveFilter(cat.id)}
+                title={`/category/${cat.id} 에서 전체 보기`}
               >
                 {cat.label}
                 <span className="count">{catCounts[cat.id]}</span>
               </button>
             ) : null
+          )}
+          {activeFilter !== "all" && (
+            <a
+              href={`/category/${activeFilter}`}
+              className="filter-btn"
+              style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}
+              title="이 분류 전용 페이지"
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              분류 페이지
+            </a>
           )}
         </div>
       </header>
@@ -138,12 +165,24 @@ export default function ArchiveListClient({
                   <div className="item-content">
                     <div className="title">{archive.title}</div>
                     <div className="meta">
-                      {archive.size ? formatSize(archive.size) : ""}
-                      {archive.size && archive.date ? " · " : ""}
-                      {archive.date || ""}
+                      {formatDate(archive.date)}
                     </div>
                   </div>
                 </Link>
+                <a
+                  href={`/archives/${archive.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="new-tab-btn"
+                  title="새 탭에서 열기"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                </a>
               </li>
             );
           })}
@@ -152,7 +191,8 @@ export default function ArchiveListClient({
 
       <footer className="archive-footer">
         324(dy) · claude Opus4.6 · Next.js · Firestore ·{" "}
-        <a href="/colophon">Colophon</a>
+        <a href="/colophon">Colophon</a> ·{" "}
+        <a href="/notes">개발노트</a>
       </footer>
     </div>
   );

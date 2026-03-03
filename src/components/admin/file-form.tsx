@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Archive, Category } from "@/lib/types";
-import { createArchive, updateArchive } from "@/app/admin/actions";
+import { createArchive, updateArchive, getArchiveContent } from "@/app/admin/actions";
 
 interface FileFormProps {
   archive: Archive | null;
@@ -24,11 +24,20 @@ export default function FileForm({
     archive?.categoryId ?? categories[0]?.id ?? ""
   );
   const [date, setDate] = useState(
-    archive?.date ?? new Date().toISOString().slice(0, 10)
+    archive?.date ?? new Date().toISOString().slice(0, 16)
   );
   const [contentHtml, setContentHtml] = useState(archive?.contentHtml ?? "");
   const [fileName, setFileName] = useState("");
   const [saving, setSaving] = useState(false);
+  const [htmlLoading, setHtmlLoading] = useState(isEdit);
+
+  useEffect(() => {
+    if (!isEdit || !archive) return;
+    getArchiveContent(archive.id).then((html) => {
+      setContentHtml(html);
+      setHtmlLoading(false);
+    });
+  }, []);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -44,6 +53,10 @@ export default function FileForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (htmlLoading) {
+      alert("콘텐츠를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
     if (!title.trim() || !slug.trim() || !contentHtml.trim()) {
       alert("제목, slug, HTML 콘텐츠는 필수입니다.");
       return;
@@ -119,14 +132,18 @@ export default function FileForm({
             </div>
             <div className="form-group" style={{ flex: 1 }}>
               <label className="form-label">날짜</label>
-              <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="form-input" />
+              <input type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} className="form-input" />
             </div>
           </div>
 
           {isEdit && (
             <div className="form-group">
               <label className="form-label">HTML 파일 교체 (선택)</label>
-              <input type="file" accept=".html,.htm" onChange={handleFileChange} className="form-file" />
+              {htmlLoading ? (
+                <p className="form-hint">콘텐츠 불러오는 중...</p>
+              ) : (
+                <input type="file" accept=".html,.htm" onChange={handleFileChange} className="form-file" />
+              )}
             </div>
           )}
 

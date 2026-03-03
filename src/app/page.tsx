@@ -1,14 +1,15 @@
 import { adminDb } from "@/lib/firebase/admin";
 import { ArchiveListItem, Category } from "@/lib/types";
 import ArchiveListClient from "@/components/archive-list-client";
+import { getSiteSettings } from "@/app/admin/actions";
 
 export const revalidate = 3600;
 
 async function getData() {
-  const [archivesSnap, categoriesSnap] = await Promise.all([
+  const [archivesSnap, categoriesSnap, settings] = await Promise.all([
     adminDb
       .collection("archives")
-      .orderBy("displayOrder")
+      .orderBy("date", "desc")
       .select(
         "slug",
         "title",
@@ -20,6 +21,7 @@ async function getData() {
       )
       .get(),
     adminDb.collection("categories").orderBy("displayOrder").get(),
+    getSiteSettings(),
   ]);
 
   const archives: ArchiveListItem[] = archivesSnap.docs.map((doc) => {
@@ -47,10 +49,17 @@ async function getData() {
     };
   });
 
-  return { archives, categories };
+  return { archives, categories, settings };
 }
 
 export default async function HomePage() {
-  const { archives, categories } = await getData();
-  return <ArchiveListClient archives={archives} categories={categories} />;
+  const { archives, categories, settings } = await getData();
+  return (
+    <ArchiveListClient
+      archives={archives}
+      categories={categories}
+      siteTitle={settings.archiveTitle}
+      siteSubtitle={settings.archiveSubtitle}
+    />
+  );
 }

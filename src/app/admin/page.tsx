@@ -5,21 +5,19 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { Archive, Category } from "@/lib/types";
 import FileList from "@/components/admin/file-list";
-import FileForm from "@/components/admin/file-form";
 import CategoryManager from "@/components/admin/category-manager";
+import SettingsPanel from "@/components/admin/settings-panel";
 import { getAdminData } from "./actions";
 
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"archives" | "categories">(
+  const [activeTab, setActiveTab] = useState<"archives" | "categories" | "settings">(
     "archives"
   );
   const [archives, setArchives] = useState<Archive[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingArchive, setEditingArchive] = useState<Archive | null>(null);
-  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -61,7 +59,7 @@ export default function AdminDashboard() {
       </header>
 
       <div className="admin-tabs">
-        {(["archives", "categories"] as const).map((tab) => (
+        {(["archives", "categories", "settings"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -69,7 +67,9 @@ export default function AdminDashboard() {
           >
             {tab === "archives"
               ? `Archives (${archives.length})`
-              : `Categories (${categories.length})`}
+              : tab === "categories"
+              ? `Categories (${categories.length})`
+              : "Settings"}
           </button>
         ))}
       </div>
@@ -80,40 +80,22 @@ export default function AdminDashboard() {
         <>
           <div className="admin-toolbar">
             <button
-              onClick={() => {
-                setEditingArchive(null);
-                setShowForm(true);
-              }}
+              onClick={() => router.push("/admin/edit/new")}
               className="admin-btn-primary"
             >
               + 새 문서
             </button>
           </div>
-
           <FileList
             archives={archives}
             categories={categories}
-            onEdit={(archive) => {
-              setEditingArchive(archive);
-              setShowForm(true);
-            }}
             onRefresh={fetchData}
           />
-
-          {showForm && (
-            <FileForm
-              archive={editingArchive}
-              categories={categories}
-              onClose={() => {
-                setShowForm(false);
-                setEditingArchive(null);
-              }}
-              onSaved={fetchData}
-            />
-          )}
         </>
-      ) : (
+      ) : activeTab === "categories" ? (
         <CategoryManager categories={categories} onRefresh={fetchData} />
+      ) : (
+        <SettingsPanel />
       )}
     </div>
   );

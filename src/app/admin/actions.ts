@@ -7,7 +7,11 @@ import { revalidatePath } from "next/cache";
 // ── READ ──────────────────────────────────────────
 export async function getAdminData() {
   const [archivesSnap, categoriesSnap] = await Promise.all([
-    adminDb.collection("archives").orderBy("displayOrder").get(),
+    adminDb
+      .collection("archives")
+      .orderBy("date", "desc")
+      .select("slug", "title", "categoryId", "fileExt", "size", "date", "displayOrder", "thumbnail")
+      .get(),
     adminDb.collection("categories").orderBy("displayOrder").get(),
   ]);
 
@@ -18,7 +22,7 @@ export async function getAdminData() {
       slug: d.slug ?? "",
       title: d.title ?? "",
       categoryId: d.categoryId ?? "",
-      contentHtml: d.contentHtml ?? "",
+      contentHtml: "",
       fileExt: d.fileExt ?? "html",
       size: d.size ?? 0,
       date: d.date ?? "",
@@ -41,6 +45,11 @@ export async function getAdminData() {
   });
 
   return { archives, categories };
+}
+
+export async function getArchiveContent(id: string): Promise<string> {
+  const doc = await adminDb.collection("archives").doc(id).get();
+  return (doc.data()?.contentHtml as string) ?? "";
 }
 
 // ── ARCHIVE WRITE ──────────────────────────────────
@@ -151,4 +160,31 @@ export async function reorderCategories(
   batch.update(adminDb.collection("categories").doc(id2), { displayOrder: order1 });
   await batch.commit();
   revalidatePath("/");
+}
+
+// ── SITE SETTINGS ───────────────────────────────────
+export interface SiteSettings {
+  archiveTitle: string;
+  archiveSubtitle: string;
+  headCode: string;
+  bodyCode: string;
+}
+
+const SETTINGS_DOC = "main";
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const doc = await adminDb.collection("settings").doc(SETTINGS_DOC).get();
+  const d = doc.data() ?? {};
+  return {
+    archiveTitle: d.archiveTitle ?? "324 Lecture & Study Archives",
+    archiveSubtitle: d.archiveSubtitle ?? "324가 보고 듣고 경험한 타인의 언어와 연구 아카이브",
+    headCode: d.headCode ?? "",
+    bodyCode: d.bodyCode ?? "",
+  };
+}
+
+export async function updateSiteSettings(data: SiteSettings) {
+  await adminDb.collection("settings").doc(SETTINGS_DOC).set(data, { merge: true });
+  revalidatePath("/");
+  revalidatePath("/archives/[slug]");
 }
