@@ -77,7 +77,7 @@ export async function createArchive(data: {
     updatedAt: FieldValue.serverTimestamp(),
   });
   revalidatePath("/");
-  revalidatePath(`/archives/${data.slug}`);
+  revalidatePath("/archives/[slug]", "page");
 }
 
 export async function updateArchive(
@@ -99,15 +99,13 @@ export async function updateArchive(
       updatedAt: FieldValue.serverTimestamp(),
     });
   revalidatePath("/");
-  revalidatePath(`/archives/${data.slug}`);
+  revalidatePath("/archives/[slug]", "page");
 }
 
 export async function deleteArchive(id: string) {
-  const doc = await adminDb.collection("archives").doc(id).get();
-  const slug = doc.data()?.slug as string | undefined;
   await adminDb.collection("archives").doc(id).delete();
   revalidatePath("/");
-  if (slug) revalidatePath(`/archives/${slug}`);
+  revalidatePath("/archives/[slug]", "page");
 }
 
 export async function reorderArchives(
@@ -153,6 +151,51 @@ export async function updateCategory(
   revalidatePath("/");
 }
 
+export async function renameCategoryId(
+  oldId: string,
+  newId: string,
+  label: string,
+  color: string
+) {
+  // Validate new ID
+  if (!newId || !/^[a-zA-Z0-9_-]+$/.test(newId)) {
+    throw new Error("ID는 영문·숫자·-·_ 만 사용 가능합니다.");
+  }
+
+  // Check if new ID already exists
+  const newDoc = await adminDb.collection("categories").doc(newId).get();
+  if (newDoc.exists) throw new Error(`"${newId}" ID가 이미 존재합니다.`);
+
+  // Get old doc data
+  const oldDoc = await adminDb.collection("categories").doc(oldId).get();
+  if (!oldDoc.exists) throw new Error("카테고리를 찾을 수 없습니다.");
+  const oldData = oldDoc.data()!;
+
+  // 1. Create new doc with new ID
+  await adminDb.collection("categories").doc(newId).set({
+    label,
+    color,
+    displayOrder: oldData.displayOrder ?? 0,
+    createdAt: oldData.createdAt,
+  });
+
+  // 2. Migrate archives + delete old doc in batch
+  const archivesSnap = await adminDb
+    .collection("archives")
+    .where("categoryId", "==", oldId)
+    .get();
+
+  const batch = adminDb.batch();
+  archivesSnap.docs.forEach((doc) => {
+    batch.update(doc.ref, { categoryId: newId });
+  });
+  batch.delete(adminDb.collection("categories").doc(oldId));
+  await batch.commit();
+
+  revalidatePath("/");
+  revalidatePath("/archives/[slug]", "page");
+}
+
 export async function deleteCategory(id: string) {
   await adminDb.collection("categories").doc(id).delete();
   revalidatePath("/");
@@ -195,5 +238,5 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 export async function updateSiteSettings(data: SiteSettings) {
   await adminDb.collection("settings").doc(SETTINGS_DOC).set(data, { merge: true });
   revalidatePath("/");
-  revalidatePath("/archives/[slug]");
+  revalidatePath("/archives/[slug]", "page");
 }

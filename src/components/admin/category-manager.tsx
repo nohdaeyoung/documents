@@ -7,6 +7,7 @@ import {
   updateCategory,
   deleteCategory,
   reorderCategories,
+  renameCategoryId,
 } from "@/app/admin/actions";
 
 const DEFAULT_COLORS = [
@@ -24,6 +25,7 @@ export default function CategoryManager({ categories, archives, onRefresh }: Cat
   const [editingId, setEditingId] = useState<string | null>(null);
   const [label, setLabel] = useState("");
   const [color, setColor] = useState(DEFAULT_COLORS[0]);
+  const [editNewId, setEditNewId] = useState(""); // editable ID for existing category
   const [customId, setCustomId] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -44,12 +46,14 @@ export default function CategoryManager({ categories, archives, onRefresh }: Cat
     setEditingId(cat.id);
     setLabel(cat.label);
     setColor(cat.color);
+    setEditNewId(cat.id);
   }
 
   function cancelEdit() {
     setEditingId(null);
     setLabel("");
     setColor(DEFAULT_COLORS[0]);
+    setEditNewId("");
     setCustomId("");
     setShowAdd(false);
   }
@@ -59,7 +63,18 @@ export default function CategoryManager({ categories, archives, onRefresh }: Cat
     setSaving(true);
     try {
       if (editingId) {
-        await updateCategory(editingId, { label: label.trim(), color });
+        const trimmedNewId = editNewId.trim();
+        if (trimmedNewId && trimmedNewId !== editingId) {
+          // ID changed: rename/migrate
+          const count = archiveCounts[editingId] ?? 0;
+          const confirmed = count === 0 || window.confirm(
+            `ID를 "${editingId}" → "${trimmedNewId}"로 변경하면 관련 아카이브 ${count}개도 업데이트됩니다. 계속할까요?`
+          );
+          if (!confirmed) { setSaving(false); return; }
+          await renameCategoryId(editingId, trimmedNewId, label.trim(), color);
+        } else {
+          await updateCategory(editingId, { label: label.trim(), color });
+        }
       } else {
         await createCategory({
           label: label.trim(),
@@ -72,7 +87,7 @@ export default function CategoryManager({ categories, archives, onRefresh }: Cat
       await onRefresh();
     } catch (err) {
       console.error("Save category failed:", err);
-      alert("저장에 실패했습니다.");
+      alert(err instanceof Error ? err.message : "저장에 실패했습니다.");
     } finally {
       setSaving(false);
     }
@@ -140,25 +155,37 @@ export default function CategoryManager({ categories, archives, onRefresh }: Cat
                     className="form-input"
                     style={{ flex: 1, minWidth: "120px" }}
                     autoFocus
+                    placeholder="카테고리 이름"
                   />
-                  <span
-                    title="Firestore 문서 ID는 변경할 수 없습니다."
-                    style={{
-                      fontSize: "0.75rem",
-                      color: "var(--muted)",
-                      background: "var(--bg-subtle, rgba(0,0,0,0.04))",
-                      padding: "4px 8px",
-                      borderRadius: "4px",
-                      border: "1px solid var(--border)",
-                      whiteSpace: "nowrap",
-                      cursor: "help",
-                    }}
-                  >
-                    ID: {cat.id}
-                  </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                    <span style={{ fontSize: "0.75rem", color: "var(--muted)", whiteSpace: "nowrap" }}>ID:</span>
+                    <input
+                      type="text"
+                      value={editNewId}
+                      onChange={(e) => setEditNewId(e.target.value.replace(/[^a-zA-Z0-9_-]/g, ""))}
+                      className="form-input"
+                      style={{
+                        width: "120px",
+                        fontFamily: "monospace",
+                        fontSize: "0.8rem",
+                        borderColor: editNewId !== cat.id ? "var(--accent, #f59e0b)" : undefined,
+                      }}
+                      title="영문·숫자·-·_ 만 사용 가능. 변경 시 관련 아카이브도 업데이트됩니다."
+                    />
+                    {editNewId !== cat.id && editNewId.trim() && (
+                      <span style={{ fontSize: "0.72rem", color: "var(--accent, #f59e0b)", whiteSpace: "nowrap" }}>
+                        ⚠ 변경됨
+                      </span>
+                    )}
+                  </div>
                   <button onClick={handleSave} disabled={saving} className="admin-action-btn">저장</button>
                   <button onClick={cancelEdit} className="admin-action-btn muted">취소</button>
                 </div>
+                {editNewId !== cat.id && editNewId.trim() && (
+                  <p style={{ fontSize: "0.72rem", color: "var(--muted)", margin: 0 }}>
+                    ⚠ ID 변경 시 아카이브 {archiveCounts[cat.id] ?? 0}개의 categoryId가 자동 업데이트됩니다.
+                  </p>
+                )}
               </div>
             ) : (
               /* ── Display row ── */

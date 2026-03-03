@@ -31,7 +31,7 @@ export default function ArchiveViewer({
       srcDoc={contentHtml}
       title={title}
       style={{ position: "fixed", inset: 0, width: "100%", height: "100%", border: "none" }}
-      sandbox="allow-scripts allow-same-origin allow-popups"
+      sandbox="allow-scripts allow-popups"
     />
   );
 }
