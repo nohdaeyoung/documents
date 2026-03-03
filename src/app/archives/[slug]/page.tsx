@@ -72,13 +72,29 @@ export default async function ArchivePage({
     const a = e.target.closest('a');
     if (!a) return;
     const rawHref = a.getAttribute('href') || '';
-    // Skip anchor-only links (TOC / in-page navigation)
-    // rawHref check: catches href="#section" before browser resolves it
-    if (rawHref.startsWith('#')) return;
-    // resolved href check: srcdoc+allow-same-origin inherits parent baseURI,
-    // so href="#section" resolves to "https://d.324.ing/archives/slug#section"
-    // — skip any resolved href that contains a fragment (#)
-    if (a.href.includes('#')) return;
+
+    // ── In-page anchor links (TOC navigation) ──────────────────
+    // srcdoc+allow-same-origin inherits parent baseURI, so clicking
+    // href="#section" would cause the iframe to navigate (reload) to
+    // "https://d.324.ing/archives/slug#section" instead of scrolling.
+    // Fix: preventDefault + manual scrollIntoView.
+    if (rawHref.startsWith('#')) {
+      e.preventDefault();
+      const id = rawHref.slice(1);
+      const target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    // Also handle resolved hrefs that contain a fragment
+    if (a.href.includes('#')) {
+      e.preventDefault();
+      const hash = a.href.split('#')[1];
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    // ── Back-navigation to archives main page ───────────────────
     if (a.href.includes('/documents') || a.href.includes('d.324.ing') || a.href.includes('doc.324.ing')) {
       e.preventDefault();
       parent.postMessage({ type: 'navigate', url: '/' }, '*');
