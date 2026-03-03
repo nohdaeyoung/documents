@@ -77,6 +77,7 @@ export async function createArchive(data: {
     updatedAt: FieldValue.serverTimestamp(),
   });
   revalidatePath("/");
+  revalidatePath(`/archives/${encodeURIComponent(data.slug)}`);
   revalidatePath("/archives/[slug]", "page");
 }
 
@@ -99,6 +100,7 @@ export async function updateArchive(
       updatedAt: FieldValue.serverTimestamp(),
     });
   revalidatePath("/");
+  revalidatePath(`/archives/${encodeURIComponent(data.slug)}`);
   revalidatePath("/archives/[slug]", "page");
 }
 
