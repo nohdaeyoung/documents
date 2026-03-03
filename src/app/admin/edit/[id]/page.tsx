@@ -53,14 +53,14 @@ export default function EditArchivePage() {
     if (!user) return;
     const load = async () => {
       const adminData = await getAdminData();
-      const cats = adminData.categories as Category[];
+      const cats = adminData.categories as unknown as Category[];
       setCategories(cats);
       if (cats.length > 0) setCategoryId(cats[0].id);
 
       if (!isNew) {
         const [arch, html] = await Promise.all([
           Promise.resolve(
-            adminData.archives.find((a) => a.id === rawId) as Archive | undefined
+            adminData.archives.find((a) => a.id === rawId) as unknown as Archive | undefined
           ),
           getArchiveContent(rawId),
         ]);
