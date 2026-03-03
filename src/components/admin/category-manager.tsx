@@ -23,6 +23,7 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
   const [editingId, setEditingId] = useState<string | null>(null);
   const [label, setLabel] = useState("");
   const [color, setColor] = useState(DEFAULT_COLORS[0]);
+  const [customId, setCustomId] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [saving, setSaving] = useState(false);
   const [reordering, setReordering] = useState(false);
@@ -38,6 +39,7 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
     setEditingId(null);
     setLabel("");
     setColor(DEFAULT_COLORS[0]);
+    setCustomId("");
     setShowAdd(false);
   }
 
@@ -52,6 +54,7 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
           label: label.trim(),
           color,
           displayOrder: categories.length,
+          id: customId.trim() || undefined,
         });
       }
       cancelEdit();
@@ -148,14 +151,34 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
       {showAdd && (
         <div className="admin-add-form">
           <h3 style={{ fontSize: "0.9rem", fontWeight: 500, marginBottom: "12px" }}>새 카테고리</h3>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
             <input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="color-picker" />
-            <input type="text" value={label} onChange={(e) => setLabel(e.target.value)} placeholder="카테고리 이름" className="form-input" style={{ flex: 1 }} autoFocus />
+            <input
+              type="text"
+              value={label}
+              onChange={(e) => setLabel(e.target.value)}
+              placeholder="카테고리 이름 *"
+              className="form-input"
+              style={{ flex: 1, minWidth: "120px" }}
+              autoFocus
+            />
+            <input
+              type="text"
+              value={customId}
+              onChange={(e) => setCustomId(e.target.value.replace(/[^a-zA-Z0-9_-]/g, ""))}
+              placeholder="ID (선택, 예: talk)"
+              className="form-input"
+              style={{ width: "150px" }}
+              title="영문·숫자·-·_ 만 사용 가능. 비우면 자동 생성됩니다."
+            />
             <button onClick={handleSave} disabled={saving || !label.trim()} className="admin-btn-primary">
               {saving ? "..." : "추가"}
             </button>
             <button onClick={cancelEdit} className="admin-action-btn muted">취소</button>
           </div>
+          <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "6px" }}>
+            * ID는 URL에 사용됩니다 (예: /category/talk). 비우면 자동 생성됩니다.
+          </p>
         </div>
       )}
     </div>

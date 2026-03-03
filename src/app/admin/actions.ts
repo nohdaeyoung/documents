@@ -128,11 +128,20 @@ export async function createCategory(data: {
   label: string;
   color: string;
   displayOrder: number;
+  id?: string; // optional custom Firestore document ID
 }) {
-  await adminDb.collection("categories").add({
-    ...data,
-    createdAt: FieldValue.serverTimestamp(),
-  });
+  const { id, ...rest } = data;
+  if (id) {
+    await adminDb.collection("categories").doc(id).set({
+      ...rest,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+  } else {
+    await adminDb.collection("categories").add({
+      ...rest,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+  }
   revalidatePath("/");
 }
 

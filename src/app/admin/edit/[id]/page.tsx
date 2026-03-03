@@ -102,16 +102,19 @@ export default function EditArchivePage() {
   }, [contentHtml]);
 
   // Pull HTML from wysiwyg iframe back to source
-  const pullFromWysiwyg = useCallback(() => {
+  // Returns the extracted HTML string so handleSave can use it synchronously
+  const pullFromWysiwyg = useCallback((): string | null => {
     const iframe = wysiwygRef.current;
-    if (!iframe) return;
+    if (!iframe) return null;
     try {
       const doc = iframe.contentDocument;
       if (doc) {
-        const html = doc.documentElement.outerHTML;
-        setContentHtml("<!DOCTYPE html>\n" + html);
+        const html = "<!DOCTYPE html>\n" + doc.documentElement.outerHTML;
+        setContentHtml(html);
+        return html;
       }
     } catch (_) {}
+    return null;
   }, []);
 
   function handleTabChange(tab: EditorTab) {
@@ -147,10 +150,14 @@ export default function EditArchivePage() {
   }
 
   async function handleSave() {
-    // Pull wysiwyg content if active
-    if (activeTab === "wysiwyg") pullFromWysiwyg();
+    // Pull wysiwyg content synchronously before saving
+    let finalHtml = contentHtml;
+    if (activeTab === "wysiwyg") {
+      const pulled = pullFromWysiwyg();
+      if (pulled !== null) finalHtml = pulled;
+    }
 
-    if (!title.trim() || !slug.trim() || !contentHtml.trim()) {
+    if (!title.trim() || !slug.trim() || !finalHtml.trim()) {
       alert("제목, slug, HTML 콘텐츠는 필수입니다.");
       return;
     }
@@ -161,7 +168,7 @@ export default function EditArchivePage() {
           title: title.trim(),
           slug: slug.trim(),
           categoryId,
-          contentHtml,
+          contentHtml: finalHtml,
           date,
         });
       } else {
@@ -169,7 +176,7 @@ export default function EditArchivePage() {
           title: title.trim(),
           slug: slug.trim(),
           categoryId,
-          contentHtml,
+          contentHtml: finalHtml,
           date,
         });
       }

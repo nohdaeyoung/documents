@@ -70,7 +70,11 @@ export default async function ArchivePage({
 <script>
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a');
-    if (a && (a.href.includes('/documents') || a.href.includes('d.324.ing') || a.href.includes('doc.324.ing'))) {
+    if (!a) return;
+    // Skip anchor-only links (TOC / in-page navigation)
+    const rawHref = a.getAttribute('href') || '';
+    if (rawHref.startsWith('#')) return;
+    if (a.href.includes('/documents') || a.href.includes('d.324.ing') || a.href.includes('doc.324.ing')) {
       e.preventDefault();
       parent.postMessage({ type: 'navigate', url: '/' }, '*');
     }
