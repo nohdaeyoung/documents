@@ -10,7 +10,6 @@ async function getData(categoryId: string) {
     adminDb
       .collection("archives")
       .where("categoryId", "==", categoryId)
-      .orderBy("date", "desc")
       .select("slug", "title", "categoryId", "date", "displayOrder")
       .get(),
     adminDb.collection("categories").doc(categoryId).get(),
@@ -24,15 +23,17 @@ async function getData(categoryId: string) {
     color: categorySnap.data()?.color ?? "#888",
   };
 
-  const archives = archivesSnap.docs.map((doc) => {
-    const d = doc.data();
-    return {
-      id: doc.id,
-      slug: d.slug ?? "",
-      title: d.title ?? "",
-      date: d.date ?? "",
-    };
-  });
+  const archives = archivesSnap.docs
+    .map((doc) => {
+      const d = doc.data();
+      return {
+        id: doc.id,
+        slug: d.slug ?? "",
+        title: d.title ?? "",
+        date: d.date ?? "",
+      };
+    })
+    .sort((a, b) => b.date.localeCompare(a.date)); // date desc (JS-side, no composite index needed)
 
   return { category, archives };
 }
