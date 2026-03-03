@@ -93,7 +93,7 @@ export default function AdminDashboard() {
           />
         </>
       ) : activeTab === "categories" ? (
-        <CategoryManager categories={categories} onRefresh={fetchData} />
+        <CategoryManager categories={categories} archives={archives} onRefresh={fetchData} />
       ) : (
         <SettingsPanel />
       )}

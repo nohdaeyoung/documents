@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Category } from "@/lib/types";
+import { useState, useMemo } from "react";
+import { Archive, Category } from "@/lib/types";
 import {
   createCategory,
   updateCategory,
@@ -16,10 +16,11 @@ const DEFAULT_COLORS = [
 
 interface CategoryManagerProps {
   categories: Category[];
+  archives: Archive[];
   onRefresh: () => Promise<void>;
 }
 
-export default function CategoryManager({ categories, onRefresh }: CategoryManagerProps) {
+export default function CategoryManager({ categories, archives, onRefresh }: CategoryManagerProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [label, setLabel] = useState("");
   const [color, setColor] = useState(DEFAULT_COLORS[0]);
@@ -28,6 +29,16 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
   const [saving, setSaving] = useState(false);
   const [reordering, setReordering] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+
+  // Compute archive count per category
+  const archiveCounts = useMemo(() => {
+    return archives.reduce((acc, archive) => {
+      if (archive.categoryId) {
+        acc[archive.categoryId] = (acc[archive.categoryId] || 0) + 1;
+      }
+      return acc;
+    }, {} as Record<string, number>);
+  }, [archives]);
 
   function startEdit(cat: Category) {
     setEditingId(cat.id);
@@ -118,20 +129,74 @@ export default function CategoryManager({ categories, onRefresh }: CategoryManag
             </div>
 
             {editingId === cat.id ? (
-              <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "8px" }}>
-                <input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="color-picker" />
-                <input type="text" value={label} onChange={(e) => setLabel(e.target.value)} className="form-input" style={{ flex: 1 }} autoFocus />
-                <button onClick={handleSave} disabled={saving} className="admin-action-btn">저장</button>
-                <button onClick={cancelEdit} className="admin-action-btn muted">취소</button>
+              /* ── Edit form ── */
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                  <input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="color-picker" />
+                  <input
+                    type="text"
+                    value={label}
+                    onChange={(e) => setLabel(e.target.value)}
+                    className="form-input"
+                    style={{ flex: 1, minWidth: "120px" }}
+                    autoFocus
+                  />
+                  <span
+                    title="Firestore 문서 ID는 변경할 수 없습니다."
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "var(--muted)",
+                      background: "var(--bg-subtle, rgba(0,0,0,0.04))",
+                      padding: "4px 8px",
+                      borderRadius: "4px",
+                      border: "1px solid var(--border)",
+                      whiteSpace: "nowrap",
+                      cursor: "help",
+                    }}
+                  >
+                    ID: {cat.id}
+                  </span>
+                  <button onClick={handleSave} disabled={saving} className="admin-action-btn">저장</button>
+                  <button onClick={cancelEdit} className="admin-action-btn muted">취소</button>
+                </div>
               </div>
             ) : (
+              /* ── Display row ── */
               <>
-                <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "8px" }}>
-                  <span className="cat-dot" style={{ backgroundColor: cat.color }} />
-                  <span style={{ fontSize: "0.9rem" }}>{cat.label}</span>
+                <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
+                  <span className="cat-dot" style={{ backgroundColor: cat.color, flexShrink: 0 }} />
+                  <span style={{ fontSize: "0.9rem", fontWeight: 500 }}>{cat.label}</span>
                   <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>({cat.id})</span>
+                  <span
+                    style={{
+                      fontSize: "0.72rem",
+                      color: "var(--muted)",
+                      background: "var(--bg-subtle, rgba(0,0,0,0.04))",
+                      padding: "2px 6px",
+                      borderRadius: "10px",
+                      border: "1px solid var(--border)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {archiveCounts[cat.id] ?? 0}개
+                  </span>
+                  <a
+                    href={`/category/${cat.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="카테고리 페이지 열기"
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "var(--accent)",
+                      textDecoration: "none",
+                      flexShrink: 0,
+                      opacity: 0.7,
+                    }}
+                  >
+                    ↗
+                  </a>
                 </div>
-                <div style={{ display: "flex", gap: "8px" }}>
+                <div style={{ display: "flex", gap: "8px", flexShrink: 0 }}>
                   <button onClick={() => startEdit(cat)} className="admin-action-btn">수정</button>
                   {confirmDeleteId === cat.id ? (
                     <>
