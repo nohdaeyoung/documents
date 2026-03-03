@@ -71,9 +71,14 @@ export default async function ArchivePage({
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a');
     if (!a) return;
-    // Skip anchor-only links (TOC / in-page navigation)
     const rawHref = a.getAttribute('href') || '';
+    // Skip anchor-only links (TOC / in-page navigation)
+    // rawHref check: catches href="#section" before browser resolves it
     if (rawHref.startsWith('#')) return;
+    // resolved href check: srcdoc+allow-same-origin inherits parent baseURI,
+    // so href="#section" resolves to "https://d.324.ing/archives/slug#section"
+    // — skip any resolved href that contains a fragment (#)
+    if (a.href.includes('#')) return;
     if (a.href.includes('/documents') || a.href.includes('d.324.ing') || a.href.includes('doc.324.ing')) {
       e.preventDefault();
       parent.postMessage({ type: 'navigate', url: '/' }, '*');
