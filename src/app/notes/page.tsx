@@ -8,15 +8,15 @@ export const metadata: Metadata = {
 const entries = [
   {
     date: "2026-03-04",
-    title: "버그 수정 3종 · 카테고리 ID 마이그레이션 · 캐시 전략 개선",
+    title: "콘텐츠 영역 확장 · 버그 수정 3종 · 카테고리 ID 마이그레이션",
     items: [
+      "콘텐츠 영역 max-width 792px → 1000px 확장 — archive, colophon, notes, category 4개 컨테이너 일괄 적용",
       "TOC 앵커 첫 클릭 새로고침 버그 수정 — iframe sandbox에서 allow-same-origin 제거, srcdoc이 부모 baseURI를 상속하지 않아 #anchor 클릭이 네이티브 스크롤로 처리됨",
       "아티클 저장 후 내용 미반영 수정 — revalidatePath를 encodeURIComponent(slug) 방식으로 개선해 한글 슬러그 캐시 키 불일치 해소, /archives/[slug] 페이지 ISR 타이머 제거 후 온디맨드 무효화로 전환",
       "카테고리 ID 수정 가능 — 편집 폼에 ID 입력 필드 추가, 변경 시 renameCategoryId 서버 액션으로 새 doc 생성 → archives.categoryId 일괄 마이그레이션 → 기존 doc 삭제 (Firestore batch 원자적 처리)",
       "카테고리 관리자 UX 개선 — 아카이브 수 배지(useMemo 계산), ↗ 카테고리 페이지 바로가기 링크, ID 변경 시 노란 경고 표시 및 영향 아카이브 수 안내",
-      "PDCA 갭 분석 재실행 — 5개 변경사항 전부 검증, 전체 매치율 92% → 93% 상승",
     ],
-    tags: ["Bugfix", "Admin", "Performance"],
+    tags: ["UI", "Bugfix", "Admin"],
   },
   {
     date: "2026-03-03",
