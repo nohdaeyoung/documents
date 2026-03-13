@@ -12,9 +12,15 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
+  signInWithPopup,
+  linkWithPopup,
+  unlink,
+  GoogleAuthProvider,
   User,
 } from "firebase/auth";
 import { auth } from "./config";
+
+const googleProvider = new GoogleAuthProvider();
 
 interface AuthContextType {
   user: User | null;
@@ -55,4 +61,18 @@ export async function signIn(email: string, password: string) {
 
 export async function signOut() {
   return firebaseSignOut(auth);
+}
+
+export async function signInWithGoogle() {
+  return signInWithPopup(auth, googleProvider);
+}
+
+export async function linkGoogleAccount() {
+  if (!auth.currentUser) throw new Error("로그인이 필요합니다.");
+  return linkWithPopup(auth.currentUser, googleProvider);
+}
+
+export async function unlinkGoogleAccount() {
+  if (!auth.currentUser) throw new Error("로그인이 필요합니다.");
+  return unlink(auth.currentUser, GoogleAuthProvider.PROVIDER_ID);
 }
