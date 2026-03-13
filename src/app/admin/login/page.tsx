@@ -25,8 +25,17 @@ export default function LoginPage() {
     try {
       await signInWithGoogle();
       router.push("/admin");
-    } catch {
-      setError("Google 로그인에 실패했습니다.");
+    } catch (err: unknown) {
+      const code = (err as { code?: string })?.code ?? "";
+      if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") {
+        // 사용자가 팝업을 닫은 경우 — 에러 표시 안 함
+      } else if (code === "auth/unauthorized-domain") {
+        setError("이 도메인은 Firebase에서 허용되지 않습니다. Firebase Console → Authentication → Settings → 승인된 도메인에 추가하세요.");
+      } else if (code === "auth/operation-not-allowed") {
+        setError("Google 로그인이 비활성화되어 있습니다. Firebase Console → Authentication → Sign-in method에서 Google을 활성화하세요.");
+      } else {
+        setError(`Google 로그인 실패: ${code || String(err)}`);
+      }
     } finally {
       setLoading(false);
     }
