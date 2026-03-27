@@ -103,7 +103,7 @@ export default function ArchiveViewer({
                 title={prev?.title}
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  width: 28, height: 28, borderRadius: 4,
+                  width: 44, height: 44, borderRadius: 4,
                   color: prev ? "#1a1a18" : "#c8c4bc",
                   pointerEvents: prev ? "auto" : "none",
                   textDecoration: "none",
@@ -120,7 +120,7 @@ export default function ArchiveViewer({
                 title={next?.title}
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  width: 28, height: 28, borderRadius: 4,
+                  width: 44, height: 44, borderRadius: 4,
                   color: next ? "#1a1a18" : "#c8c4bc",
                   pointerEvents: next ? "auto" : "none",
                   textDecoration: "none",
