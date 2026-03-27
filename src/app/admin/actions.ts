@@ -3,6 +3,7 @@
 import { adminDb } from "@/lib/firebase/admin";
 import { FieldValue } from "firebase-admin/firestore";
 import { revalidatePath } from "next/cache";
+import { sendNewArchiveNotification } from "@/lib/email";
 
 // ── READ ──────────────────────────────────────────
 export async function getAdminData() {
@@ -79,6 +80,17 @@ export async function createArchive(data: {
   revalidatePath("/");
   revalidatePath(`/archives/${encodeURIComponent(data.slug)}`);
   revalidatePath("/archives/[slug]", "page");
+
+  // Send email notification (non-blocking)
+  adminDb.collection("categories").doc(data.categoryId).get().then((catDoc) => {
+    const categoryLabel = catDoc.data()?.label ?? data.categoryId;
+    sendNewArchiveNotification({
+      title: data.title,
+      categoryLabel,
+      date: data.date,
+      slug: data.slug,
+    }).catch((err) => console.error("Notification email failed:", err));
+  }).catch(() => {});
 }
 
 export async function updateArchive(
@@ -214,6 +226,28 @@ export async function reorderCategories(
   batch.update(adminDb.collection("categories").doc(id2), { displayOrder: order1 });
   await batch.commit();
   revalidatePath("/");
+}
+
+// ── SUBSCRIBERS ─────────────────────────────────────
+export async function getSubscribers() {
+  const snap = await adminDb
+    .collection("subscribers")
+    .orderBy("subscribedAt", "desc")
+    .get();
+  return snap.docs.map((doc) => {
+    const d = doc.data();
+    const ts = d.subscribedAt?.toDate?.();
+    return {
+      id: doc.id,
+      email: d.email as string,
+      active: d.active as boolean,
+      subscribedAt: ts ? ts.toISOString().slice(0, 10) : "",
+    };
+  });
+}
+
+export async function deleteSubscriber(id: string) {
+  await adminDb.collection("subscribers").doc(id).delete();
 }
 
 // ── SITE SETTINGS ───────────────────────────────────

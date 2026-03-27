@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김영하 — 당신은 이미 한 편의 소설이다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f2eb;
+  --bg-warm: #f0e9dd;
+  --bg-card: #fffcf6;
+  --text: #2a2018;
+  --text-sub: #6d5f50;
+  --text-dim: #a89b8a;
+  --accent: #b85a2b;
+  --accent-soft: rgba(184,90,43,0.1);
+  --sepia: #8c7560;
+  --line: rgba(42,32,24,0.08);
+  --line-warm: rgba(184,90,43,0.2);
+  --film-border: #d9d0c3;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Noto Sans KR', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1.0rem;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(246,242,235,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav a {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-sub);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.nav a:hover { color: var(--accent); }
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 100px clamp(24px, 6vw, 80px) 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 70vw; height: 70vw;
+  background: radial-gradient(circle, rgba(255,210,140,0.18) 0%, rgba(255,180,100,0.06) 40%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -10%; left: -15%;
+  width: 50vw; height: 50vw;
+  background: radial-gradient(circle, rgba(184,90,43,0.06) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 2; max-width: 600px; }
+.film-frame {
+  display: inline-block;
+  padding: 14px 14px 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--film-border);
+  box-shadow: 0 2px 20px rgba(42,32,24,0.06), 0 0 0 1px rgba(255,255,255,0.5) inset;
+  margin-bottom: 36px;
+  transform: rotate(-1.2deg);
+  position: relative;
+}
+.film-inner {
+  width: 200px; height: 130px;
+  background: var(--bg-warm);
+  border: 1px solid rgba(42,32,24,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.film-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,220,160,0.3) 0%, rgba(240,200,150,0.1) 40%, rgba(200,170,130,0.15) 100%);
+}
+.film-inner::after {
+  content: '';
+  position: absolute;
+  top: 15%; left: 20%;
+  width: 60%; height: 50%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.film-text {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--sepia);
+  letter-spacing: 0.1em;
+  z-index: 1;
+  opacity: 0.6;
+}
+.film-stamp {
+  position: absolute;
+  bottom: 10px; right: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5.5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--accent);
+  position: relative;
+}
+.hero-title em::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 2px;
+  width: 100%; height: 6px;
+  background: var(--accent-soft);
+  z-index: -1;
+}
+.hero-sub {
+  font-size: 0.96rem;
+  color: var(--text-sub);
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+.container {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.chapter {
+  padding: 72px 0;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.chapter.visible { opacity: 1; transform: translateY(0); }
+.chapter-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.chapter-num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.chapter-line { flex: 1; height: 1px; background: var(--line-warm); }
+.chapter-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 28px;
+}
+.chapter p { margin-bottom: 1.35em; font-weight: 300; }
+.voice {
+  position: relative;
+  margin: 36px 0;
+  padding: 24px 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--film-border);
+  border-radius: 2px;
+  box-shadow: 0 1px 8px rgba(42,32,24,0.04);
+}
+.voice::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 24px;
+  width: 40px; height: 3px;
+  background: var(--accent);
+  border-radius: 0 0 2px 2px;
+}
+.voice p {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.82;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.voice .voice-attr {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--text-dim);
+  margin-top: 12px;
+  display: block;
+}
+.divider {
+  text-align: center;
+  padding: 32px 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5em;
+}
+.aside-box {
+  margin: 36px 0;
+  padding: 22px 24px;
+  background: var(--accent-soft);
+  border-radius: 4px;
+  border-left: 3px solid var(--accent);
+}
+.aside-box .aside-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.aside-box p { font-size: 0.88rem; color: var(--text-sub); line-height: 1.72; margin-bottom: 0; }
+.keyline { margin: 52px 0; text-align: center; padding: 0 16px; }
+.keyline p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.6;
+}
+.keyline .kl-mark { display: block; width: 28px; height: 2px; background: var(--accent); margin: 14px auto 0; }
+
+.closing { padding: 80px 0 60px; text-align: center; }
+.closing-symbol { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.8em; margin-bottom: 36px; }
+.closing-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 3.2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.55;
+  max-width: 520px;
+  margin: 0 auto 20px;
+}
+.closing-attr { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-dim); letter-spacing: 0.06em; }
+.closing-note {
+  margin-top: 48px;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  line-height: 1.72;
+  max-width: 440px;
+  margin-left: auto; margin-right: auto;
+}
+.scroll-top {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 38px; height: 38px;
+  background: var(--bg-card);
+  border: 1px solid var(--film-border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0;
+  transition: opacity 0.3s, background 0.2s;
+  z-index: 90;
+  box-shadow: 0 2px 10px rgba(42,32,24,0.08);
+}
+.scroll-top.show { opacity: 1; }
+.scroll-top:hover { background: var(--accent); border-color: var(--accent); }
+.scroll-top svg { color: var(--text-sub); }
+.scroll-top:hover svg { color: #fff; }
+@media (max-width: 640px) {
+  .hero { padding: 100px 24px 60px; }
+  .film-frame { padding: 10px 10px 26px; }
+  .film-inner { width: 160px; height: 105px; }
+  .chapter { padding: 52px 0; }
+  .voice { padding: 20px 20px; }
+  .aside-box { padding: 18px 20px; }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="https://d.324.ing">← Archives</a>
+  <a href="#">324.ing</a>
+</nav>
+<section class="hero">
+  <div class="hero-content">
+    <div class="film-frame">
+      <div class="film-inner">
+        <span class="film-text">2023 / 04 / 23</span>
+      </div>
+      <span class="film-stamp">KODAK 200 &nbsp; 21A</span>
+    </div>
+    <div class="hero-meta">소설가 김영하 · 강연 45분 · 성수동</div>
+    <h1 class="hero-title">당신은 이미<br>한 편의 <em>소설</em>이다</h1>
+    <p class="hero-sub">선택, 이야기, 그리고 우리 안에서 작동하는<br>보이지 않는 프로그램에 대하여</p>
+  </div>
+</section>
+<main class="container">
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="chapter-num">Chapter 01</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">때려치기 전문가</h2>
+    <p>김영하는 ROTC를 그만뒀다. 경영학과를 다니다가 작가가 됐다. 국립대학 교수직을 2년 반 만에 내려놨다. 그의 인생에서 반복되는 패턴이 있다면, 그것은 성공이 아니라 이탈이다.</p>
+    <p>연세대학교 경영학과. 학군단. 장교 임관. 모든 것이 정해진 순서대로 진행되고 있었다. 아무도 반대하지 않았다. 아버지도, 친구도, 시스템도. 그러나 정확히 그 지점에서 그는 멈췄다.</p>
+    <div class="voice">
+      <p>살아갈 날 나랑 어울리지 않는 어떤 삶을 살아갈 것이 너무 커 보였어요. 그래서 안 해. 그렇게 얘기를 했던 거예요.</p>
+      <span class="voice-attr">— 김영하, 학군단 탈퇴를 결심하며</span>
+    </div>
+    <p>아버지가 동아리방까지 찾아왔다. 마지막 소원이라고 했다. 임관만 해라. 그 다음은 네 마음대로 살아라. 간곡했다. 그러나 스물셋의 김영하는 그 말을 믿지 않았다. 부모님의 마지막 소원은 계속될 것이다. 임관하면 취직, 취직하면 결혼. 끝이 없을 것이다.</p>
+    <p>그는 간파했다. 그리고 거절했다.</p>
+    <p>대학원에 진학했다. 군 입대를 늦추기 위해서였지만, 그 2년 반이 그의 삶을 바꿨다. PC 통신에서 글을 쓰기 시작했다. 주변에 없던 글 쓰는 사람들을 처음으로 만났다. 그들이 말했다. 너 글 좀 잘 쓰는 것 같은데, 또 써봐. 그래서 계속 썼고, 잡지에 실리기 시작했고, 오래지 않아 등단했다.</p>
+    <div class="aside-box">
+      <div class="aside-label">Timeline</div>
+      <p>연세대 경영학과 4.5년 → 동 대학원 2.5년 → PC통신 집필 시작 → 1995 등단 → 1996 《나는 나를 파괴할 권리가 있다》 문학동네 작가상 → 2004 한예종 교수 → 2006 교수직 사임 → 전업 작가</p>
+    </div>
+    <p>대학원을 가지 않았다면? 학군단 장교로 임관해서 제대하고, 며칠 뒤 대기업에 출근하고, 기업연수원에서 극기훈련을 받고, 술을 마시고, 뇌가 알코올에 저려지면서 그냥 살았을 것이다. 그의 표현이다. <i>그냥 살았을 것이다.</i></p>
+  </section>
+  <div class="divider">· · ·</div>
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="chapter-num">Chapter 02</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">자연스러운 길은 대체로<br>잘못된 길이었다</h2>
+    <p>작가가 된 뒤에도 패턴은 반복됐다. 한국예술종합학교 교수가 됐다. 국립대학. 안정된 직업. 작가들이 꿈꾸는 이상적인 코스. 모두가 좋다고 했다.</p>
+    <p>그리고 2년 반 만에 그만뒀다.</p>
+    <div class="voice">
+      <p>교수로 정년을 맞고, 동료 교수들과 늙어가고, 연금 받고 살아가는 삶을 생각하자 — 그게 제 인생의 스토리에는 없는 디테일이었어요.</p>
+      <span class="voice-attr">— 김영하, 교수직 사임의 이유</span>
+    </div>
+    <p>동료 교수가 말렸다. 나가면 건강보험 어떻게 할 거냐고. 대출도 잘 나오고, 아파트 살 때 좋다고. 그 말을 듣고 확신했다. 탈출해야 한다.</p>
+    <p>어머니는 가장 실망한 사람이었다. 아들이 작가인 것은 한 번도 자랑하지 않았다. 하지만 교수가 된 아들은 좋아했다. 엄마 친구 아들이 현대 다니는데, 콘도도 보내주고, 부모한테 혜택이 많다더라. 작가한테는 그런 게 없잖아요. 그런데 국립대 교수라면 — 드디어 자랑할 수 있는 아들이 된 것이다.</p>
+    <p>2년 반 만에 그 아들이 또 때려쳤다.</p>
+    <p>김영하는 이렇게 정리한다. 자연스러워 보이는 길을 갈 때마다, 대체로 잘못된 길이었다고. 아무도 반대하지 않는 길. 경영학과, 학군단, 교수직. 전부 자연스러웠지만, 자신과는 맞지 않았다.</p>
+  </section>
+  </div>
+  <div class="keyline">
+    <p>우리가 편안하게 살고 있었던 이 삶,<br>엄마도 좋아하고 아빠도 좋아하는 이 삶이<br>문득 무가치한 게 아닐까 하는 생각을 하게 된다.</p>
+    <span class="kl-mark"></span>
+  </div>
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="chapter-num">Chapter 03</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">달과 6펜스,<br>그리고 나도 모르는 나의 프로그램</h2>
+    <p>중학교 2학년. 소풍 전날. 아이들은 다 집에 갔는데, 김영하는 도서실에 혼자 앉아 책을 읽고 있었다. 국어 선생님이 왔다. 도수 높은 안경을 쓴, 키가 큰 선생님. 책 읽는구나. 이거 읽어봐. 서머셋 모음의 《달과 6펜스》를 건네주었다.</p>
+    <p>그날 거의 다 읽었다. 증권 중개인 스트릭랜드가 어느 날 모든 것을 때려치고 타히티로 떠나 그림을 그리는 이야기. 재미있었다. 그리고 잊어버렸다. 다른 소설들이 덮어쓰기를 했으니까.</p>
+    <p>작가가 되고 한참 뒤, 인터뷰에서 누군가 물었다. 어떤 책이 영향을 끼쳤나요. 그 순간 벼락처럼 기억이 떠올랐다.</p>
+    <div class="voice">
+      <p>아, 그게 그래서 내가 경영학과를 다니다가 때려쳤구나. 때려치는 전문가가 됐구나.</p>
+      <span class="voice-attr">— 김영하, 뒤늦은 발굴</span>
+    </div>
+    <p>그는 스트릭랜드의 이야기를 내면화하고 있었던 것이다. 증권 중개인으로 살다가 예술을 위해 모든 것을 버리는 인물. 그 서사가 위화감 없이 자신의 선택에 투영되고 있었다. 하던 일을 그만두는 것이 당연하게 느껴졌다. 모험이 아니라 본능이었다.</p>
+    <div class="aside-box">
+      <div class="aside-label">소설이 우리에게 하는 일</div>
+      <p>안나 카레니나는 귀족의 안정된 삶을 살다가 각성했다. 엠마 보바리도, 조지 오웰의 윈스턴 스미스도. 소설은 반복적으로 같은 이야기를 한다 — 평온한 삶은 죽은 삶이며, 진짜 삶은 그 바깥에 있다고. 소설가들이 그렇게 느껴지게 만든다. 김영하의 표현대로, 소설 조심하셔야 돼요.</p>
+    </div>
+  </section>
+  <div class="divider">· · ·</div>
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="chapter-num">Chapter 04</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">읽기와 쓰기의 결합</h2>
+    <p>김영하에게 인생이란 소설을 쓰는 과정이다. 단, 미래를 써나가는 것만이 아니다. 과거를 계속 고치는 것이기도 하다.</p>
+    <p>우리는 과거를 동영상으로 기억하지 않는다. 스냅샷들로 기억한다. 수많은 디테일 중에서 지금의 나에게 맞는 것만 편집해서 넣는다. 작가가 되면 작가의 삶에 영향을 준 디테일을 편입시키고, 영화 감독이 되면 영화에 관한 에피소드를 발굴한다.</p>
+    <div class="keyline">
+      <p>인생을 살아가는 것은<br>이야기를 써나가는 과정이기도 하지만<br>과거를 계속 고치는 것이다.</p>
+      <span class="kl-mark"></span>
+    </div>
+    <p>김영하가 성공한 작가가 됐기 때문에, ROTC를 그만둔 일은 통과의례가 됐다. 교수직을 내려놓은 일은 용기 있는 선택이 됐다. 하지만 만약 실패했다면? 같은 디테일이 후회의 서사로 편집됐을 것이다.</p>
+    <p>이것이 그가 말하는 핵심이다. 우리는 알게 모르게 어떤 이야기를 따라가며 살고 있다. 넷플릭스를 재미로 보고 있다고 생각하지만, 어느새 그 관점으로 인생을 보고 움직이게 된다.</p>
+    <div class="voice">
+      <p>우리가 안다고 생각하는 많은 것들은 실은 영화나 드라마, 소설에서 보고 안다고 믿는 것입니다. 모르는 것보다 더 위험한 것은 안다고 믿는 것이다.</p>
+    </div>
+    <p>조폭을 만나본 적 없지만 아는 것 같다. 비행기가 납치되면 어떻게 해야 하는지 알 것 같다. 연애 상담도 할 수 있을 것 같다. 전부 이야기에서 가져온 것이다. 우리는 이야기라는 원소로 구성되어 있다.</p>
+  </section>
+  <div class="divider">· · ·</div>
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="chapter-num">Chapter 05</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">시련은 주인공이<br>반드시 거쳐야 하는 것이다</h2>
+    <p>Q&A에서 누군가 물었다. 선택을 후회해본 적 없는가.</p>
+    <p>김영하의 답. 후회한다는 것은 자기 인생이라는 소설이 나쁜 결론으로 끝났다고 생각하는 것이다. 하지만 끝나지 않았다.</p>
+    <div class="voice">
+      <p>이것은 주인공들이 초반에 겪는 시련이야. 여러분이 지금 겪고 있는 것들은 주인공의 성장을 위해서 반드시 거쳐야 되는 것이다.</p>
+    </div>
+    <p>아내는 맨날 정신 승리한다고 한다. 그러나 그는 진지하다. 스파이더맨도 한 시간 이상 시련을 겪는다. 할리우드 대중영화조차 그렇다. 고통 없는 주인공이 어디 있는가.</p>
+    <p>그래서 그는 긴 호흡의 이야기를 볼 것을 권한다. 숏폼이 아니라. 긴 이야기를 보면, 시련이 해결된다는 것을 알게 된다. 자기 인생도 마찬가지라고 믿게 된다.</p>
+    <p>인생이 100페이지라면, 당신은 25페이지쯤 왔다. 아직 초반이다.</p>
+  </section>
+  </div>
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="chapter-num">Chapter 06</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">망하면 쓰면 된다</h2>
+    <p>김영하는 국내 작가 최초로 팟캐스트를 시작했다. 2010년, 뉴욕 소호의 애플 스토어에서 팟캐스트 강의를 듣고, 이베이에서 맥북 중고를 사서, 이틀 만에 송출을 시작했다. 마이크도 없어서 내장 마이크로.</p>
+    <p>새로운 것을 시도할 때의 마인드를 묻자, 그는 이렇게 답했다.</p>
+    <div class="voice">
+      <p>작가들의 여행에는 실패가 없다. 왜냐하면 실패하면 쓰면 되니까.</p>
+    </div>
+    <p>폴란드에서 대사관 만찬에 초대받았다. 메뉴판을 받자 즉각 선택했다. 동료 작가들이 김영하는 뭘 좀 아는구나, 나도 그거 — 해서 모두 같은 것을 시켰다. 완전히 망했다. 만두처럼 생긴 음식이 나왔는데, 아무도 먹지 못했다.</p>
+    <p>그는 말한다. 벌써 재미있잖아요.</p>
+    <p>망하면 망하는 대로 에피소드가 되고, 성공하면 선구자가 된다. 어느 쪽이든 이야기가 생긴다. 그리고 이야기가 생긴다는 것은, 그의 문법으로는, 살아 있다는 뜻이다.</p>
+  </section>
+  <section class="closing">
+    <div class="closing-symbol">FIN</div>
+    <p class="closing-quote">인간은 정신적으로<br>이야기라는 원소로 구성되어 있다.<br>우리 모두가 자기 인생이라는<br>한 편의 이야기의 작가이다.</p>
+    <div class="closing-attr">— 김영하, 2023.04.23</div>
+    <p class="closing-note">
+      이 글은 2023년 4월 23일 성수동에서 열린 김영하 작가의 강연(45분)을 재구성한 아티클입니다.
+      강연의 핵심 맥락을 보존하되, 구어체의 반복과 접속사를 정리하고
+      소설가의 문법에 맞는 구조로 편집했습니다.<br><br>
+      <i>"내가 알고 있는 것은 그저 내게 '단 한 번의 삶'이 주어졌다는 것뿐."</i> — 김영하, 《단 한 번의 삶》
+    </p>
+  </section>
+</main>
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+<script>
+const chapters = document.querySelectorAll('.chapter');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '-30px' });
+chapters.forEach(ch => observer.observe(ch));
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 600); });
+</script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>박웅현 — 인생은 공책이다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --bg-warm: #f0ede5;
+  --bg-card: #fffdf8;
+  --text: #1a1a18;
+  --text-body: #2d2b26;
+  --text-sub: #6b6560;
+  --text-dim: #a09889;
+  --accent: #3d6b4f;
+  --accent-light: rgba(61,107,79,0.08);
+  --accent-line: rgba(61,107,79,0.25);
+  --line: rgba(26,26,24,0.07);
+  --notebook-line: rgba(61,107,79,0.06);
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Noto Sans KR', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  font-size: 1.0rem;
+  line-height: 1.88;
+  -webkit-font-smoothing: antialiased;
+}
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(247,245,240,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav a {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-sub);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.nav a:hover { color: var(--accent); }
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 100px clamp(24px, 6vw, 80px) 80px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -15%; left: -10%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(61,107,79,0.05) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 2; max-width: 620px; }
+.hero-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.1rem, 5.8vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 22px;
+}
+.hero-title em { font-style: normal; color: var(--accent); }
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+.hero-sub {
+  font-size: 0.96rem;
+  color: var(--text-sub);
+  max-width: 460px;
+  margin: 0 auto;
+  line-height: 1.78;
+}
+.container { max-width: 660px; margin: 0 auto; padding: 0 24px; }
+.chapter {
+  padding: 72px 0;
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.chapter.visible { opacity: 1; transform: translateY(0); }
+.chapter-label { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.chapter-num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+}
+.chapter-line { flex: 1; height: 1px; background: var(--accent-line); }
+.chapter-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 3.2vw, 1.78rem);
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 28px;
+}
+.chapter p { margin-bottom: 1.35em; font-weight: 300; }
+.voice {
+  position: relative;
+  margin: 36px 0;
+  padding: 24px 28px;
+  background: var(--bg-card);
+  border: 1px solid rgba(61,107,79,0.12);
+  border-radius: 3px;
+  box-shadow: 0 1px 6px rgba(26,26,24,0.03);
+}
+.voice::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 24px;
+  width: 36px; height: 3px;
+  background: var(--accent);
+  border-radius: 0 0 2px 2px;
+}
+.voice p {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.82;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.voice .voice-attr {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--text-dim);
+  margin-top: 12px;
+  display: block;
+}
+.copy-block { margin: 52px 0; text-align: center; padding: 0 16px; }
+.copy-block p {
+  font-family: var(--font-sans);
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--text);
+}
+.copy-block .cb-mark { display: block; width: 28px; height: 2px; background: var(--accent); margin: 16px auto 0; }
+.aside-box {
+  margin: 36px 0;
+  padding: 22px 24px;
+  background: var(--accent-light);
+  border-radius: 4px;
+  border-left: 3px solid var(--accent);
+}
+.aside-box .aside-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.aside-box p { font-size: 0.88rem; color: var(--text-sub); line-height: 1.72; margin-bottom: 0; }
+.notebook {
+  margin: 40px 0;
+  padding: 28px 28px 28px 48px;
+  background: var(--bg-card);
+  border: 1px solid rgba(26,26,24,0.06);
+  border-radius: 3px;
+  position: relative;
+  background-image: repeating-linear-gradient(
+    transparent, transparent 31px, var(--notebook-line) 31px, var(--notebook-line) 32px
+  );
+  background-position: 0 27px;
+}
+.notebook::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 36px;
+  width: 1px;
+  background: rgba(180,80,80,0.12);
+}
+.notebook p {
+  font-size: 0.92rem;
+  color: var(--text-sub);
+  line-height: 32px;
+  margin-bottom: 0;
+}
+.divider {
+  text-align: center;
+  padding: 32px 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5em;
+}
+.copy-showcase {
+  margin: 48px 0;
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center;
+}
+.copy-tag {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-light);
+  border: 1px solid rgba(61,107,79,0.12);
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.closing { padding: 80px 0 60px; text-align: center; }
+.closing-symbol { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.8em; margin-bottom: 36px; }
+.closing-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 3.2vw, 1.72rem);
+  font-weight: 700;
+  line-height: 1.55;
+  max-width: 520px;
+  margin: 0 auto 20px;
+}
+.closing-attr { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-dim); letter-spacing: 0.06em; }
+.closing-note {
+  margin-top: 48px;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  line-height: 1.72;
+  max-width: 440px;
+  margin-left: auto; margin-right: auto;
+}
+.scroll-top {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 38px; height: 38px;
+  background: var(--bg-card);
+  border: 1px solid rgba(61,107,79,0.15);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0;
+  transition: opacity 0.3s, background 0.2s;
+  z-index: 90;
+  box-shadow: 0 2px 10px rgba(26,26,24,0.06);
+}
+.scroll-top.show { opacity: 1; }
+.scroll-top:hover { background: var(--accent); border-color: var(--accent); }
+.scroll-top svg { color: var(--text-sub); }
+.scroll-top:hover svg { color: #fff; }
+@media (max-width: 640px) {
+  .hero { padding: 100px 24px 60px; }
+  .chapter { padding: 52px 0; }
+  .voice { padding: 20px 20px; }
+  .aside-box { padding: 18px 20px; }
+  .notebook { padding: 22px 22px 22px 42px; }
+  .copy-showcase { gap: 8px; }
+  .copy-tag { font-size: 0.72rem; padding: 5px 12px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="https://d.324.ing/">← Archives</a>
+  <a href="#">324.ing</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tagline">TBWA Korea · Creative Director · Author</div>
+    <h1 class="hero-title">인생은<br><em>공책</em>이다</h1>
+    <div class="hero-meta">광고인 박웅현 · 강연 69분 · 2022.12.23</div>
+    <p class="hero-sub">자존, 극복, 선택 — 그리고 정답 없는 세상에서<br>자기만의 별을 그리는 법에 대하여</p>
+  </div>
+</section>
+
+<main class="container">
+
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="chapter-num">Chapter 01</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">알을 깨고 나오는 공포</h2>
+    <p>박웅현은 《여덟 단어》라는 책에서 자존, 본질, 고전, 견, 현재, 소통, 권위, 인생 — 여덟 개의 단어를 골랐다. 그중 하나만 꼽으라면 첫 번째, 자존이라고 했다. 오늘의 강연은 그 단어를 중심으로 흘러간다.</p>
+    <p>그는 데미안 이야기로 시작한다. 중학교 때 자랑하려고 읽었고, 대학교 때 제대로 읽으려고 읽었고, 50대 초반에 다시 읽었을 때 완전히 파괴됐다고 했다. 수많은 성장 소설이 있지만, 데미안은 성장 소설의 이데아 같다는 것이 그의 생각이다.</p>
+    <div class="voice">
+      <p>싱클레어는 데미안을 극복해내요. 아버지를 극복해내요. 신부를 극복해내요. 저는 성장이라는 건 극복이라고 봐요.</p>
+      <span class="voice-attr">— 박웅현, 데미안의 핵심을 요약하며</span>
+    </div>
+    <p>알을 깨고 나온다는 것은 공포다. 아버지라는 보호망, 신부님의 권위라는 보호망, 누군가의 "내 말만 따라오면 괜찮을 거야"라는 보호망. 그 안에 머무르면 편안하다. 하지만 그 편안함 속에서 자기 삶은 시작되지 않는다.</p>
+    <p>데미안의 첫 줄. <i>나로부터 솟아나오는 것, 나는 그것을 살아보고 싶었을 뿐이다. 그것이 왜 그리 힘들었던 것인가.</i> 박웅현은 이 세 줄에 공감한다고 했다. 딸에게도 이 이야기를 해주고 싶었다고. 세상 어디에도 답은 없다. 니 답을 찾아라.</p>
+    <div class="aside-box">
+      <div class="aside-label">아브락사스 — 극복의 구조</div>
+      <p>헤세의 《데미안》에서 싱클레어가 극복해야 하는 대상은 세 겹이다. 첫째, 존경하는 친구 데미안. 둘째, 아버지의 세계. 셋째, 신부의 권위. 헤세가 동일한 구조를 《싯다르타》에도 적용한다는 점을 박웅현은 짚는다 — 부처의 득도 역시 극복의 과정이다. 스승을 버리고, 쾌락을 버리고, 고행을 버리고, 마지막으로 부처 자신의 가르침마저 극복한다.</p>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="chapter-num">Chapter 02</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">고정 변수를 직시하라</h2>
+    <p>박웅현은 이렇게 말한다. 우리 모두는 고정 변수에 잡혀 있다. 원하든 원하지 않든 못 박혀 있다. 31살이라는 나이. 여자라는 성별. 아버지가 30억을 물려주지 않았다는 사실. 조인성처럼 생기지 않았다는 현실. 이것은 다 바꿀 수 없는 고정 변수다.</p>
+    <p>김훈의 문장을 인용한다.</p>
+    <div class="copy-block">
+      <p>항해술의 시작은<br>선박의 자기 위치 파악이다.</p>
+      <span class="cb-mark"></span>
+    </div>
+    <p>여러분 지금 어디 계세요. 이걸 먼저 물어봐야 한다. 나의 과오, 후회, 떨어진 대학, 헤어진 연인, 이불킥하는 실수 — 전부 포함해서 고정 변수다. 이것을 직시하지 않으면 항해를 시작할 수 없다.</p>
+    <div class="voice">
+      <p>이번 생은 망했어, 다음 생에 잘 살 거야 — 이 말은 위험해요. 페넌트레이스에서 이번 경기를 패전 처리하자는 것과 같아요. 이번 생이 망했으면 한마디로, 망한 겁니다.</p>
+      <span class="voice-attr">— 박웅현, '이생망'에 대해</span>
+    </div>
+    <p>그래서 이번 생은 절대 망하면 안 된다. 나의 수많은 실수를 포함해서 절대. 그리고 남의 게임이 아니라 내 게임을 해야 한다.</p>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="chapter-num">Chapter 03</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">메시처럼 흘러가라</h2>
+    <p>2022년 카타르 월드컵. 메시가 크로아티아전에서 보여준 움직임을 박웅현은 이렇게 표현했다. 고체가 아니라 액체. 흘러다니는 것처럼 흘러다니더라.</p>
+    <p>축구 선수는 매 경기를 예측할 수 없고, 매 경기 실수를 한다. 메시도, 손흥민도. 중요한 것은 그 실수에 묶이지 않는 것이다. 빨리 잊고, 다음 공에 집중하는 것이다.</p>
+    <div class="voice">
+      <p>인생은 계획표대로 되어가는 것이 아니에요. 내가 간절히 원하면 온 우주가 여러분을 도와줄까요? 우주는 여러분한테 관심 없어요.</p>
+    </div>
+    <p>계획을 세우지 말라는 것이 아니다. 긍정적인 노력은 다 해야 한다. 다만 내 노력대로 되지 않는다는 것을 상상해야 한다. 코로나가 2020년에 그렇게 올 줄 몰랐듯이, 내년 4월에 은인이 나타날지 7월에 새로운 기회가 올지 알 수 없다. 그래서 잘 흘러가야 한다. 물살이 언제 세질지 알 수 없으니까.</p>
+    <div class="aside-box">
+      <div class="aside-label">박웅현의 광고 철학과의 연결</div>
+      <p>박웅현이 TBWA에서 경쟁 PT를 준비할 때도 같은 원리가 작동한다. 아이디어 5개, 10개가 나오면 정답을 찾으려 하지 않는다. 하나를 선택하고, 기를 쓰고 정답으로 만든다. 현대건설 '생활의 중심' 캠페인은 PT 기간 한 달 중 일주일 만에 "책을 만들어 가자"고 판단을 내렸다. 300억 규모의 PT. 나머지 아이디어를 전부 놓고 책에 집중했다. 살이 떨렸지만, 선택한 것을 정답으로 만드는 과정이 시작됐다.</p>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="chapter-num">Chapter 04</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">엄마 친구 아들은<br>법적으로 금지시켜야 한다</h2>
+    <p>엄마 친구 아들이라는 말은 벌써 점을 바깥에 찍는 것이다. 저 사람처럼 되어보라는 것이다. 데미안의 이야기와 정확히 반대다. 싱클레어한테 "너는 데미안처럼 되어봐"라고 하면, 그 사람은 데미안의 짝퉁이다. 싱클레어가 없어진다.</p>
+    <p>그리고 이 비교는 언제나 비겁하다. 엄마 친구 아들의 가장 좋은 점 하나를 뽑아서, 나의 가장 후진 상태와 비교한다. 이것이 우리나라 교육의 가장 큰 문제라고 그는 본다. 청소년 자살률이 높은 이유가 여기 있다고.</p>
+    <div class="copy-block">
+      <p>장미는 장미라서 예쁘고<br>찔레꽃은 찔레꽃이라서 예쁩니다.</p>
+      <span class="cb-mark"></span>
+    </div>
+    <p>서도호와의 인터뷰를 소개한다. 서울대 미대와 예일대 미대를 모두 다닌 설치미술가. 두 교육기관의 차이를 물었더니 이렇게 답했다. 서울대에서는 교수님이 뒤에 오셔서 지도해주신다 — 여기 빛의 각도를 살짝 눌러주고. 예일에서는 가르쳐주지 않는다. 대신 묻는다 — 넌 뭘 그리고 싶어? 왜 그걸 그리고 싶어?</p>
+    <p>바깥에서 안으로 넣어주는 교육과, 안에서 밖으로 뽑아내는 교육의 차이. 스티브 잡스가 말한 창의성의 정의도 같은 맥락이다.</p>
+    <div class="voice">
+      <p>창의성은 내가 할 수 있는 것으로써 무언가를 이루는 것이다.</p>
+      <span class="voice-attr">— 스티브 잡스 (박웅현 재인용)</span>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="chapter-num">Chapter 05</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">들꽃들입니다</h2>
+    <p>박웅현은 TBWA에서 '망치'라는 프로젝트를 운영해왔다. 대학생들이 500명 앞에서 7분 동안 자기 이야기를 하는 스피치 프로젝트. 처음에 학생들은 모두 같은 말을 한다. "저는 할 이야기가 없어요."</p>
+    <p>파고 들어가면 이야기가 나온다. 패배에 대한 이야기. 성공에 대한 이야기는 자기가 할 게 없으니까. 아버지를 교통사고로 잃은 학생. 10년간 랩을 했지만 재능이 부족하다는 걸 깨달은 학생. 중학교 때 세 명에게 학폭을 당한 여학생 — 7년간 가해자의 인스타를 들여다보며 놓지 못하다가, 발표 후 처음으로 보낼 수 있게 됐다고 했다.</p>
+    <p>이 프로젝트의 서문 제목을 '들꽃'으로 잡았다. 헤밍웨이의 말로 시작한다.</p>
+    <div class="voice">
+      <p>제대로 쓰이기만 한다면, 모든 사람의 인생은 하나의 소설감이다.</p>
+      <span class="voice-attr">— 어니스트 헤밍웨이 (박웅현 재인용)</span>
+    </div>
+    <div class="notebook">
+      <p>환영합니다. 꽃밭에 들어서셨습니다. 들꽃들입니다. 가꾸어지고 다듬어진 정원의 꽃들이 아닙니다. 제멋대로 자라고, 아직 덜 자라고, 자라다 꺾이고, 꺾여도 또 자라는 그런 것들입니다. 일부 예외는 있지만, 대체로 야단을 많이 맞고 자란 꽃들입니다.</p>
+    </div>
+    <p>장미는 장미라서 예쁘고, 찔레꽃은 찔레꽃이라서 예쁘다는 당연한 말이 우리 사회의 가장 절실한 말이 된 이유. 우리나라는 장미꽃만 꽃이라 하고, 그 장미마저 색깔별로 줄을 세운다. 100명 중 스카이에 들어가는 두세 명을 빼면 나머지는 의미 없는 인생인가?</p>
+    <div class="aside-box">
+      <div class="aside-label">정신건강의학회장의 평가</div>
+      <p>상계백병원의 이동우 박사(한국정신건강의학회 학회장)는 망치 스피치를 거의 빠짐없이 참관했다. 그의 말 — "이 행사가 잘 되면 우리 거 필요 없습니다. 사람들이 이렇게 치유가 되는 겁니다."</p>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="chapter-num">Chapter 06</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">선택한 다음에<br>정답으로 만드는 것</h2>
+    <p>강연에서 가장 많이 받는 질문은 이런 종류다. 유학을 갈까요 말까요? 이직을 해야 할까요? 결혼을 해야 할까요? 이것은 본질적으로 "3년 후에 내 인생 페이지에는 무엇이 쓰여 있을까요?"라는 질문과 같다.</p>
+    <p>박웅현의 대답. 확실한 사실 하나. 그 페이지에는 아무것도 안 쓰여 있다.</p>
+    <div class="voice">
+      <p>인생에 정답은 없습니다. 다만 정답으로 만들어가는 과정만 있을 뿐입니다. 지혜로운 사람들은 선택한 다음에 그걸 정답으로 만들어내고, 어리석은 사람들은 선택한 다음에 후회하면서 오답으로 만들죠.</p>
+    </div>
+    <p>그는 문 두 개의 비유를 든다. 앞문과 뒷문. 유학과 취업. 결혼과 비혼. 어떻게든 하나를 고른다. 고른 다음이 중요하다. 뒷문을 골랐으면, 앞문은 문이 아니었다고 생각하는 것이다. 내 앞에 있는 유일한 문은 이것이었어. 스티브 잡스는 이것을 '주관의 자기 왜곡장'이라 불렀다.</p>
+    <p>박웅현 본인이 그랬다. 신문사 떨어졌다. 방송국 떨어졌다. 삼지망이었던 광고회사에 왔다. 처음에 행복하지 않았다. 신문 기자나 PD는 사회에 올바른 메시지를 던지는데, 광고는 소비를 조장한다고 인식했다. 그래서 고민했다. 광고에 가치를 담을 수 없을까.</p>
+    <div class="copy-showcase">
+      <span class="copy-tag">넥타이와 청바지는 평등하다</span>
+      <span class="copy-tag">나이는 숫자에 불과하다</span>
+      <span class="copy-tag">사람을 향합니다</span>
+      <span class="copy-tag">생각이 에너지다</span>
+      <span class="copy-tag">진심이 짓는다</span>
+      <span class="copy-tag">열심히 일한 당신 떠나라</span>
+    </div>
+    <p>이 카피들이 가치를 담고 있기 때문에, 삼지망이었던 광고인 박웅현이 지금 여기까지 온 것이다. 차선을 선택한 다음, 기를 쓰고 정답으로 만든 결과물이다.</p>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <section class="chapter" id="ch7">
+    <div class="chapter-label"><span class="chapter-num">Chapter 07</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">의미 없어 보이는 점들이<br>별이 된다</h2>
+    <p>《여덟 단어》에 이런 문장이 있다. 열심히 살다 보면 인생에 어떤 점들이 뿌려질 것이고, 눈에 보이지 않던 것들이 어느 순간 연결되어 별이 된다. 스티브 잡스의 'connecting the dots'와 같은 이야기다.</p>
+    <p>오늘 내가 본 영화, 오늘 나눈 대화, 오늘 맺은 인연 — 다 의미 없어 보인다. 하지만 이것이 전부다. 좋은 미래를 준비하는 가장 좋은 방법은 오늘을 충실히 사는 것이다.</p>
+    <p>박영석 대장의 안나푸르나 이야기를 인용한다. 마지막 캠프에서 정상을 올려다보면 포기하게 된다. 그래서 터득한 방법이 있다 — 정상을 보지 않는다. 1m 앞만 본다. 힘들게 1m를 가고, 확 내려가고 싶어지면 1m만 더 보고 판단하자. 이것이 안나푸르나를 오르는 가장 좋은 방법이라고.</p>
+    <div class="copy-block">
+      <p>충실한 하루만큼<br>훌륭한 미래 준비는 없다.</p>
+      <span class="cb-mark"></span>
+    </div>
+    <p>나폴레옹의 말을 인용한다. "내가 지금 겪고 있는 이 불행은, 언젠가 잘못 보낸 시간의 결과다." 잔인하지만, 그대로 미래로 적용된다. 오늘 긍정적인 점들을 쌓으면, 5년 후에는 더 좋은 곳에 가 있지 않겠는가.</p>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <section class="chapter" id="ch8">
+    <div class="chapter-label"><span class="chapter-num">Chapter 08</span><span class="chapter-line"></span></div>
+    <h2 class="chapter-title">끝날 때까지 끝난 게 아니다,<br>그리고 닿지 않는 것은 닿지 않는 것이다</h2>
+    <p>Q&A에서 불안에 대한 질문이 나왔다. 박웅현의 답 — 불안할 때 불안하지 않으려고 노력하는 수밖에 없다. 불안해봐야 자기를 누르는 거다. 불안한 시간에 성장할 수 있는 방법을 찾아야 한다.</p>
+    <p>대학 시절, 도서관에서 4천 명 중 2천 명이 동아상식백과를 펼치고 언론사 시험을 준비하고 있었다. 박웅현은 그 책을 보고 있는 게 짜증이 나서 안 했다. 대신 안나 카레니나를 읽었다. 그래서 시험에 떨어졌다. 불안했지만, 자기가 동의하지 않는 것은 하지 않았다.</p>
+    <p>갈등이 있을 때의 철학도 전한다. 한 손에는 "끝날 때까지 끝난 게 아니다"를, 다른 손에는 박목월의 시 한 구절을 가지고 가라고.</p>
+    <div class="voice">
+      <p>지나간 곳은 지나온 것이요, 닿지 않는 것은 닿지 않는 것이다.</p>
+      <span class="voice-attr">— 박목월</span>
+    </div>
+    <p>최선을 다하되, 닿지 않는 사람과 일과 인연은 놓아주라는 것이다. 불굴의 의지만 가지고 가면 번아웃이 오거나 영혼이 다친다. 두 개를 양 손에 쥐고 균형을 잡아야 한다.</p>
+    <p>일의 의미에 대한 질문에는 명쾌했다. 일의 의미는 통장이다. 먹고 살라고 하는 것이다. 워라벨이라는 말에 의문을 품는다 — 워크와 라이프가 어떻게 동급인가. 일은 수단이고, 삶을 꾸려나가기 위한 생계다. 다만 그 생업에서 자라지 않으면 숫자가 줄어드니, 잘해야 한다.</p>
+    <p>그리고 마지막으로, 가사 노동이든 어떤 노동이든 할 수 있다는 것 자체가 행복임을 알아야 한다고 했다. 세월호 부모님들이 가장 힘들어한 말이 "다녀왔습니다"였다는 이야기를 꺼내며 — 박탈당하고 나서야 가장 그리워할 것들이 지금 일상 속에 있다고.</p>
+  </section>
+
+  <section class="closing">
+    <div class="closing-symbol">FIN</div>
+    <p class="closing-quote">내 마음속에<br>올바른 재판관이 있다고 생각하고<br>그 존재와 상의하면서<br>선택을 해나가시면 됩니다.</p>
+    <div class="closing-attr">— 박웅현, 2022.12.23</div>
+    <p class="closing-note">
+      이 글은 2022년 12월 23일에 진행된 박웅현의 강연(69분)을 재구성한 아티클입니다.
+      음성 스크립트의 구어적 반복을 정리하고, 주요 인용의 맥락을 보충하며
+      강연의 서사 구조를 8개의 챕터로 재편했습니다.<br><br>
+      <i>"모든 멘토를 참고사항으로 삼으라. 이 책을 참고하고 당신의 길을 가라."</i> — 박웅현, 《여덟 단어》 표사
+    </p>
+  </section>
+
+</main>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+const chapters = document.querySelectorAll('.chapter');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '-30px' });
+chapters.forEach(ch => observer.observe(ch));
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 600); });
+</script>
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 FIA F1 규정 Section A: 일반 규정 | 한국어 전문 번역</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f5f0e8;--deep:#2c1810;--accent:#8b4513;--accent2:#c4621e;--card-bg:#faf6f0;--border:#e0d5c5;--text:#3d2b1f;--text-light:#6b5744;--pink-bg:#fff0f5;--pink-border:#d63384;--blue:#1a5276}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:1.0rem}
+
+.nav-archives{position:fixed;top:20px;left:20px;z-index:1000;background:rgba(44,24,16,.85);backdrop-filter:blur(10px);padding:8px 18px;border-radius:6px;text-decoration:none;color:#f5f0e8;font-size:.82rem;font-weight:500;letter-spacing:.5px;transition:all .3s}
+.nav-archives:hover{background:rgba(44,24,16,.95);transform:translateY(-1px)}
+
+.scroll-top{position:fixed;bottom:30px;right:30px;z-index:1000;width:46px;height:46px;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .3s;box-shadow:0 4px 15px rgba(139,69,19,.3)}
+.scroll-top.visible{opacity:1;visibility:visible}
+.scroll-top:hover{background:var(--deep);transform:translateY(-3px)}
+
+.hero{width:100%;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 30%,#0f3460 60%,#1a1a2e 100%);color:#fff;text-align:center;padding:60px 20px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(26,82,118,.2) 0%,transparent 60%),radial-gradient(ellipse at 80% 30%,rgba(196,98,30,.15) 0%,transparent 50%)}
+.hero-content{position:relative;z-index:1;max-width:850px}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 20px;border-radius:30px;font-size:.82rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:30px}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:900;line-height:1.3;margin-bottom:20px}
+.hero h1 span{color:#e8a87c}
+.hero-sub{font-size:1.06rem;font-weight:300;color:rgba(255,255,255,.7);margin-bottom:40px;line-height:1.7}
+.hero-meta{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;font-size:.82rem;color:rgba(255,255,255,.5)}
+
+.content{max-width:860px;margin:0 auto;padding:60px 24px 120px}
+
+.toc{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:36px 32px;margin-bottom:60px}
+.toc h2{font-family:'Noto Serif KR',serif;font-size:1.35rem;font-weight:700;color:var(--deep);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--accent)}
+.toc-list{list-style:none;padding:0}
+.toc-list li{padding:5px 0;border-bottom:1px solid rgba(224,213,197,.5)}
+.toc-list li:last-child{border-bottom:none}
+.toc-list a{color:var(--text-light);text-decoration:none;font-size:.94rem;transition:color .2s}
+.toc-list a:hover{color:var(--accent)}
+.toc-list .indent{padding-left:24px;font-size:.88rem}
+
+.article-section{margin-bottom:56px;animation:fadeUp .6s ease both}
+.article-header{font-family:'Noto Serif KR',serif;font-size:1.4rem;font-weight:700;color:var(--deep);padding:18px 0 10px;border-bottom:2px solid var(--accent);margin-bottom:18px}
+.article-header .num{color:var(--accent)}
+
+.sub-header{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--deep);margin:28px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+
+.clause{margin-bottom:14px;padding-left:0;font-size:.94rem;line-height:1.85}
+.clause-num{font-weight:700;color:var(--accent);margin-right:6px}
+.clause-sub{padding-left:28px;margin-bottom:8px;font-size:.94rem}
+.clause-sub2{padding-left:52px;margin-bottom:6px;font-size:.88rem;color:var(--text-light)}
+
+.changed{background:var(--pink-bg);border-left:3px solid var(--pink-border);padding:10px 14px;margin:10px 0;border-radius:0 8px 8px 0;font-size:.88rem}
+.changed::before{content:'🔄 변경사항';display:block;font-weight:700;color:var(--pink-border);font-size:.76rem;margin-bottom:4px;letter-spacing:1px}
+
+.note{background:rgba(26,82,118,.06);border-left:3px solid var(--blue);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:.88rem;color:var(--text-light)}
+
+.table-wrap{overflow-x:auto;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:var(--deep);color:#fff;padding:10px 12px;text-align:center;font-weight:600;font-size:.82rem}
+td{padding:8px 12px;border:1px solid var(--border);text-align:center}
+tr:nth-child(even) td{background:rgba(250,246,240,.8)}
+
+.preamble{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:32px;margin-bottom:40px;font-family:'Noto Serif KR',serif;font-size:.94rem;line-height:2}
+
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:50px 0}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){
+  .content{padding:40px 16px 80px}
+  .toc{padding:24px 20px}
+  .clause-sub{padding-left:16px}
+  .clause-sub2{padding-left:32px}
+  .hero h1{font-size:1.8rem}
+}
+</style>
+</head>
+<body>
+
+<a href="https://d.324.ing" class="nav-archives">← Archives</a>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-content">
+  <div class="hero-badge">Official FIA Document — Korean Translation</div>
+  <h1>2026 FIA F1 규정<br><span>Section A: 일반 규정</span></h1>
+  <p class="hero-sub">
+    Fédération Internationale de l'Automobile<br>
+    2026 포뮬러 원 일반 규정 조항 — Issue 02 전문 한국어 번역
+  </p>
+  <div class="hero-meta">
+    <span>📅 2026년 2월 27일 발행</span>
+    <span>📋 WMSC 승인: 2026.02.27</span>
+    <span>🏎️ Issue 02</span>
+  </div>
+</div>
+</section>
+
+<div class="content">
+
+<!-- 범례 -->
+<div class="note" style="margin-bottom:40px">
+  <strong>번역 범례:</strong> 본 문서는 FIA 원문의 한국어 전문 번역입니다. 
+  <span style="background:var(--pink-bg);padding:2px 6px;border-radius:3px">분홍 배경</span>으로 표시된 부분은 Issue 01 대비 Issue 02에서 변경된 내용(원문 Pink Text)입니다. 
+  원문 PDF: <a href="https://www.fia.com/system/files/documents/fia_2026_f1_regulations_-_section_a_general_provisions_-_iss_02_-_2026-02-27.pdf" target="_blank" style="color:var(--accent)">FIA 공식 링크</a>
+</div>
+
+<!-- 목차 -->
+<div class="toc" id="toc">
+  <h2>목차</h2>
+  <ul class="toc-list">
+    <li><a href="#preamble">서문</a></li>
+    <li><a href="#a1">제A1조: 일반 원칙</a></li>
+    <li class="indent"><a href="#a1-1">A1.1 개요</a></li>
+    <li class="indent"><a href="#a1-2">A1.2 적용 규정</a></li>
+    <li class="indent"><a href="#a1-3">A1.3 적용 범위</a></li>
+    <li class="indent"><a href="#a1-4">A1.4 위반에 대한 일반 책임</a></li>
+    <li><a href="#a2">제A2조: FIA 포뮬러 원 월드 챔피언십</a></li>
+    <li class="indent"><a href="#a2-1">A2.1 챔피언십 형식</a></li>
+    <li class="indent"><a href="#a2-2">A2.2 챔피언십 포인트 체계</a></li>
+    <li class="indent"><a href="#a2-3">A2.3 F1 차량 도장</a></li>
+    <li class="indent"><a href="#a2-4">A2.4 경기 번호</a></li>
+    <li class="indent"><a href="#a2-5">A2.5 경기의 연기 또는 취소</a></li>
+    <li class="indent"><a href="#a2-6">A2.6 FIA 시상식 및 갈라 디너</a></li>
+    <li><a href="#a3">제A3조: 참가 신청, 라이선스 및 등록</a></li>
+    <li><a href="#a4">제A4조: 무결성 요구사항</a></li>
+    <li><a href="#a5">제A5조: 주요 이해관계자의 일반 역할과 책임</a></li>
+    <li><a href="#a6">제A6조: 조사, 질의권 및 위반 통지</a></li>
+    <li><a href="#a7">제A7조: 위반 심판 및 제재</a></li>
+    <li><a href="#a8">제A8조: 기밀유지, 공개 보고 및 데이터 프라이버시</a></li>
+    <li><a href="#a9">제A9조: 유효기간, 개정, 해석 및 기타</a></li>
+    <li><a href="#appendix">부록 A1~A9</a></li>
+  </ul>
+</div>
+
+<!-- 서문 -->
+<div class="article-section" id="preamble">
+  <div class="article-header">서문 (PREAMBLE)</div>
+  <div class="preamble">
+    <p style="font-size:.82rem;color:var(--text-light);margin-bottom:12px">자문위원회: RGAC / 거버넌스: F1 위원회 / WMSC</p>
+    <p>F1 규정(아래 제A1.2.2조에 정의)은 FIA와 FIA 포뮬러 원 월드 챔피언십("챔피언십")을 뒷받침하는 근본적 가치를 보호할 목적으로 채택되었다.</p>
+    <p style="margin-top:14px">특히 F1 규정은 다음과 같은 핵심 목표("목표")를 추구한다:</p>
+    <p class="clause-sub">a. 챔피언십을 모터스포츠의 최고봉으로 유지한다;</p>
+    <p class="clause-sub">b. 챔피언십의 최고 안전 기준을 촉진한다;</p>
+    <p class="clause-sub">c. 챔피언십의 스포츠 공정성을 촉진하고 보호한다;</p>
+    <p class="clause-sub">d. 챔피언십의 경쟁 균형과 지속가능성을 촉진한다;</p>
+    <p class="clause-sub">e. 챔피언십, 이해관계자, F1 팀 및 PU 제조사의 장기적 재정 안정성과 지속가능성을 보장한다;</p>
+    <p class="clause-sub">f. 챔피언십의 환경적 지속가능성을 촉진한다;</p>
+    <p class="clause-sub">g. 챔피언십의 이미지, 명성 및 무결성을 보호한다; 그리고</p>
+    <p class="clause-sub">h. 포뮬러 원의 고유한 기술, 혁신 및 엔지니어링 도전을 보존한다.</p>
+  </div>
+</div>
+
+<!-- A1: 일반 원칙 -->
+<div class="article-section" id="a1">
+  <div class="article-header"><span class="num">제A1조</span> 일반 원칙 (GENERAL PRINCIPLES)</div>
+  <p style="font-size:.82rem;color:var(--text-light);margin-bottom:16px">자문위원회: RGAC / 거버넌스: F1 위원회 / WMSC</p>
+
+  <div class="sub-header" id="a1-1">A1.1 개요</div>
+  
+  <p class="clause"><span class="clause-num">A1.1.1</span> FIA는 국제 스포츠 캘린더에 포함된 FIA 포뮬러 원 그랑프리 경기(각각 "경기(Competition)")로 구성되는 FIA 포뮬러 원 월드 챔피언십("챔피언십")의 스포츠 조직 및 규제를 담당하며, 드라이버 및 컨스트럭터 두 개의 월드 챔피언십 타이틀이 있다.</p>
+
+  <p class="clause"><span class="clause-num">A1.1.2</span> 챔피언십은 FIA의 독점적 자산이다. FIA는 상업적 권리 보유자에게 챔피언십의 상업적 권리를 독점적으로 활용할 권리를 부여하였다.</p>
+
+  <p class="clause"><span class="clause-num">A1.1.3</span> 본 Section A(일반 규정 조항) 및 그 부록에는 챔피언십에 일반적으로 적용되는 조항이 포함되어 있으며, 별도로 명시되지 않는 한 FIA F1 규정의 모든 다른 섹션에 적용된다.</p>
+
+  <div class="sub-header" id="a1-2">A1.2 적용 규정</div>
+
+  <p class="clause"><span class="clause-num">A1.2.1</span> 챔피언십, 각 경기 및 모든 F1 활동은 FIA 규칙 및 규정에 따라 FIA가 관할한다. FIA 규칙 및 규정에는 FIA 정관, FIA 국제 스포츠 코드 및 그 부록("ISC"), FIA F1 규정(제A1.2.2조 참조), FIA 윤리 강령, FIA 사법 및 징계 규칙, 그리고 FIA가 수시로 발행(및 개정)하는 기타 규칙, 정책 및 절차("FIA 규칙 및 규정")가 포함된다. FIA는 또한 수시로 구속력 있는 또는 구속력 없는 지침, 설명 및 피드백을 포함할 수 있는 FIA F1 문서(제A1.2.3조 및 제A9.5조 참조)를 발행할 수 있다.</p>
+
+  <p class="clause"><span class="clause-num">A1.2.2</span> "FIA F1 규정"은 다음으로 구성된다:</p>
+  <p class="clause-sub">- Section A: FIA 포뮬러 원 일반 규정 조항 및 관련 부록;</p>
+  <p class="clause-sub">- Section B: FIA 포뮬러 원 스포팅 규정 및 관련 부록;</p>
+  <p class="clause-sub">- Section C: FIA 포뮬러 원 기술 규정 및 관련 부록;</p>
+  <p class="clause-sub">- Section D: FIA 포뮬러 원 재무 규정 – F1 팀 및 관련 부록;</p>
+  <p class="clause-sub">- Section E: FIA 포뮬러 원 재무 규정 – PU 제조사 및 관련 부록; 그리고</p>
+  <p class="clause-sub">- Section F: FIA 포뮬러 원 운영 규정 및 관련 부록.</p>
+
+  <p class="clause"><span class="clause-num">A1.2.3</span> FIA F1 문서</p>
+  <p class="clause-sub">a. FIA는 수시로 추가 문서("FIA F1 문서")를 발행할 수 있으며, 이는 구속력 있는 지침(해당 FIA F1 규정에 명시적으로 규정된 범위 내에서) 또는 구속력 없는 지침을 포함할 수 있다. 이러한 문서에는 "FIA-F1-Doc" 접두사가 붙으며, 그 다음에 문서 번호, 버전, 제목, 그리고 구속력 여부(구속력 있는 경우 해당 FIA F1 규정 조항 참조 포함)가 명시된다. FIA는 이러한 FIA F1 문서를 FIA 포털에서 F1 팀 및 PU 제조사에게 제공한다. F1 팀 및 PU 제조사는 기밀유지 제한에 따라 해당 문서를 각각의 인력(및 해당되는 경우 각각의 공급업체)과 공유할 책임이 있다.</p>
+
+  <p class="clause-sub">b. 이러한 문서의 내용은 통상적으로 기밀이며 FIA가 지정한 수령인에게만 제공된다. 수령인은 필요한 경우 전문 자문인, 공급업체, 법적 그룹 구성원에게 해당 내용을 공유하거나 적용 법률이 요구하는 바에 따라 공개할 수 있다.</p>
+
+  <p class="clause-sub">c. 구속력 있는 것으로 지정된 FIA F1 문서는 다음으로 한정된다:</p>
+  <p class="clause-sub2">i. 재무 규정의 해당 조항에 따른 결정(Determination)으로 지정된 FIA 발행 문서;</p>
+  <p class="clause-sub2">ii. 기술 규정의 해당 조항에 규정되고 이에 따라 F1 차량에 특정 부품 또는 장치를 올바르게 설치하기 위한 기술 사양을 적시에 제공하는 문서;</p>
+  <p class="clause-sub2">iii. FIA F1 규정 준수를 위해 F1 팀 및/또는 PU 제조사가 FIA에 제공해야 하는 필수 정보 또는 문서를 명시하고, 해당 정보 또는 문서의 형식을 정의하는 문서; 그리고</p>
+  <p class="clause-sub2">iv. 챔피언십 참가자와 관중 및 기타 참석자의 안전을 보호하기 위해 FIA가 필요하다고 판단하는 긴급 조치를 정의하는 문서.</p>
+
+  <p class="clause-sub">d. 구속력 없는 것으로 지정된 FIA F1 문서는 권고 사항에 불과하며 FIA F1 규정의 일부를 구성하지 않는다. 이러한 문서는 FIA F1 규정의 적용 및 시행에 관한 지침, 설명, 의견 또는 피드백을 제공할 수 있으며, 일반적으로 FIA F1 규정을 준수하기 위해 요구되는 사항에 대한 FIA의 입장을 명시하지만, 적용 가능한 규정의 범위를 넘어서는 추가적인 준수 의무나 요구사항을 팀 또는 PU 제조사에 부과하지는 않는다.</p>
+
+  <p class="clause"><span class="clause-num">A1.2.4</span> 적용 법률 — FIA F1 규정의 어떤 내용도 적용 법률의 적용을 손상하거나 영향을 미치려는 의도가 없다. 적용 법률이 FIA 규칙 및 규정에 따른 관련자의 의무와 충돌할 수 있는 경우, 적용 법률이 우선하며 FIA 규칙 및 규정 위반은 성립하지 않는다.</p>
+
+  <div class="sub-header" id="a1-3">A1.3 적용 범위</div>
+
+  <p class="clause"><span class="clause-num">A1.3.1</span> 챔피언십, 경기 또는 F1 활동에 어떤 자격으로든 참가하는 모든 적용 대상자(제A1.3.2조에 정의)는 그러한 참가의 조건으로서 FIA 규칙 및 규정(FIA F1 규정 포함) 및 모든 결정에 구속되고 이를 준수하기로 동의한 것으로 간주되며, 위반 시 해당 결과를 포함하여 FIA 규칙 및 규정을 시행할 FIA의 권한과 스튜어드 및 FIA 법원의 관할권에 복종한 것으로 간주된다.</p>
+
+  <p class="clause"><span class="clause-num">A1.3.2</span> FIA 규칙 및 규정(FIA F1 규정 포함)은 다음 인원(각각 "적용 대상자")에게 적용된다:</p>
+  <p class="clause-sub">a. F1 팀 및 그 인력;</p>
+  <p class="clause-sub">b. PU 제조사 및 그 인력;</p>
+  <p class="clause-sub">c. 드라이버;</p>
+  <p class="clause-sub">d. ASN(각국 스포츠 기관);</p>
+  <p class="clause-sub">e. 주최자;</p>
+  <p class="clause-sub">f. 프로모터;</p>
+  <p class="clause-sub">g. 단일 공급업체;</p>
+  <p class="clause-sub">h. 서킷 운영자;</p>
+  <p class="clause-sub">i. 임원;</p>
+  <p class="clause-sub">j. 제A3.5조에 따른 신규 참가 팀;</p>
+  <p class="clause-sub">k. 제A3.6조에 따른 신규 참가 PU 제조사;</p>
+  <p class="clause-sub">l. 제A1.4.1조에 의해 사실상 포착되는 기타 인원; 그리고</p>
+  <p class="clause-sub">m. FIA 규칙 및 규정과/또는 FIA F1 규정에 구속되기로 서면 동의한 기타 인원.</p>
+
+  <p class="clause"><span class="clause-num">A1.3.3</span> 의심의 여지를 없애기 위해, 적용 대상자는 모든 FIA 규칙 및 규정에 구속되므로, FIA F1 규정 이외의 FIA 규칙 및 규정 위반이 발견된 경우, FIA F1 규정에 달리 명시되지 않는 한 해당 위반은 위반된 특정 FIA 규칙 및 규정에 따라 추적된다.</p>
+
+  <div class="sub-header" id="a1-4">A1.4 위반에 대한 일반 책임</div>
+
+  <p class="clause"><span class="clause-num">A1.4.1</span> ISC 제9.15조와 일관되게, FIA F1 규정에 구속되는 각 F1 팀, PU 제조사 및 기타 단체는 그 인력 및 그를 대신하여 또는 법적 그룹 내 단체를 대신하여 행동하는 기타 인원의 행위로 인한 FIA F1 규정의 미준수에 대해 무과실 책임(strict liability)을 진다.</p>
+
+  <p class="clause"><span class="clause-num">A1.4.2</span> 구체적으로 명시되지 않는 한 FIA F1 규정에 따른 개인 책임은 없다. FIA F1 규정이 개인에게 특정 의무를 부과하는 경우, 해당 개인은 그러한 의무 위반에 대해 개인적으로 책임을 질 수 있다.</p>
+
+  <p class="clause"><span class="clause-num">A1.4.3</span> 제A1.4.2조의 규정에도 불구하고, 다음에 해당하지 않는 한 개인에게 벌금이 부과되지 않는다:</p>
+  <p class="clause-sub">a. 드라이버; 또는</p>
+  <p class="clause-sub">b. Section A의 규정 및 ISC와 관련하여 Section B, C, D, E, F의 범위를 벗어나는 개인 행위에 관련된 위반에 대한 F1 팀 또는 PU 제조사의 핵심 개인.</p>
+  <p class="clause">그 외 모든 경우, 개인의 특정 행위에 대해 벌금이 적용되는 경우, 해당 벌금은 그 개인이 소속된 F1 팀, PU 제조사 또는 기타 조직에 부과된다.</p>
+
+  <p class="clause"><span class="clause-num">A1.4.4</span> 각 적용 대상자는 항상 FIA 규칙 및 규정을 숙지하고 준수할 개인적 책임이 있다. FIA 규칙 및 규정에 대한 무지는 위반에 대한 항변이 되지 않는다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- A2: FIA 포뮬러 원 월드 챔피언십 -->
+<div class="article-section" id="a2">
+  <div class="article-header"><span class="num">제A2조</span> FIA 포뮬러 원 월드 챔피언십</div>
+  <p style="font-size:.82rem;color:var(--text-light);margin-bottom:16px">자문위원회: RGAC / 거버넌스: F1 위원회 / WMSC</p>
+
+  <div class="sub-header" id="a2-1">A2.1 챔피언십 형식</div>
+
+  <p class="clause"><span class="clause-num">A2.1.1</span> FIA는 매년 1월 1일 이전에 챔피언십에 포함된 경기 목록을 국제 스포츠 캘린더에 게시하며, 각 경기는 제한된 국제 경기의 지위를 갖는다.</p>
+
+  <p class="clause"><span class="clause-num">A2.1.2</span> 챔피언십의 최대 경기 수는 24개이고 최소 경기 수는 8개이다.</p>
+
+  <p class="clause"><span class="clause-num">A2.1.3</span> 챔피언십에는 최대 24대의 F1 차량이 참가할 수 있으며, 각 F1 팀은 2대의 F1 차량을 출전시킨다.</p>
+
+  <p class="clause"><span class="clause-num">A2.1.4</span> 월드 챔피언십 타이틀:</p>
+  <p class="clause-sub">a. 드라이버 챔피언십 타이틀은 제A2.2조에 따라 산정된 최다 포인트를 획득한 F1 드라이버에게 수여되며, 실제로 치러진 모든 경기의 결과를 고려한다.</p>
+  <p class="clause-sub">b. 컨스트럭터 챔피언십 타이틀은 제A2.2조에 따라 산정된 최다 포인트를 획득한 F1 팀에게 수여되며, 실제로 치러진 경기에서 양 F1 차량의 결과를 고려한다. 자체 제조하지 않은 파워 유닛을 사용하는 F1 팀이 컨스트럭터 챔피언십 타이틀을 획득한 경우, 컨스트럭터 챔피언십 타이틀은 해당 F1 팀에 수여된다.</p>
+  <p class="clause-sub">c. 둘 이상의 F1 드라이버 또는 F1 팀이 동일한 포인트로 챔피언십을 마감한 경우, 상위 순위는 다음에 따라 결정된다:</p>
+  <p class="clause-sub2">i. 레이스에서 1위를 가장 많이 차지한 자.</p>
+  <p class="clause-sub2">ii. 1위 횟수가 동일한 경우, 2위를 가장 많이 차지한 자.</p>
+  <p class="clause-sub2">iii. 2위 횟수가 동일한 경우, 3위를 가장 많이 차지한 자, 이하 동일하게 승자가 결정될 때까지 계속한다.</p>
+  <p class="clause-sub2">iv. 이 절차로도 결과가 나오지 않는 경우, 시즌 중 F1 드라이버들의 예선 결과에 위와 동일한 기준을 적용한다.</p>
+
+  <div class="sub-header" id="a2-2">A2.2 챔피언십 포인트 체계</div>
+
+  <p class="clause"><span class="clause-num">A2.2.1</span> 레이스 경기에 대한 포인트 배정</p>
+  <p class="clause">드라이버 챔피언십 및 컨스트럭터 챔피언십 타이틀을 위한 포인트는 각 경기에서 최종 레이스 분류에 기초하여 배정되며, 스타트 신호와 세션 종료 신호 사이에 선두가 완주한 거리에 따라 달라진다. 모든 경우, 세이프티카 또는 버추얼 세이프티카 절차 없이 선두가 최소 2바퀴를 완전하고 연속적으로 완주하지 않으면 포인트가 배정되지 않는다.</p>
+
+  <div class="changed">
+    포인트 배정 기준이 "랩 수(laps)" 기반에서 "거리(distance)" 기반으로 변경됨 (Issue 02 변경사항)
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th rowspan="2">순위</th>
+        <th colspan="4">포인트</th>
+      </tr>
+      <tr>
+        <th>1열<br>≥2바퀴</th>
+        <th>2열<br>≥25%</th>
+        <th>3열<br>≥50%</th>
+        <th>4열<br>≥75%</th>
+      </tr>
+      <tr><td>1위</td><td>6</td><td>13</td><td>19</td><td>25</td></tr>
+      <tr><td>2위</td><td>4</td><td>10</td><td>14</td><td>18</td></tr>
+      <tr><td>3위</td><td>3</td><td>8</td><td>12</td><td>15</td></tr>
+      <tr><td>4위</td><td>2</td><td>6</td><td>10</td><td>12</td></tr>
+      <tr><td>5위</td><td>1</td><td>5</td><td>8</td><td>10</td></tr>
+      <tr><td>6위</td><td></td><td>4</td><td>6</td><td>8</td></tr>
+      <tr><td>7위</td><td></td><td>3</td><td>4</td><td>6</td></tr>
+      <tr><td>8위</td><td></td><td>2</td><td>3</td><td>4</td></tr>
+      <tr><td>9위</td><td></td><td>1</td><td>2</td><td>2</td></tr>
+      <tr><td>10위</td><td></td><td></td><td>1</td><td>1</td></tr>
+    </table>
+  </div>
+
+  <p class="clause" style="margin-top:16px"><span class="clause-num">A2.2.2</span> 스프린트에 대한 포인트 배정</p>
+  <p class="clause">각 스프린트에서 드라이버 및 컨스트럭터 챔피언십 타이틀을 위한 포인트는 최종 스프린트 분류에 기초하여 배정된다. 세이프티카 또는 버추얼 세이프티카 절차 없이 선두가 최소 2바퀴를 완주하지 않으면 포인트가 배정되지 않는다.</p>
+  <p class="clause-sub">a. 선두가 2바퀴를 완주했으나 예정 스프린트 거리의 50% 미만인 경우, 포인트가 배정되지 않는다.</p>
+  <p class="clause-sub">b. 선두가 예정 스프린트 거리의 50% 이상을 완주한 경우, 아래 표에 따라 포인트가 배정된다.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>순위</th><th>포인트 (≥50%)</th></tr>
+      <tr><td>1위</td><td>8</td></tr>
+      <tr><td>2위</td><td>7</td></tr>
+      <tr><td>3위</td><td>6</td></tr>
+      <tr><td>4위</td><td>5</td></tr>
+      <tr><td>5위</td><td>4</td></tr>
+      <tr><td>6위</td><td>3</td></tr>
+      <tr><td>7위</td><td>2</td></tr>
+      <tr><td>8위</td><td>1</td></tr>
+    </table>
+  </div>
+
+  <p class="clause"><span class="clause-num">A2.2.3</span> 동착 — 동일 순위에 동착한 F1 차량에 배정되는 상금 및 포인트는 합산하여 균등 분배한다.</p>
+
+  <div class="sub-header" id="a2-3">A2.3 F1 차량 도장 (Car Livery)</div>
+
+  <p class="clause"><span class="clause-num">A2.3.1</span> F1 차량 도장에 관한 ISC 규정은 챔피언십에 적용되지 않는다.</p>
+
+  <p class="clause"><span class="clause-num">A2.3.2</span> F1 팀이 출전시키는 양 F1 차량은 챔피언십의 모든 경기에서 실질적으로 동일한 도장으로 제시되어야 한다. 챔피언십 중 도장의 중요한 변경은 FIA 및 상업적 권리 보유자의 동의 하에만 가능하다.</p>
+
+  <p class="clause"><span class="clause-num">A2.3.3</span> F1 차량의 광고</p>
+  <p class="clause-sub">a. 정치적이거나 종교적 성격의 광고 또는 FIA의 이익에 해로운 광고는 엄격히 금지된다.</p>
+  <p class="clause-sub">b. F1 팀은 F1 차량 도장의 모든 광고가 적용 법률을 준수하도록 보장해야 한다.</p>
+
+  <p class="clause"><span class="clause-num">A2.3.4</span> F1 차량 도장 요구사항</p>
+  <div class="changed">
+    a. 각 F1 차량은 파란색 또는 흰색의 FIA 로고를 부착해야 하며, 높이는 최소 75mm(기존 100mm에서 변경)여야 한다. 이 로고는 노즈 상단 또는 노즈 양측에 위치하여 차량 측면에서 보여야 한다.
+  </div>
+  <p class="clause-sub">b. F1 차량 제작사의 이름 또는 엠블럼은 F1 차량 노즈 전면에 표시되어야 하며, 최대 치수가 최소 25mm여야 한다.</p>
+  <p class="clause-sub">c. 드라이버의 이름은 F1 차량의 외부 차체에 명확하게 읽을 수 있도록 표시되어야 한다.</p>
+  <p class="clause-sub">d. 각 F1 팀의 F1 차량을 트랙에서 쉽게 구별할 수 있도록, 한 차량의 주 롤 구조물 위 온보드 카메라는 공급된 그대로 유지해야 하고, 다른 차량의 온보드 카메라는 주로 형광 노란색이어야 한다.</p>
+  <p class="clause-sub">e. 도장은 F1 차량의 차체를 넘어 돌출되어서는 안 되며, 차량 양측에서 실질적으로 유사해야 한다.</p>
+
+  <div class="sub-header" id="a2-4">A2.4 경기 번호 (Competition Numbers)</div>
+
+  <p class="clause"><span class="clause-num">A2.4.1</span> 제A2.4.3조에 따라, 모든 F1 드라이버에게는 선착순으로 영구 경기 번호가 배정된다. F1 드라이버는 해당 챔피언십에 참가하는 모든 경기에서 해당 경기 번호를 사용해야 한다.</p>
+
+  <p class="clause"><span class="clause-num">A2.4.2</span> 현 월드 챔피언 드라이버는 번호 1을 사용할 수 있다. 이전에 해당 F1 드라이버에게 배정된 경기 번호는 월드 챔피언 드라이버 타이틀을 유지하지 못하는 경우 다음 챔피언십을 위해 예약된다.</p>
+
+  <p class="clause"><span class="clause-num">A2.4.3</span> F1 드라이버는 FIA에 서면으로 이 결정을 확인하거나, 연속 두 챔피언십 동안 경기에 참가하지 않는 경우 경기 번호를 영구적으로 상실한다.</p>
+
+  <p class="clause"><span class="clause-num">A2.4.5</span> 경기 번호는 1번부터 99번(포함)까지이며, 17번은 제외한다.</p>
+
+  <p class="clause"><span class="clause-num">A2.4.6</span> 각 F1 차량은 챔피언십 시작 시 FIA가 발표한 드라이버의 경기 번호를 부착해야 한다. 경기 번호는 F1 차량 전면에서 명확히 보여야 하며, 최소 높이 160mm, 최소 획 두께 25mm이어야 한다.</p>
+
+  <div class="sub-header" id="a2-5">A2.5 경기의 연기 또는 취소</div>
+
+  <p class="clause"><span class="clause-num">A2.5.1</span> 경기는 ISC에 따라 연기 또는 취소될 수 있다.</p>
+  <p class="clause"><span class="clause-num">A2.5.2</span> 12대 미만의 F1 차량이 가용한 경우 경기가 취소될 수도 있다.</p>
+
+  <div class="sub-header" id="a2-6">A2.6 FIA 시상식 및 갈라 디너</div>
+
+  <p class="clause"><span class="clause-num">A2.6.1</span> 드라이버 챔피언십 1위, 2위, 3위 F1 드라이버, 컨스트럭터 챔피언십 1위 F1 팀의 대표, 그리고 우승 차량의 주행 또는 전시 버전(FIA가 지정)은 연례 FIA 시상식 및 갈라 디너의 전체 기간 동안 참석해야 하며, 각각 F1 팀의 비용으로 한다. 이 요구사항의 불이행은 불가항력의 경우를 제외하고 각 불이행에 대해 최대 €250,000의 벌금이 부과된다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- A3: 참가 신청, 라이선스 및 등록 -->
+<div class="article-section" id="a3">
+  <div class="article-header"><span class="num">제A3조</span> 참가 신청, 라이선스 및 등록</div>
+  <p style="font-size:.82rem;color:var(--text-light);margin-bottom:16px">자문위원회: RGAC (별도 명시 제외) / 거버넌스: F1 위원회 / WMSC (별도 명시 제외)</p>
+
+  <div class="sub-header">A3.1 F1 팀 참가 신청</div>
+
+  <p class="clause"><span class="clause-num">A3.1.1</span> 기존 F1 팀 및 신규 참가 팀은 챔피언십 각 시즌 이전에 신청서(참가 양식 및 FIA가 요구하는 기타 관련 서류 포함)를 제출해야 한다.</p>
+
+  <p class="clause"><span class="clause-num">A3.1.2</span> N년도 챔피언십 참가를 위한 F1 팀의 신청은 N-1년 10월 21일부터 11월 1일까지(포함) FIA에 제출할 수 있다. 이러한 신청에는 다음이 포함되어야 한다: (i) 부록 A4A에 명시된 참가 양식; (ii) 부록 A4B에 명시된 F1 팀 핵심 인력 등록 양식; (iii) F1 팀 슈퍼 라이선스 신청 양식; (iv) N-1년 12월 15일까지 FIA에 참가비를 납부하겠다는 확약.</p>
+
+  <p class="clause"><span class="clause-num">A3.1.3</span> F1 팀의 신청에는 다음이 포함되어야 한다:</p>
+  <p class="clause-sub">a. 신청자가 FIA 규칙 및 규정을 읽었으며 자신과 챔피언십 참가와 관련된 모든 사람을 대신하여 이를 준수하기로 동의함을 확인;</p>
+  <p class="clause-sub">b. F1 팀의 이름(섀시 이름 포함);</p>
+  <p class="clause-sub">c. 파워 유닛의 제조사(F1 팀은 챔피언십 중 언제든지 파워 유닛 제조사를 변경할 수 있으나, 처음 사용되는 다음 경기 전에 FIA에 즉시 통지해야 함);</p>
+  <p class="clause-sub">d. F1 차량의 제조사;</p>
+  <p class="clause-sub">e. F1 드라이버의 이름;</p>
+  <p class="clause-sub">f. 양 F1 차량으로 모든 경기에 참가하겠다는 신청자의 확약.</p>
+
+  <p class="clause"><span class="clause-num">A3.1.4</span> F1 팀의 신청은 상기 요구사항에 따라 적절히 완료되고 참가비의 적시 납부가 수반되어야 한다.</p>
+
+  <p class="clause"><span class="clause-num">A3.1.5</span> 승인된 신청자는 자동으로 챔피언십의 모든 경기에 참가 등록된다.</p>
+
+  <div class="sub-header">A3.2 파워 유닛 제조사 참가 신청</div>
+  <p class="clause">2026~2030 챔피언십에서 하나 이상의 F1 팀에 파워 유닛을 공급하기 위해 등록된 PU 제조사는 부록 C5의 요구사항에 따라 해당 챔피언십 기간에 파워 유닛을 공급하려는 첫 해의 3월 1일 이전에 FIA에 파워 유닛 형식 승인 서류를 제출해야 한다.</p>
+
+  <div class="sub-header">A3.3 라이선스</div>
+
+  <p class="clause"><span class="clause-num">A3.3.1</span> F1 드라이버:</p>
+  <p class="clause-sub">a. F1 드라이버는 유효한 슈퍼 라이선스 및 국제 라이선스를 보유해야 한다.</p>
+  <p class="clause-sub">b. 견책 또는 벌금 이외의 처벌이 부과되는 경우, 스튜어드는 F1 드라이버의 슈퍼 라이선스에 벌점을 부과할 수 있다. F1 드라이버가 슈퍼 라이선스에 12벌점을 누적하면, 다음 경기에서 출전 정지되며, 이후 12점이 제거된다. 벌점은 부과 후 12개월간 유지된다.</p>
+
+  <p class="clause"><span class="clause-num">A3.3.2</span> F1 팀은 챔피언십 참가 조건으로 유효한 슈퍼 라이선스를 보유해야 한다.</p>
+
+  <div class="sub-header">A3.4 F1 팀 및 PU 제조사 핵심 인력의 등록 인증서</div>
+  <p class="clause">ISC 제2.6.4조 및 제2.6.5조에 따라, F1 팀 및 PU 제조사는 해당 조항에 열거된 인력과 부록 A4B 및 부록 A5에 의해 등록이 요구되는 기타 인력을 FIA에 등록해야 한다.</p>
+
+  <div class="sub-header">A3.5 신규 참가 팀</div>
+
+  <p class="clause"><span class="clause-num">A3.5.1</span> 챔피언십의 필수 기준을 유지하기 위해, 신청이 수락된 신규 참가 팀은 N년도 챔피언십 첫 참가 이전에 다음 FIA F1 규정 조항을 준수해야 한다:</p>
+  <p class="clause-sub">a. Section A (일반 규정 조항): N-1년 전체;</p>
+  <p class="clause-sub">b. Section B (스포팅), 제B11조: N-1년 전체;</p>
+  <p class="clause-sub">c. Section D (재무 – F1 팀): N-1년 전체;</p>
+  <p class="clause-sub">d. Section F (운영), 제F1조, F2조, F3.1조, F4조: N-1년 전체;</p>
+  <p class="clause-sub">e. FIA F1 규정에서 신규 참가 팀에 적용된다고 명시적으로 명시한 기타 조항.</p>
+
+  <div class="sub-header">A3.6 신규 참가 PU 제조사</div>
+
+  <p class="clause"><span class="clause-num">A3.6.1</span> 2026~2030 시즌 챔피언십에서 하나 이상의 F1 팀에 파워 유닛을 공급하고자 하는 단체는 PU 제조사 등록 양식을 완성하고, PU 제조사 비주장 협정(Non-Assert Agreement)을 체결하며, 해당 거버넌스 프로세스에 동의해야 한다.</p>
+
+  <p class="clause"><span class="clause-num">A3.6.2</span> N년도부터 파워 유닛을 공급하고자 하는 PU 제조사의 등록 양식 완성 기한은 N-4년 6월 30일이다.</p>
+
+  <p class="clause"><span class="clause-num">A3.6.5</span> 신규 참가 PU 제조사의 준수 요구사항:</p>
+  <p class="clause-sub">a. Section A: N-4, N-3, N-2, N-1년 전체;</p>
+  <p class="clause-sub">b. Section E (재무 – PU 제조사): N-3, N-2, N-1년 전체;</p>
+  <p class="clause-sub">c. Section F (운영) 관련 조항: N-4~N-1년.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- A4: 무결성 요구사항 -->
+<div class="article-section" id="a4">
+  <div class="article-header"><span class="num">제A4조</span> 무결성 요구사항 (INTEGRITY REQUIREMENTS)</div>
+  <p style="font-size:.82rem;color:var(--text-light);margin-bottom:16px">자문위원회: RGAC / 거버넌스: F1 위원회 / WMSC</p>
+
+  <div class="sub-header">A4.1 적격성 심사 (Fit and Proper Persons Test)</div>
+  <p class="clause"><span class="clause-num">A4.1.1</span> 적격성 심사("FPP 심사")는 ISC 부록 F에 명시되어 있으며 챔피언십 참가의 조건을 구성한다. FPP 심사의 목적은 챔피언십의 이미지, 명성 및 무결성을 보호하는 것이다.</p>
+  <p class="clause"><span class="clause-num">A4.1.2</span> FPP 심사는 다음에 해당하는 각 자연인("FP 관련자")에게 적용된다:</p>
+  <p class="clause-sub">a. F1 팀, 신규 참가 팀, PU 제조사 또는 신규 참가 PU 제조사의 발행 주식의 30% 이상을 직접 또는 간접적으로 보유하는 자연인;</p>
+  <p class="clause-sub">b. CEO(또는 동등한 직위) 또는 팀 프린시펄(또는 동등한 직위), 또는 해당 단체의 경영을 지배하거나 결정하는 자연인.</p>
+
+  <div class="sub-header">A4.2 도핑 방지</div>
+  <p class="clause"><span class="clause-num">A4.2.1</span> FIA는 2010년부터 세계도핑방지규약을 준수하고 있다. 세계도핑방지규약은 FIA 도핑방지 규정에 통합되었다.</p>
+
+  <div class="sub-header">A4.3 경기 조작 방지</div>
+  <p class="clause"><span class="clause-num">A4.3.1</span> FIA 경기 조작 규정은 모터스포츠의 무결성을 유지하고 경기 결과에 부적절하게 영향을 미치려는 시도를 방지하는 것을 목적으로 한다.</p>
+
+  <div class="sub-header">A4.4 보호</div>
+  <p class="clause"><span class="clause-num">A4.4.1</span> 모든 참가자의 안전과 복지는 최우선이다. FIA는 모든 개인, 특히 아동 및 취약 성인의 복지와 안전을 촉진하는 것을 목표로 한다.</p>
+
+  <div class="sub-header">A4.5 음주 방지</div>
+  <p class="clause"><span class="clause-num">A4.5.1</span> FIA는 인간의 행동과 판단에 영향을 미치고 운전 능력을 손상시킬 수 있는 물질, 특히 알코올을 금지함으로써 모터스포츠의 안전성을 향상시키는 데 전념한다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- A5: 주요 이해관계자 역할과 책임 -->
+<div class="article-section" id="a5">
+  <div class="article-header"><span class="num">제A5조</span> 주요 이해관계자의 일반 역할과 책임</div>
+  <p style="font-size:.82rem;color:var(--text-light);margin-bottom:16px">자문위원회: RGAC / 거버넌스: F1 위원회 / WMSC (별도 명시 제외)</p>
+
+  <div class="sub-header">A5.1 모든 이에게 적용되는 일반 의무</div>
+  <p class="clause"><span class="clause-num">A5.1.1</span> 모든 적용 대상자는 다음의 일반 의무를 준수해야 한다:</p>
+  <p class="clause-sub">a. 항상 FIA 규칙 및 규정을 준수하고, 자신의 역할과 책임 범위 내의 조항을 준수;</p>
+  <p class="clause-sub">b. 제A6.3조 및 부록 A3에 따른 FIA의 서면 정보 요청/접근 요청 또는 요구(Demand)에 지정된 기한까지 준수;</p>
+  <p class="clause-sub">c. FIA가 발행한 문서에서 요구하는 모든 정보 또는 서류를 지정된 기한까지 제출;</p>
+  <p class="clause-sub">d. FIA의 규제 기능 수행에 있어 적시에 완전히 협력;</p>
+  <p class="clause-sub">e. FIA의 규제 기능 수행을 지연, 방해 또는 좌절시키지 않을 것;</p>
+  <p class="clause-sub">f. FIA 규칙 및 규정 위반에 관한 정보를 선의로 보고하는 것을 만류하거나 보복하지 않을 것;</p>
+  <p class="clause-sub">g. 허위이거나 사기적임을 알고 있거나 합리적으로 알아야 하는 선언서에 서명하거나 정보를 FIA에 제출하지 않을 것;</p>
+  <p class="clause-sub">h. 부정확하거나 불완전하거나 오해의 소지가 있는 보고 서류를 FIA에 제출하지 않을 것;</p>
+  <p class="clause-sub">i. 모든 해당 결정, ABA 또는 합의의 조건을 준수;</p>
+  <p class="clause-sub">j. 부과된 잠정 정지 또는 제재 조건을 준수;</p>
+  <p class="clause-sub">k. 항상 정직하고 성실하게, 투명성과 협력의 정신으로 모든 해당 의무를 수행;</p>
+  <p class="clause-sub">l. FIA 또는 챔피언십의 명예를 실추시키는 행위(작위 또는 부작위)를 하지 않을 것; 그리고</p>
+  <p class="clause-sub">m. ISC 제12.2조를 포함하여 FIA F1 규정 또는 FIA 규칙 및 규정에 따른 기타 의무를 준수.</p>
+
+  <div class="sub-header">A5.2 FIA</div>
+  <p class="clause"><span class="clause-num">A5.2.1</span> FIA는 FIA 규칙 및 규정(FIA F1 규정 포함)을 개발, 관리 및 시행하고 이에 명시된 권한을 행사하고 기능을 수행할 책임이 있다.</p>
+  <p class="clause"><span class="clause-num">A5.2.2</span> FIA는 FIA F1 규정의 준수를 지속적으로 모니터링하고, 미준수 의심 사례를 조사하며, 위반에 대해 적절한 집행 조치를 취할 책임이 있다.</p>
+
+  <div class="sub-header">A5.3 프로모터 및 주최자</div>
+  <p class="clause"><span class="clause-num">A5.3.1</span> 상업적 권리 보유자는 각 경기에 대해 프로모터를 임명한다. 프로모터는 경기를 홍보하고 재무 규정과 관련된 사항을 제외한 재정 및 상업적 사항에 대해서만 통제권을 갖는다.</p>
+  <p class="clause"><span class="clause-num">A5.3.3</span> 프로모터 및 주최자에 대한 제한 — F1 팀이나 F1 팀 연합은 직접 또는 간접적으로 경기를 주최하거나 홍보할 수 없다.</p>
+
+  <div class="sub-header">A5.7 F1 팀 및 PU 제조사</div>
+  <p class="clause"><span class="clause-num">A5.7.1</span> 각 F1 팀 또는 PU 제조사는 FIA, 스튜어드 및 관련 FIA 법원에 모든 FIA F1 규정을 항상 준수하고 있음을 입증할 의무가 있다.</p>
+  <p class="clause"><span class="clause-num">A5.7.3</span> 인력 이동 — F1 팀: 각 F1 팀은 다른 F1 팀에 대한 기밀 정보 공개를 방지하기 위한 합리적 조치를 시행해야 한다. 다음 활동에 관여하는 인력은 기밀 정보를 보유한 것으로 간주된다:</p>
+  <p class="clause-sub">i. F1 차량의 설계, 연구 개발 또는 시스템;</p>
+  <p class="clause-sub">ii. 시뮬레이션 방법론의 개발;</p>
+  <p class="clause-sub">iii. 레이스 운영 또는 전략에 관여하는 인력.</p>
+  <p class="clause">두 F1 팀이 일정 수준의 협력을 공유하는 경우(예: 동일 소유권), 팀 간 인력 이동 시 최소 3개월의 가든 리브(Garden Leave) 기간을 부과해야 한다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- A6: 조사, 질의권 및 위반 통지 -->
+<div class="article-section" id="a6">
+  <div class="article-header"><span class="num">제A6조</span> 조사, 질의권 및 위반 통지</div>
+  <p style="font-size:.82rem;color:var(--text-light);margin-bottom:16px">자문위원회: RGAC / 거버넌스: F1 위원회 / WMSC</p>
+
+  <div class="sub-header">A6.1 조사</div>
+  <p class="clause"><span class="clause-num">A6.1.1</span> 일반: FIA는 본 제A6조 및 FIA 사법 및 징계 규칙에 따라 FIA F1 규정에 의한 조사를 개시하고 수행할 수 있다.</p>
+  <p class="clause"><span class="clause-num">A6.1.2</span> 조사 개시: FIA는 제A7.9조에 정의된 소멸시효에 따라, FIA F1 규정의 실제, 잠재적 또는 의심되는 미준수에 대해 언제든지 조사를 개시하고 수행할 수 있다. F1 팀 또는 PU 제조사("신고자")가 다른 F1 팀 또는 PU 제조사의 위반을 FIA에 보고하는 경우에도 조사를 개시할 수 있다. 신고 시 다음이 필요하다:</p>
+  <p class="clause-sub">i. 선의로 제출되고 미준수를 인지한 후 즉시 제출;</p>
+  <p class="clause-sub">ii. 미준수 F1 팀 또는 PU 제조사를 식별하고 명확히 요약;</p>
+  <p class="clause-sub">iii. 관련 FIA F1 규정 조항을 명확히 명시;</p>
+  <p class="clause-sub">iv. 충분한 유효 증거 또는 강력한 징후 포함;</p>
+  <p class="clause-sub">v. 신고자의 CEO 또는 팀 프린시펄의 서명;</p>
+  <p class="clause-sub">vi. €10,000의 비환불 행정 수수료 및 €40,000의 보증금 동반.</p>
+
+  <div class="sub-header">A6.2 FIA 윤리 및 준법 핫라인</div>
+  <p class="clause">FIA 웹사이트에서 이용 가능한 FIA 윤리 및 준법 핫라인은 개별 내부고발자가 FIA 규칙 및 규정의 위반 혐의에 관한 문제나 우려를 기밀로 제기할 수 있게 한다.</p>
+
+  <div class="sub-header">A6.3 FIA 정보/접근 요청 및 요구(Demand)</div>
+  <p class="clause"><span class="clause-num">A6.3.1</span> FIA는 규제 기능을 수행하기 위해:</p>
+  <p class="clause-sub">a. F1 팀, PU 제조사 등에 정보, 서류 또는 설명을 서면으로 요청할 수 있으며;</p>
+  <p class="clause-sub">b. 조사 맥락에서, 전자 기기에 저장되거나 접근 가능한 데이터가 FIA F1 규정 미준수의 증거가 될 수 있다고 믿을 합리적 근거가 있는 경우, 전자 기기에 대한 접근 및 데이터 복사/다운로드를 서면으로 요청할 수 있다("요구(Demand)").</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- A7: 위반 심판 및 제재 -->
+<div class="article-section" id="a7">
+  <div class="article-header"><span class="num">제A7조</span> 위반 심판 및 제재</div>
+  <p style="font-size:.82rem;color:var(--text-light);margin-bottom:16px">자문위원회: RGAC / 거버넌스: F1 위원회 / WMSC</p>
+
+  <div class="sub-header">A7.1 청문회 없는 사건 해결</div>
+  <p class="clause"><span class="clause-num">A7.1.1</span> 합의: 기소 기관은 FIA 사법 및 징계 규칙에 따라 절차를 종료하기 위한 합의를 체결할 수 있다.</p>
+  <p class="clause"><span class="clause-num">A7.1.2</span> 승인된 위반 합의(ABA) — 재무 규정: 비용 상한 관리기관은 재무 규정 위반 혐의에 대해 언제든지 해당 F1 팀, PU 제조사 또는 선언 서명자와 청문회 없이 사안을 해결하기 위한 ABA를 체결할 수 있다.</p>
+
+  <div class="sub-header">A7.2 1심 심판</div>
+  <p class="clause"><span class="clause-num">A7.2.1</span> 스튜어드: 이벤트에 임명된 스튜어드는 자신이 임명된 이벤트의 범위 내에서 ISC, 기타 적용 가능한 FIA 규정, 국내 규정 및 부칙 규정의 시행에 있어 최고 권한을 갖는다.</p>
+
+  <div class="changed">
+    b.ii. 스튜어드는 이벤트 이후 결정이 필요하고 사안이 시간에 민감하여 다음 이벤트까지 해결을 지연시키는 것이 적절하지 않은 경우(예: 셧다운 기간 또는 챔피언십 사이), 위반 혐의가 이벤트에 즉각적이고 직접적인 영향을 미치지 않는 경우, 또는 위반 혐의가 하나 이상의 이벤트에 관련되거나 영향을 미치는 경우, 경기외 스튜어드 패널에 권한을 위임할 수 있다. (Issue 02 신설)
+  </div>
+
+  <p class="clause"><span class="clause-num">A7.2.2</span> 국제 재판소: FIA 정관 제26.1조 및 FIA 사법 규칙 제5조에 따라, 스튜어드의 권한에 따르되, 국제 재판소는 도핑방지 규정 및 재무 규정에 관한 사항을 제외한 모든 징계 사항에 대해 1심 관할권을 갖는다.</p>
+
+  <p class="clause"><span class="clause-num">A7.2.3</span> 비용 상한 심판 패널: FIA 정관 제31조에 따라, 비용 상한 심판 패널은 재무 규정에 관한 모든 징계 사항에 대해 1심 관할권을 갖는다.</p>
+
+  <div class="sub-header">A7.5 ICA(국제 항소 법원)에 대한 항소</div>
+  <p class="clause"><span class="clause-num">A7.5.4</span> 항소 접수 수수료: F1 팀, PU 제조사 또는 드라이버의 경우 €5,000의 비환불 행정 수수료 및 €20,000의 보증금. 기타 개인의 경우 €1,000의 수수료 및 €6,000의 보증금.</p>
+
+  <div class="sub-header">A7.9 소멸시효</div>
+  <p class="clause"><span class="clause-num">A7.9.1</span> 위반 또는 법규위반 기소의 법정 소멸시효는 5년이다.</p>
+
+  <div class="sub-header">A7.10 입증 책임 및 증명 기준</div>
+  <p class="clause"><span class="clause-num">A7.10.1</span> FIA는 FIA F1 규정 위반이 발생했음을 입증할 책임이 있다. 증명 기준은 FIA가 혐의의 심각성을 고려하여 심판 패널에게 충분히 만족스러운(comfortable satisfaction) 정도로 위반을 입증했는지 여부이다. 이 기준은 단순한 개연성의 균형보다 높으나 합리적 의심을 넘어서는 증명보다는 낮다.</p>
+
+  <div class="sub-header">A7.12 제재</div>
+  <p class="clause"><span class="clause-num">A7.12.3</span> 추가 제재 — 챔피언십의 맥락에서 다음 추가 제재가 적용될 수 있다:</p>
+  <p class="clause-sub">a. F1 팀 또는 PU 제조사에 대한 강화 모니터링 절차;</p>
+  <p class="clause-sub">b. 지정된 기간 동안 FIA 등록 및/또는 라이선스의 보류 및/또는 취소;</p>
+  <p class="clause-sub">c. 지정된 기간 동안 FIA 월드 챔피언십 경기의 제한 구역 접근권 박탈;</p>
+  <p class="clause-sub">d. 지정된 기간 동안 직접 또는 간접적으로 FIA 경기 참가 정지.</p>
+
+  <p class="clause"><span class="clause-num">A7.12.7</span> 가중 또는 감경 사유</p>
+  <p class="clause">가중 사유 예시: 협력 거부, 악의/부정/고의적 은폐/사기 요소, 이전 위반 전력, 위반의 심각성.</p>
+  <p class="clause">감경 사유 예시: FIA에 대한 자발적 위반 공개, 규정 준수 이력, 불가항력, 완전하고 자유로운 FIA 협력.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- A8: 기밀유지, 공개 보고 및 데이터 프라이버시 -->
+<div class="article-section" id="a8">
+  <div class="article-header"><span class="num">제A8조</span> 기밀유지, 공개 보고 및 데이터 프라이버시</div>
+
+  <div class="sub-header">A8.1 기밀유지</div>
+  <p class="clause"><span class="clause-num">A8.1.1</span> FIA, 스튜어드 및/또는 FIA 법원이 FIA F1 규정에 따라 수령한 모든 정보(개인 정보 포함)는 FIA F1 규정에 따른 규제 기능 수행에 필요한 경우 해당 기관 간에 공유될 수 있다.</p>
+
+  <div class="sub-header">A8.2 공개 보고</div>
+  <p class="clause"><span class="clause-num">A8.2.1</span> FIA는 기밀 정보를 제외하고 다음을 공개적으로 보고할 수 있다:</p>
+  <p class="clause-sub">a. 조사 개시 여부 및 그 결과;</p>
+  <p class="clause-sub">b. 위반 혐의 통지 여부;</p>
+  <p class="clause-sub">c. 스튜어드 또는 1심 법원에 대한 사건 회부;</p>
+  <p class="clause-sub">d. 스튜어드 또는 1심 법원의 최종 결정;</p>
+  <p class="clause-sub">e. 항소 접수 여부;</p>
+  <p class="clause-sub">f. 국제 항소 법원의 최종 결정;</p>
+  <p class="clause-sub">g. ABA 또는 합의 체결 여부 및 조건 요약;</p>
+  <p class="clause-sub">h. 재무 규정 준수 여부.</p>
+
+  <div class="sub-header">A8.3 데이터 프라이버시</div>
+  <p class="clause">FIA는 데이터 관리자로서 FIA F1 규정에 따른 규제 기능을 수행하기 위해 개인 정보를 처리한다. FIA의 개인 데이터 처리, 데이터 주체 권리 관리 및 그 행사 방법에 대한 세부 사항은 www.fia.com/motorsport-privacy-notice에서 확인할 수 있다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- A9: 유효기간, 개정, 해석 및 기타 -->
+<div class="article-section" id="a9">
+  <div class="article-header"><span class="num">제A9조</span> 유효기간, 개정, 해석 및 기타</div>
+
+  <div class="sub-header">A9.1 FIA F1 규정의 유효기간</div>
+  <p class="clause"><span class="clause-num">A9.1.1</span> 달리 명시되지 않는 한, FIA F1 규정은 2026년 1월 1일에 발효되며 해당 FIA F1 규정의 제목에 언급된 전체 연도(N년도) 및 해당 연도 내에 개최되는 챔피언십에 적용된다.</p>
+
+  <div class="sub-header">A9.3 개정</div>
+  <p class="clause"><span class="clause-num">A9.3.1</span> FIA F1 규정의 개정은 ISC 제18조에 따라 WMSC의 승인을 받아야 하며, 해당 거버넌스 프로세스(자문위원회 및 F1 위원회 포함)에 따른 추가 승인 요구사항을 충족해야 한다.</p>
+  <p class="clause"><span class="clause-num">A9.3.2</span> FIA는 다음 개정사항은 WMSC 승인만으로 거버넌스 프로세스 승인 없이 할 수 있다:</p>
+  <p class="clause-sub">a. 안전상의 이유로 이루어진 개정;</p>
+  <p class="clause-sub">b. 경과된 특정 날짜에 대한 참조로 인해 불필요하거나 무관해진 조항의 삭제;</p>
+  <p class="clause-sub">c. 연도별 날짜 참조의 업데이트; 그리고</p>
+  <p class="clause-sub">d. 관련 조항의 해석이나 효력에 영향을 미치지 않는 오타 또는 기타 사소한 오류의 수정.</p>
+
+  <div class="sub-header">A9.4 해석</div>
+  <p class="clause"><span class="clause-num">A9.4.1</span> FIA F1 규정 및 FIA F1 문서의 확정 버전은 영어 버전이며, 해석에 관한 분쟁이 발생하는 경우 이를 사용한다.</p>
+  <p class="clause"><span class="clause-num">A9.4.2</span> FIA F1 규정 및 FIA F1 문서는 독립적이고 자율적인 텍스트로 해석되어야 하며, 특정 관할권의 기존 법률 또는 법규를 참조하여 해석되지 않는다. 전항에 따라, 프랑스 법에 의해 규율되고 해석된다.</p>
+  <p class="clause"><span class="clause-num">A9.4.5</span> 달리 명시되지 않는 한:</p>
+  <p class="clause-sub">a. FIA F1 규정에서 정의된 단어 및 구문(대문자로 시작)은 부록 A1에 명시된 의미를 가지며 모든 섹션에 적용;</p>
+  <p class="clause-sub">b. 제목은 참조의 편의만을 위한 것이며 FIA F1 규정의 일부를 구성하지 않음;</p>
+  <p class="clause-sub">e. 대명사 "they/their"는 개인에 대해 사용되며 모든 성별을 포함;</p>
+  <p class="clause-sub">f. 단수형은 복수형을 포함하고 복수형은 단수형을 포함하되, 이 해석 규칙은 기술적 특성, 측정, 부품 수량 또는 수치 한계를 명시하는 조항에는 적용되지 않음;</p>
+  <p class="clause-sub">k. 시간 표현은 중앙유럽 표준시(CET)를 기준으로 함.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- 부록 개요 -->
+<div class="article-section" id="appendix">
+  <div class="article-header"><span class="num">부록</span> A1~A9 개요</div>
+
+  <div class="note">
+    <strong>부록 A1:</strong> 정의 — FIA F1 규정 전체에 걸쳐 사용되는 핵심 용어의 정의 목록<br>
+    <strong>부록 A2:</strong> 자문위원회 요약<br>
+    <strong>부록 A3:</strong> 전자 기기 접근("요구(Demands)") — 조사 시 전자 기기 데이터 접근에 관한 절차<br>
+    <strong>부록 A4:</strong> FIA F1 월드 챔피언십 참가 양식 및 F1 팀 핵심 인력 등록 양식<br>
+    <strong>부록 A5:</strong> PU 제조사 핵심 인력 등록 양식<br>
+    <strong>부록 A6:</strong> 인력 이동 양식<br>
+    <strong>부록 A7:</strong> 2026~2030 파워 유닛, 연료 및 오일 공급 — 파워 유닛 공급 의무 등에 관한 상세 조항<br>
+    <strong>부록 A8:</strong> 챔피언십 트로피 규칙<br>
+    <strong>부록 A9:</strong> 후속 연도를 위한 Section A 승인된 변경사항
+  </div>
+
+  <div class="note" style="margin-top:20px">
+    본 문서는 2026 FIA F1 규정 Section A: 일반 규정 조항 (Issue 02, 2026년 2월 27일)의 한국어 전문 번역입니다. 
+    법적 효력이 있는 원본은 영어 버전이며, 본 번역은 참고용입니다.
+    <br><br>
+    원문: <a href="https://www.fia.com/system/files/documents/fia_2026_f1_regulations_-_section_a_general_provisions_-_iss_02_-_2026-02-27.pdf" target="_blank" style="color:var(--accent)">FIA 공식 PDF 다운로드</a>
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.getElementById('scrollTop').classList.toggle('visible',window.scrollY>600);
+});
+</script>
+
+</body>
+</html>

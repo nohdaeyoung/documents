@@ -2,6 +2,7 @@ import { adminDb } from "@/lib/firebase/admin";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ArchiveViewer from "@/components/archive-viewer";
+import { cache } from "react";
 
 export async function generateStaticParams() {
   const snap = await adminDb
@@ -13,7 +14,7 @@ export async function generateStaticParams() {
     .map((doc) => ({ slug: doc.data().slug as string }));
 }
 
-async function getArchive(slug: string) {
+const getArchive = cache(async function getArchive(slug: string) {
   const snap = await adminDb
     .collection("archives")
     .where("slug", "==", slug)
@@ -32,7 +33,7 @@ async function getArchive(slug: string) {
     date: string;
     size: number;
   };
-}
+});
 
 export async function generateMetadata({
   params,
@@ -49,8 +50,27 @@ export async function generateMetadata({
       title: archive.title,
       url: `https://d.324.ing/archives/${archive.slug}`,
       images: ["/og-image.png"],
+      locale: "ko_KR",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: archive.title,
+      images: ["/og-image.png"],
     },
   };
+}
+
+type NavItem = { slug: string; title: string };
+
+async function getAdjacentArchives(date: string): Promise<{ prev: NavItem | null; next: NavItem | null }> {
+  const [prevSnap, nextSnap] = await Promise.all([
+    adminDb.collection("archives").where("date", "<", date).orderBy("date", "desc").select("slug", "title").limit(1).get(),
+    adminDb.collection("archives").where("date", ">", date).orderBy("date", "asc").select("slug", "title").limit(1).get(),
+  ]);
+  const prev = prevSnap.empty ? null : { slug: prevSnap.docs[0].data().slug as string, title: prevSnap.docs[0].data().title as string };
+  const next = nextSnap.empty ? null : { slug: nextSnap.docs[0].data().slug as string, title: nextSnap.docs[0].data().title as string };
+  return { prev, next };
 }
 
 export default async function ArchivePage({
@@ -62,6 +82,8 @@ export default async function ArchivePage({
   const archive = await getArchive(decodeURIComponent(slug));
 
   if (!archive) notFound();
+
+  const { prev, next } = await getAdjacentArchives(archive.date);
 
   // Intercept back-navigation links inside the iframe
   const injectedScript = `
@@ -105,5 +127,5 @@ export default async function ArchivePage({
     injectedScript + "</body>"
   );
 
-  return <ArchiveViewer contentHtml={contentHtml} title={archive.title} />;
+  return <ArchiveViewer contentHtml={contentHtml} title={archive.title} prev={prev} next={next} />;
 }

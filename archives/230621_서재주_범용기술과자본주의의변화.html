@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서재주 — 범용 기술과 자본주의의 변화</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8;
+  --bg-deep: #ede7db;
+  --surface: #faf7f2;
+  --card: #fff;
+  --ink: #1a1510;
+  --text: #4a4035;
+  --muted: #8a7e6f;
+  --navy: #1b2a4a;
+  --navy-light: rgba(27,42,74,.06);
+  --navy-mid: rgba(27,42,74,.12);
+  --teal-deep: #1a3a3a;
+  --gold: #c8a96e;
+  --rust: #9c3a1a;
+  --rust-soft: rgba(156,58,26,.07);
+  --olive: #5c6b3a;
+  --olive-soft: rgba(92,107,58,.07);
+  --border: #d6cfc3;
+  --serif: 'Noto Serif KR', serif;
+  --sans: 'Noto Sans KR', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  font-family: var(--sans); color: var(--text); line-height: 1.95;
+  font-weight: 300; -webkit-font-smoothing: antialiased;
+}
+
+.home-btn {
+  position: fixed; top: 1.25rem; left: 1.25rem; z-index: 1000;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .80rem; font-weight: 500; letter-spacing: .06em;
+  color: var(--muted); text-decoration: none; padding: 8px 14px;
+  border: 1px solid var(--border); border-radius: 3px;
+  background: rgba(245,240,232,.95); backdrop-filter: blur(12px);
+  transition: all .25s;
+}
+.home-btn:hover { color: var(--navy); border-color: var(--navy); }
+
+.scroll-top {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: rgba(245,240,232,.95); backdrop-filter: blur(12px);
+  color: var(--muted); cursor: pointer;
+  opacity: 0; transform: translateY(10px);
+  transition: all .3s; pointer-events: none;
+}
+.scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.scroll-top:hover { border-color: var(--navy); color: var(--navy); }
+
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 5rem 2rem; position: relative;
+  background: linear-gradient(160deg, var(--teal-deep) 0%, var(--navy) 60%, #1a1a2e 100%);
+  color: #e8e2d6;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 120px; background: linear-gradient(0deg, var(--bg) 0%, transparent 100%);
+}
+.hero-series {
+  font-size: .68rem; font-weight: 500; letter-spacing: .4em;
+  text-transform: uppercase; color: rgba(232,226,214,.35);
+  margin-bottom: .75rem;
+  opacity: 0; animation: fadeUp .8s .2s forwards;
+}
+.hero-inst {
+  font-size: .72rem; font-weight: 500; letter-spacing: .35em;
+  text-transform: uppercase; color: rgba(232,226,214,.45);
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .4s forwards;
+}
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(1.64rem, 4.4vw, 2.56rem);
+  font-weight: 700; line-height: 1.55; color: #f5f0e8;
+  margin-bottom: .75rem;
+  opacity: 0; animation: fadeUp .8s .6s forwards;
+}
+.hero h1 em { font-style: normal; color: var(--gold); }
+.hero-sub {
+  font-size: 1.0rem; font-weight: 300; color: rgba(232,226,214,.6);
+  line-height: 1.95; max-width: 520px; margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .9s forwards;
+}
+.hero-speaker {
+  display: flex; flex-direction: column; align-items: center; gap: .35rem;
+  opacity: 0; animation: fadeUp .8s 1.1s forwards;
+}
+.hero-speaker .name {
+  font-family: var(--serif); font-size: 1.11rem;
+  font-weight: 600; color: #f5f0e8;
+}
+.hero-speaker .title {
+  font-size: .80rem; color: rgba(232,226,214,.5); letter-spacing: .04em;
+}
+.hero-date {
+  margin-top: 1.75rem; font-size: .80rem; letter-spacing: .15em;
+  color: rgba(232,226,214,.35);
+  opacity: 0; animation: fadeUp .8s 1.3s forwards;
+}
+
+/* Content */
+.content { max-width: 680px; margin: 0 auto; padding: 4.5rem 2rem; }
+
+.chapter { margin-bottom: 4.5rem; opacity: 0; transform: translateY(18px); }
+.chapter.visible { animation: fadeUp .7s forwards; }
+
+.chapter-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--navy);
+  margin-bottom: .6rem; opacity: .6;
+}
+.chapter h2 {
+  font-family: var(--serif); font-size: 1.28rem;
+  font-weight: 700; color: var(--ink); line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+.chapter p { font-size: 1.0rem; margin-bottom: 1.15rem; line-height: 2.05; text-align: justify; }
+
+/* Voice */
+.voice {
+  position: relative; margin: 1.75rem 0; padding: 1.15rem 1.4rem;
+  background: var(--surface); border-left: 3px solid var(--navy);
+  border-radius: 0 3px 3px 0;
+}
+.voice p {
+  font-family: var(--serif); font-size: 1.0rem;
+  color: var(--ink); margin: 0; line-height: 2;
+}
+.voice cite {
+  display: block; margin-top: .35rem;
+  font-family: var(--sans); font-size: .80rem;
+  font-style: normal; letter-spacing: .06em; color: var(--muted);
+}
+
+/* Thesis card */
+.thesis-card {
+  background: var(--teal-deep); color: #e8e2d6;
+  border-radius: 4px; padding: 1.25rem 1.5rem; margin: 1.75rem 0;
+}
+.thesis-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: .5rem;
+}
+.thesis-card p {
+  font-size: .98rem; color: rgba(232,226,214,.85); line-height: 1.95; margin: 0;
+}
+
+/* Data card */
+.data-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1.15rem 1.4rem; margin: 1.75rem 0;
+}
+.data-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--rust);
+  margin-bottom: .5rem;
+}
+.data-card p { font-size: .9rem; color: var(--text); line-height: 1.9; margin: 0; }
+
+/* Compare card */
+.compare-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1.15rem 1.4rem; margin: 1.75rem 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+.compare-side h4 {
+  font-size: .80rem; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; margin-bottom: .5rem;
+}
+.compare-side.left h4 { color: var(--olive); }
+.compare-side.right h4 { color: var(--rust); }
+.compare-side p { font-size: .88rem; line-height: 1.85; color: var(--text); }
+
+/* Debate card */
+.debate-card {
+  background: var(--rust-soft); border: 1px solid rgba(156,58,26,.12);
+  border-radius: 4px; padding: 1.15rem 1.4rem; margin: 1.75rem 0;
+}
+.debate-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--rust);
+  margin-bottom: .5rem;
+}
+.debate-card p { font-size: .9rem; color: var(--text); line-height: 1.9; margin: 0; }
+
+/* Timeline card */
+.timeline-card {
+  background: var(--olive-soft); border: 1px solid rgba(92,107,58,.15);
+  border-radius: 4px; padding: 1.15rem 1.4rem; margin: 1.75rem 0;
+}
+.timeline-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--olive);
+  margin-bottom: .5rem;
+}
+.timeline-card p { font-size: .9rem; color: var(--text); line-height: 1.9; margin: 0; }
+
+/* Divider */
+.divider {
+  height: 1px; background: var(--border); margin: 3.5rem 0;
+  position: relative;
+}
+.divider::after {
+  content: '§'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif); font-size: .7rem;
+  color: var(--muted); background: var(--bg); padding: 0 12px;
+}
+
+/* Insight */
+.insight-section {
+  background: var(--navy); padding: 5rem 2rem;
+  border-top: 1px solid rgba(232,226,214,.1);
+}
+.insight-inner { max-width: 640px; margin: 0 auto; }
+.insight-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .5em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.75rem;
+}
+.insight-section h2 {
+  font-family: var(--serif); font-size: 1.28rem;
+  font-weight: 700; color: #f5f0e8; margin-bottom: 1.75rem; line-height: 1.55;
+}
+.insight-section p {
+  font-size: .98rem; line-height: 2.1; color: rgba(232,226,214,.7); margin-bottom: 1.4rem;
+}
+.insight-section p strong { color: var(--gold); font-weight: 500; }
+.counterpoint {
+  border-top: 1px solid rgba(232,226,214,.1);
+  margin-top: 2rem; padding-top: 2rem;
+}
+.counter-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: #b85c3a; margin-bottom: 1rem;
+}
+.counterpoint p { color: rgba(232,226,214,.65); }
+
+footer {
+  text-align: center; padding: 2.5rem 2rem;
+  background: #111827; border-top: 1px solid rgba(232,226,214,.06);
+}
+footer p { font-size: .80rem; color: rgba(232,226,214,.3); letter-spacing: .06em; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media(max-width:600px) {
+  .content { padding: 3rem 1.25rem; }
+  .hero { padding: 4rem 1.5rem; }
+  .compare-card { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<a href="https://d.324.ing/" class="home-btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+Archives
+</a>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<section class="hero">
+<div class="hero-series">대우재단 시민 인문학 강좌 · 자본주의의 미래</div>
+<div class="hero-inst">제5강 · 최종강</div>
+<h1>범용 기술과<br><em>자본주의의 변화</em></h1>
+<p class="hero-sub">산업혁명에서 디지털 혁명까지 — 범용 기술이 불평등을 낳고, 불평등이 제도를 바꾸고, 제도가 자본주의를 재구성하는 300년의 순환</p>
+<div class="hero-speaker">
+<span class="name">서재주</span>
+<span class="title">한국노동연구원 원장 · 서울대 무역학과 · 파리 1대학 경제학 박사</span>
+</div>
+<div class="hero-date">2023. 06. 21 · 80분</div>
+</section>
+
+<div class="content">
+
+<!-- Ch1 -->
+<div class="chapter">
+<div class="chapter-label">Chapter 01</div>
+<h2>왜 지금 자본주의의 미래를 묻는가</h2>
+
+<p>서재주 원장은 "자본주의의 미래"라는 거대한 제목을 받고, 그것을 한국 사회의 현실로 좁히는 것에서 출발한다. 세계 공통의 추상적 전망보다는 가까운 질문 — 한국의 자본주의는 지속 가능한가 — 이 더 유효하다는 판단이다. 그리고 그 질문의 중심에 불평등 문제를 놓는다.</p>
+
+<p>프롤로그에서 그는 1980년대를 호출한다. 대처리즘과 레이거노믹스, 즉 신자유주의의 시작점이다. 고전파 경제학자들이 주장했던 경제 운용 원리 — 시장의 자율성, 정부 개입의 축소 — 를 부활시킨 이 정책적 전환은, WTO 설립(1995), 관세 인하, 투자 자유화 협정이라는 구체적 제도로 구현되었다.</p>
+
+<div class="thesis-card">
+<div class="thesis-label">문제 제기</div>
+<p>자유무역과 투자 자유화의 결과는 비대칭적이었다. 선진국 기업과 부유층에게는 좋았으나, 선진국 중산층에게는 오히려 불만의 축적이었다 — 이것이 브랑코 밀라노비치(Branko Milanović)의 코끼리 곡선이 보여주는 핵심이다.</p>
+</div>
+
+<p>밀라노비치는 1988년부터 2008년까지 30년간의 전 세계 소득 분배를 분석했다. 전 세계인을 소득순으로 나열했을 때, 소득 증가율이 가장 높았던 집단은 중국·인도의 신흥 중산층이었고, 가장 낮았던 집단은 선진국의 중산층이었다. 코끼리의 등이 올라가고 코가 치솟는 사이에, 선진국 중산층은 움푹 패인 곳에 서 있었다.</p>
+
+<p>이 데이터가 정치적으로 읽힌 결과가 트럼피즘이고 브렉시트다. 서재주는 "지식인일수록 과거의 선입관에 빠져서 트럼프 당선 가능성을 낮게 봤지만, 정치적 직관이 뛰어난 사람은 코끼리 곡선의 움푹 팬 곳을 봤다"고 말한다.</p>
+
+<div class="data-card">
+<div class="data-label">학문적 전환</div>
+<p>불평등 연구의 부활: 토마 피케티 《21세기 자본》(2013), IMF 보고서 「소득 불평등의 원인과 결과」(2015), 앵거스 디턴 노벨 경제학상 수상(2015), 앤터니 앳킨슨 《불평등이란 무엇인가》 — 불평등이 경제학의 주류 의제로 복귀한 것은 사실상 최근 10년의 일이다.</p>
+</div>
+
+<p>그러나 서재주는 이것이 완전히 새로운 관심은 아니라고 짚는다. 18세기 아담 스미스, 데이비드 리카도, 19세기 칼 마르크스 — 고전파 경제학자들에게 소득 분배는 핵심 연구 대상이었다. 최근의 불평등 연구 부활은, 그 시대와 유사한 조짐을 우리가 겪고 있다는 신호일 수 있다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- Ch2 -->
+<div class="chapter">
+<div class="chapter-label">Chapter 02</div>
+<h2>자본주의란 무엇인가 — 역사적 정의</h2>
+
+<p>"여러분이 생각하는 자본주의가 뭔가요?" 서재주가 청중에게 던지는 질문이다. "우리가 살고 있는 사회"라는 답은 틀리지 않지만, 500년 전 사회와 무엇이 달라서 '자본주의'라는 이름을 붙이는가 — 이 물음에서 역사적 정의가 시작된다.</p>
+
+<div class="thesis-card">
+<div class="thesis-label">세 가지 특징</div>
+<p>자본주의를 자본주의 아닌 사회와 구분하는 역사적 특징은 세 가지다: 사유재산 제도의 확립, 경제적 자유의 보장, 시장 교환에 의한 자원 배분.</p>
+</div>
+
+<p><strong>사유재산 제도.</strong> 과거 생산 수단(주로 토지)은 왕의 것이었고, 귀족까지만 나눠 가졌다. 마그나카르타(1215), 프랑스 대혁명(1789) — 사유재산권을 근거 없이 빼앗는 왕에 대한 저항이 역사적 전환점을 만들었다. 반대로 1917년 러시아 혁명은 사유재산 제도를 악의 근원으로 보고 폐지했다. 자본주의와 비자본주의를 가르는 가장 근본적 분기점이 사유재산이다.</p>
+
+<p><strong>경제적 자유.</strong> 직업 선택의 자유, 거주의 자유, 계약의 자유. 지금은 너무 당연하지만, 서재주는 그 기원의 폭력성을 강조한다. 16세기 영국 인클로저 운동 — 헨리 8세 시절 양모 값 폭등으로 귀족들이 울타리를 쳐 농민을 쫓아냈다. 올리버 트위스트의 세계, 구빈법의 제정 — 경제적 자유는 원하지 않았음에도 강제로 주어진 것이었다.</p>
+
+<div class="debate-card">
+<div class="debate-label">역설</div>
+<p>"지금 우리가 당연하게 생각하는 자유 — 직업 선택의 자유, 거주의 자유 — 가 주어진 계기는 몹시 폭력적이었다. 경제적 자유의 시초를 보면, 그것은 해방이 아니라 추방이었다."</p>
+</div>
+
+<p><strong>시장 교환에 의한 자원 배분.</strong> 아담 스미스의 보이지 않는 손 — 다만, 서재주는 흔히 생략되는 전제를 되살린다. "시장이 공정하게 작동한다면"이라는 조건이다. 분권화된 의사결정, 복수의 시장에서 개인들이 자유롭게 교환하는 시스템이 자본주의의 특징이지만, 공정한 시장이 보장된 적은 역사적으로 한 번도 없다. 자본주의 시장 경제를 채택한 국가 중 성공한 곳과 실패한 곳의 차이는, 바로 "시장이 제대로 작동하게 하는 노력"에 있다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- Ch3 -->
+<div class="chapter">
+<div class="chapter-label">Chapter 03</div>
+<h2>300년의 풍요 — 성장률이 말해주는 것</h2>
+
+<p>서재주는 앵거스 매디슨(Angus Maddison)의 장기 GDP 데이터를 인용하며, 인류사 전체를 관통하는 성장률 표를 보여준다.</p>
+
+<div class="data-card">
+<div class="data-label">매디슨 데이터</div>
+<p>서기 0년~1700년: 연간 세계 경제 성장률 0.1% 미만 (2천 년 이상). 1700년 이후: 약 1.6% — 이전 대비 약 16배. 초기에는 인구 증가율과 생산성 증가율이 비슷하게 기여했으나, 1820년 이후 산업혁명기에는 생산성 증가율이 주도하기 시작했고, 20세기에는 그 격차가 더 벌어졌다.</p>
+</div>
+
+<p>물질적 풍요가 주어진 시기는 길어야 300년, 짧으면 200년이다. 서재주는 일화를 통해 이 사실을 체감시킨다. 중세 농노의 재산 목록 — 식기 몇 개, 식탁 하나, 옷 몇 벌이 전부였다. 셰익스피어가 아내에게 유언으로 남긴 재산은 침대 한 대였다. 18세기 미국 개척자들은 못(nail)이 목재보다 귀해서, 건물을 불태워 못을 회수했고, 아담 스미스 시대에 못은 화폐처럼 쓰였다.</p>
+
+<p>신발, 외투, 종이, 창문, 의자 — 지금은 노숙자도 가진 물건들이 과거에는 특권층의 소유물이었다. 이 풍요의 배경에 사유재산 제도, 기업의 발명, 기업가 정신이 있다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- Ch4 -->
+<div class="chapter">
+<div class="chapter-label">Chapter 04</div>
+<h2>자본주의와 불평등은 떼려야 뗄 수 없다</h2>
+
+<p>장자크 루소의 《인간 불평등 기원론》(1755)에서부터 아담 스미스까지, 사유재산 제도를 인정하는 한 불평등은 불가피하다는 인식은 자본주의의 출발점부터 존재했다. 능력에 따른 차이를 인정하되, 그 결과물의 향유를 불법이라 하지 않는 한, 재산은 분산될 수밖에 없다.</p>
+
+<div class="thesis-card">
+<div class="thesis-label">핵심 명제</div>
+<p>자본주의는 사유재산을 보호하고 기업가 정신을 고취해서 물질적 풍요를 가져왔다. 그러나 바로 그 메커니즘 — 사유재산 보호와 시장 교환 — 이 불평등을 구조적으로 내장하고 있다. 이 둘은 분리할 수 없다.</p>
+</div>
+
+<p>문제는 불평등이 일정 수준을 넘어갈 때 발생하는 비용이다. 소득 이동성이 높으면 — 아메리칸 드림이든 코리안 드림이든, 사람들이 꿈을 가질 수 있다면 — 다소 높은 불평등도 사회를 유지할 수 있다. 그러나 이동성이 낮아져서 가난한 사람은 계속 가난하고 부자는 계속 부자인 상태가 고착되면, 시장의 작동 자체가 멈출 수 있다. 폭동, 혁명 — 역사는 그 임계점을 여러 차례 보여주었다.</p>
+
+<div class="compare-card">
+<div class="compare-side left">
+<h4>이동성이 높을 때</h4>
+<p>유인 작동 → 생산성 상승 → 불평등 존재하나 사회 안정 유지 → 어메리칸 드림/코리안 드림</p>
+</div>
+<div class="compare-side right">
+<h4>이동성이 낮을 때</h4>
+<p>유인 상실 → 불만 축적 → 사회 갈등 고조 → 시장 작동 정지 → 혁명/붕괴</p>
+</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Ch5 -->
+<div class="chapter">
+<div class="chapter-label">Chapter 05</div>
+<h2>범용 기술 — 산업혁명과 디지털 혁명의 평행</h2>
+
+<p>범용 기술(General Purpose Technology, GPT)이란 무엇인가. 서재주는 "공장의 효율성을 높이는 기술"이 아니라, "사회 각 영역에 과거와는 다른 영향을 불러일으키는 기술"이라고 정의한다. 문자의 발명, 바퀴의 발명, 농업의 발명도 범용 기술이지만, 자본주의 시대에 한정하면 1·2차 산업혁명(증기 기관, 전기, 컨베이어 벨트)과 현재의 디지털 혁명이 대표적이다.</p>
+
+<p>산업혁명기에 하층 출신이 대기업가로 성장한 사례들이 있었다. 존 윌킨슨은 제철업자의 아들, 피터 어니언스는 십장(foreman), 벤저민 헌츠먼은 시계공, 리처드 아크라이트는 이발사 — 이들이 당대의 최대 부호가 되었다.</p>
+
+<div class="data-card">
+<div class="data-label">한국의 새로운 부자들</div>
+<p>2023년 한국 10대 부자 중 절반 이상이 당대에 부를 일군 신흥 부자다. 김범주(사모펀드), 서정진(셀트리온), 권혁빈(스마일게이트), 김범수(카카오) — 이재용(삼성전자)을 제치고 새로운 순위가 형성되었다. 100년 후에 이 시대를 정리하면, 산업혁명기의 이발사와 시계공처럼 이들의 이름이 기록될 것이다.</p>
+</div>
+
+<div class="thesis-card">
+<div class="thesis-label">범용 기술과 불평등의 메커니즘</div>
+<p>확산 초기: 작은 능력 차이 → 거대한 소득 격차. 눈썰미가 좋고 기회를 잘 포착한 소수가 압도적 부를 축적한다. 동시에 제도와 교육은 이전 시대에 머물러 있다. 이 비동시성(asynchrony)이 불평등을 폭발적으로 확대시킨다.</p>
+</div>
+
+<p>서재주는 타다(TADA)의 사례를 든다. 택시 업계의 반발, 국회의 표 의식, 대법원 판결 — 디지털 기술은 이미 사회를 바꾸고 있었지만, 노동법·상법·민법은 과거 시대에 머물러 있었다. 규제가 정비되지 않은 초기에 비즈니스 모델을 정착시킨 기업(구글, 네이버, 카카오)은 그 자체로 새로운 지대(rent)를 확보하며, 제도의 지체는 오히려 부자들의 지위를 안정화시키는 방향으로 작동한다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- Ch6 -->
+<div class="chapter">
+<div class="chapter-label">Chapter 06</div>
+<h2>피케티 커브인가, 쿠즈네츠 커브인가</h2>
+
+<p>토마 피케티의 핵심 명제: 자본 수익률(r)은 역사적으로 노동 소득 증가율(g)을 한 번도 밑돈 적이 없다. 따라서 자본주의는 구조적으로 불평등이 확대될 수밖에 없다 — 이것이 피케티 커브다.</p>
+
+<p>반면 사이먼 쿠즈네츠는 경제 발전 초기에는 불평등이 확대되지만, 일정 수준을 넘어서면 줄어든다고 주장했다 — 역U자형의 쿠즈네츠 커브다.</p>
+
+<div class="compare-card">
+<div class="compare-side left">
+<h4>피케티</h4>
+<p>r &gt; g → 자본 소득이 항상 노동 소득을 압도 → 불평등은 구조적으로 확대 → 외부 충격(전쟁) 없이는 완화되지 않는다</p>
+</div>
+<div class="compare-side right">
+<h4>쿠즈네츠</h4>
+<p>발전 초기 불평등 확대 → 기술 표준화 + 공교육 확대 → 스킬 보급 → 불평등 완화 → 역U자형 곡선</p>
+</div>
+</div>
+
+<p>서재주의 해석은 양자를 통합하려는 시도다. 범용 기술의 확산이라는 렌즈로 보면, 확산 초기에는 피케티의 진단이 맞다 — 작은 능력 차이가 거대한 부의 격차를 낳고, 제도와 교육이 따라잡지 못한다. 그러나 기술이 표준화되고 학교가 그에 맞는 교육을 시작하면, 쿠즈네츠 커브의 하강 국면이 올 수 있다. 1·2차 산업혁명 이후 20세기 초반에 불평등이 완화된 것이 그 사례다.</p>
+
+<div class="debate-card">
+<div class="debate-label">비관과 낙관 사이</div>
+<p>"장기적으로 낙관할 수 있지만, 거기까지 가는 과정이 순탄하리라는 뜻은 아닙니다. 역사를 보면, 사전에 이해 조정을 해서 바람직한 시스템으로 간 경우는 예외적입니다. 우리가 과도기에 적응력을 어떻게 높이느냐가 핵심 과제입니다."</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Ch7 -->
+<div class="chapter">
+<div class="chapter-label">Chapter 07</div>
+<h2>21세기 자본주의 — 무엇이 바뀌어야 하는가</h2>
+
+<p>서재주는 19세기와 20세기 자본주의의 차이를 제도적 진화로 설명한다. 사유재산 보호와 경제적 자유라는 기본 원칙은 변하지 않았지만, 20세기에 추가된 것들이 있다: 반독점법(공정거래), 사회보장 제도, 공교육 확대, 노동법, 중앙은행(경기변동 완화), 재정정책.</p>
+
+<div class="timeline-card">
+<div class="timeline-label">자본주의의 제도적 진화</div>
+<p><strong>19세기:</strong> 사유재산 보호 + 경제적 자유 + 시장 교환. 그 외의 안전장치는 거의 부재. 귀족만 교육을 받고, 공황이 와도 정부의 역할은 제한적.<br>
+<strong>20세기:</strong> 반독점법(스탠더드 오일 해체), 사회보장(빈곤 방지), 공교육(능력 배양), 노동법(공정한 계약), 중앙은행(경기변동 완화), 재정정책(경기 조절) — 시장 경제의 부작용을 교정하는 제도적 장치들이 축적됨.<br>
+<strong>21세기:</strong> 기존 제도의 내용 변화가 필요. 구글세(디지털 기업 과세), 반독점 규제의 재설계, 사회보장 방식의 혁신, 디지털 시대에 맞는 교육 시스템, 국제 조세 규범(OECD 합의) 등.</p>
+</div>
+
+<p>서재주는 여기서 한 가지를 추가한다. 20세기에는 전혀 고려하지 않았던 요소 — 생태계 파괴의 비용이다. 환경 비용을 생산 활동에 반영하는 것, 이것은 19세기에도 20세기에도 없었던 21세기 자본주의의 고유한 과제다.</p>
+
+<p>그러나 사유재산 제도를 폐지하거나, 경제적 자유를 없애는 일은 21세기에 일어나지 않을 것이라는 것이 서재주의 전제다. 바뀌는 것은 제도의 내용이지, 체제의 근본이 아니다. "인위적으로 체제를 전환해서 기존 제도를 잘 고쳐 쓰는 것보다 나은 결과가 나온 적은 없다" — 이것이 20세기의 교훈이다.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- Ch8: Q&A -->
+<div class="chapter">
+<div class="chapter-label">Chapter 08</div>
+<h2>Q&A — 코로나, 와일드 카드, 한국의 위치</h2>
+
+<p><strong>질문: 팬데믹 같은 와일드 카드가 자본주의 변화에 미치는 영향은?</strong></p>
+
+<p>서재주는 코로나19가 디지털 혁명의 확산 속도에 결정적 모멘텀을 제공했다고 답한다. 본인의 가족 경험을 예로 든다 — 아들의 미국인 여자친구와의 상견례를 줌(Zoom)으로 진행한 것. "코로나를 겪지 않았으면 그런 생각을 못했을 것이다." 줌이라는 고유명사가 보통명사가 되고 있듯이, 팬데믹은 그 자체로 자본주의를 변모시키는 독립 변수라기보다는, 디지털 기술 확산의 가속 요인이었다.</p>
+
+<p><strong>청중 발언: 어려운 시기일수록 약자가 더 어려워진다.</strong></p>
+
+<p>서재주는 동의하면서, 이것을 더 넓은 프레임으로 확장한다. 인플레이션, 팬데믹, 인구 감소 — 이 모든 부정적 충격은 비대칭적이다. 약자에게 더 나쁜 영향을 미치고, 강자에게는 오히려 기회를 제공한다. 이것이 "사회를 조율할 필요성"을 제기하는 이유다.</p>
+
+<div class="voice">
+<p>"한국은 다행히 어떤 임계 지점을 지난 궤도에 들어서서, 외부 충격이 와도 어느 정도는 잘 극복할 수 있는 나라가 되었습니다. 우리가 이 과도기에 적응하고 제도를 잘 조정하는 것이 자본주의의 미래에 대한 문제의식이고, 그것은 곧 한국 사회에 대한 문제의식과 다르지 않습니다."</p>
+<cite>— 서재주</cite>
+</div>
+
+<p>그는 한국이 세계적 관심의 대상이 된 시대라는 점을 환기하며, "우리가 잘하는 것이 곧 자본주의의 지속 가능성을 증명하는 것"이라는 말로 강연을 마무리한다. 자본주의의 미래에 대한 거창한 전망이 아니라, "고쳐 쓰는 시스템"으로서의 자본주의를 어떻게 고쳐 쓸 것인가 — 이것이 질문의 최종 형태다.</p>
+</div>
+
+</div>
+
+<!-- Claude's Insight -->
+<section class="insight-section">
+<div class="insight-inner">
+<div class="insight-label">Claude's Insight</div>
+
+<h2>"고쳐 쓰는 시스템" — 점진주의자의 역사적 낙관</h2>
+
+<p>이 강연의 핵심 구조는 <strong>범용 기술 확산의 비동시성(asynchrony) 모델</strong>이다. 기술은 빠르게 변하고, 제도는 느리게 따라간다. 그 시차(time lag) 안에서 불평등이 폭발한다. 산업혁명기에도 그랬고, 디지털 혁명기에도 그러하다. 서재주가 제시하는 것은, 이 패턴이 반복된다는 역사적 관찰이며, 따라서 표준화와 제도 정비가 이루어지면 불평등은 다시 완화될 수 있다는 조건부 낙관이다.</p>
+
+<p>이 프레임의 가장 날카로운 지점은 <strong>피케티 커브와 쿠즈네츠 커브의 통합 시도</strong>다. 피케티가 옳다 — 확산 초기에는. 쿠즈네츠도 옳다 — 표준화 이후에는. 양자를 범용 기술의 생애주기라는 틀 안에 배치함으로써, 서재주는 구조적 비관론(피케티)과 발전론적 낙관(쿠즈네츠)을 동시에 수용한다. 이것은 경제학적으로 깔끔한 프레임이면서, 동시에 정책적 함의가 분명하다: 기술 표준화를 촉진하고, 교육을 재설계하고, 제도를 빠르게 정비하라.</p>
+
+<p>그리고 서재주가 이 프레임 위에 올려놓은 한국론이 이 강연의 진짜 메시지다. <strong>"고쳐 쓰는 시스템"</strong>이라는 표현은, 체제 전환(혁명)이 아니라 체제 내 개혁(점진적 제도 조정)이 역사적으로 더 나은 결과를 냈다는 20세기의 교훈을 압축한다. 그리고 한국은 그 "고쳐 쓰기"를 할 수 있는 임계점을 넘어선 나라라는 것이 그의 판단이다.</p>
+
+<div class="counterpoint">
+<div class="counter-label">Counterpoint</div>
+
+<p>서재주의 비동시성 모델은 설득력 있지만, <strong>제도가 "따라잡는다"는 전제</strong> 자체를 검토할 필요가 있다. 20세기의 제도 정비(반독점법, 사회보장)는 두 차례 세계대전과 대공황이라는 극단적 충격 이후에 이루어졌다. 피케티가 지적하듯, 불평등이 자연스럽게 완화된 것이 아니라 전쟁의 파괴가 자본 스톡을 무너뜨린 결과였다. "고쳐 쓰기"가 평화적으로 이루어진 역사적 사례가 얼마나 되는가?</p>
+
+<p>디지털 기술의 특성은 산업혁명기 기술과 질적으로 다를 수 있다. <strong>네트워크 효과와 데이터 독점</strong>은, 증기 기관이나 전기와 달리, 기술이 표준화될수록 오히려 독점이 강화되는 구조를 만든다. 구글, 아마존, 메타의 지배력은 기술이 "확산"되었기 때문에 약해진 것이 아니라, 확산 그 자체가 플랫폼의 독점력을 강화시킨 결과다. 쿠즈네츠 커브의 하강 국면이 디지털 경제에서도 작동할 것이라는 가정은 검증이 필요하다.</p>
+
+<p>마지막으로, <strong>한국에 대한 낙관</strong>은 이 강연이 2023년 6월에 이루어졌다는 맥락에서 읽어야 한다. "임계점을 넘어선 나라"라는 진단은, 출생률 0.7명대, 자산 불평등 심화, 플랫폼 노동의 확대라는 현실과 긴장 관계에 있다. 서재주가 원장으로 재직 중인 한국노동연구원이 생산하는 데이터 자체가, "고쳐 쓰기"가 얼마나 느리고 고통스러운 과정인지를 보여주고 있다.</p>
+</div>
+
+</div>
+</section>
+
+<footer>
+<p>강연 정리 및 분석 · 서재주 · 한국노동연구원 · 대우재단 시민 인문학 강좌 · 2023.06.21</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){var b=document.getElementById('scrollTop');if(window.scrollY>600)b.classList.add('visible');else b.classList.remove('visible')});
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(function(el){observer.observe(el)});
+</script>
+</body>
+</html>

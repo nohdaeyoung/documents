@@ -1,0 +1,37 @@
+[
+  {
+    "id": "html",
+    "label": "YOUTUBE",
+    "color": "#c4450a"
+  },
+  {
+    "id": "md",
+    "label": "Economy",
+    "color": "#2a6b4f"
+  },
+  {
+    "id": "blog",
+    "label": "Talk",
+    "color": "#6366f1"
+  },
+  {
+    "id": "report",
+    "label": "Tech",
+    "color": "#0891b2"
+  },
+  {
+    "id": "note",
+    "label": "Longblack",
+    "color": "#5c5a55"
+  },
+  {
+    "id": "article",
+    "label": "ARTICLE",
+    "color": "#bfc20a"
+  },
+  {
+    "id": "f1",
+    "label": "F1",
+    "color": "#ff0000"
+  }
+]

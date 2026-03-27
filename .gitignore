@@ -43,3 +43,6 @@ next-env.d.ts
 
 # legacy source files (migration reference)
 /_source/
+
+# Local Netlify folder
+.netlify

@@ -7,12 +7,13 @@ import { Archive, Category } from "@/lib/types";
 import FileList from "@/components/admin/file-list";
 import CategoryManager from "@/components/admin/category-manager";
 import SettingsPanel from "@/components/admin/settings-panel";
+import SubscribersPanel from "@/components/admin/subscribers-panel";
 import { getAdminData } from "./actions";
 
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"archives" | "categories" | "settings">(
+  const [activeTab, setActiveTab] = useState<"archives" | "categories" | "subscribers" | "settings">(
     "archives"
   );
   const [archives, setArchives] = useState<Archive[]>([]);
@@ -59,7 +60,7 @@ export default function AdminDashboard() {
       </header>
 
       <div className="admin-tabs">
-        {(["archives", "categories", "settings"] as const).map((tab) => (
+        {(["archives", "categories", "subscribers", "settings"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -69,6 +70,8 @@ export default function AdminDashboard() {
               ? `Archives (${archives.length})`
               : tab === "categories"
               ? `Categories (${categories.length})`
+              : tab === "subscribers"
+              ? "Subscribers"
               : "Settings"}
           </button>
         ))}
@@ -94,6 +97,8 @@ export default function AdminDashboard() {
         </>
       ) : activeTab === "categories" ? (
         <CategoryManager categories={categories} archives={archives} onRefresh={fetchData} />
+      ) : activeTab === "subscribers" ? (
+        <SubscribersPanel />
       ) : (
         <SettingsPanel />
       )}

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>민주주의와 자본주의 — 균형, 불균형, 그리고 한국의 경험</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8;
+  --bg-deep: #ede7db;
+  --surface: #faf7f2;
+  --card: #fff;
+  --ink: #1a1510;
+  --text: #4a4035;
+  --muted: #8a7e6f;
+  --navy: #2c3654;
+  --navy-light: rgba(44,54,84,.06);
+  --navy-mid: rgba(44,54,84,.12);
+  --accent: #8b5e3c;
+  --accent-soft: rgba(139,94,60,.07);
+  --rust: #7a3527;
+  --rust-soft: rgba(122,53,39,.07);
+  --border: #d6cfc3;
+  --serif: 'Noto Serif KR', serif;
+  --sans: 'Noto Sans KR', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  font-family: var(--sans); color: var(--text); line-height: 1.95;
+  font-weight: 300; -webkit-font-smoothing: antialiased;
+}
+
+.home-btn {
+  position: fixed; top: 1.25rem; left: 1.25rem; z-index: 1000;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .80rem; font-weight: 500; letter-spacing: .06em;
+  color: rgba(232,226,214,.5); text-decoration: none; padding: 8px 14px;
+  border: 1px solid rgba(232,226,214,.15); border-radius: 3px;
+  background: rgba(44,54,84,.3); backdrop-filter: blur(12px);
+  transition: all .25s;
+}
+.home-btn:hover { color: #f5f0e8; border-color: rgba(232,226,214,.4); }
+
+.scroll-top {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: rgba(245,240,232,.95); backdrop-filter: blur(12px);
+  color: var(--muted); cursor: pointer;
+  opacity: 0; transform: translateY(10px);
+  transition: all .3s; pointer-events: none;
+}
+.scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.scroll-top:hover { border-color: var(--navy); color: var(--navy); }
+
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 5rem 2rem; position: relative;
+  background: var(--navy);
+  color: #e8e2d6;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 120px; background: linear-gradient(0deg, var(--bg) 0%, transparent 100%);
+}
+.hero-inst {
+  font-size: .72rem; font-weight: 500; letter-spacing: .35em;
+  text-transform: uppercase; color: rgba(232,226,214,.40);
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .3s forwards;
+}
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(1.64rem, 4.4vw, 2.56rem);
+  font-weight: 700; line-height: 1.55; color: #f5f0e8;
+  margin-bottom: .75rem;
+  opacity: 0; animation: fadeUp .8s .6s forwards;
+}
+.hero h1 em { font-style: normal; color: #c8a96e; }
+.hero-sub {
+  font-size: .94rem; font-weight: 300; line-height: 1.95;
+  color: rgba(232,226,214,.55); max-width: 540px;
+  opacity: 0; animation: fadeUp .8s .9s forwards;
+}
+.hero-speaker {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-top: 2.5rem;
+  opacity: 0; animation: fadeUp .8s 1.2s forwards;
+}
+.hero-speaker .name {
+  font-family: var(--serif); font-size: 1.12rem; font-weight: 600; color: #e8e2d6;
+}
+.hero-speaker .title { font-size: .80rem; color: rgba(232,226,214,.45); }
+.hero-date {
+  font-size: .74rem; color: rgba(232,226,214,.30); margin-top: 1.25rem;
+  letter-spacing: .15em;
+  opacity: 0; animation: fadeUp .8s 1.5s forwards;
+}
+
+/* Content */
+.content { max-width: 720px; margin: 0 auto; padding: 4rem 2rem 3rem; }
+.chapter { margin-bottom: 3rem; opacity: 0; animation: fadeUp .7s forwards; }
+.chapter-label {
+  font-size: .72rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: .75rem;
+}
+.chapter h2 {
+  font-family: var(--serif); font-size: 1.28rem; font-weight: 700;
+  color: var(--ink); line-height: 1.65; margin-bottom: 1.25rem;
+}
+.chapter p {
+  font-size: .94rem; margin-bottom: 1.1rem; line-height: 2;
+}
+
+.divider {
+  width: 48px; height: 1px; background: var(--border); margin: 2.5rem auto;
+}
+
+/* Cards */
+.thesis-card {
+  background: var(--navy); border-radius: 6px; padding: 1.75rem 2rem;
+  margin: 1.5rem 0;
+}
+.thesis-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: #c8a96e; margin-bottom: .75rem;
+}
+.thesis-card p {
+  font-family: var(--serif); font-size: .94rem;
+  color: rgba(232,226,214,.75); line-height: 2;
+}
+
+.data-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+  padding: 1.75rem 2rem; margin: 1.5rem 0;
+}
+.data-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--navy); margin-bottom: .75rem;
+}
+.data-card p { font-size: .92rem; color: var(--text); line-height: 1.9; }
+.data-card strong { color: var(--ink); font-weight: 600; }
+
+.debate-card {
+  background: var(--rust-soft); border-left: 3px solid var(--rust);
+  border-radius: 0 6px 6px 0; padding: 1.5rem 2rem; margin: 1.5rem 0;
+}
+.debate-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--rust); margin-bottom: .75rem;
+}
+.debate-card p { font-size: .92rem; color: var(--text); line-height: 1.9; }
+
+.voice {
+  border-left: 3px solid var(--accent); padding: 1.25rem 1.75rem;
+  margin: 1.75rem 0; background: var(--accent-soft); border-radius: 0 6px 6px 0;
+}
+.voice p {
+  font-family: var(--serif); font-size: .98rem;
+  color: var(--ink); line-height: 2; font-weight: 400;
+}
+.voice cite {
+  font-style: normal; display: block; margin-top: .5rem;
+  font-size: .74rem; color: var(--muted); letter-spacing: .06em;
+}
+
+/* Insight */
+.insight-section {
+  background: #1e2840; padding: 4rem 2rem; margin-top: 3rem;
+}
+.insight-inner { max-width: 720px; margin: 0 auto; }
+.insight-label {
+  font-size: .72rem; font-weight: 700; letter-spacing: .35em;
+  text-transform: uppercase; color: #c8a96e; margin-bottom: 1.5rem;
+}
+.insight-title {
+  font-family: var(--serif); font-size: 1.28rem;
+  font-weight: 700; color: #f5f0e8; margin-bottom: 1.75rem; line-height: 1.55;
+}
+.insight-section p {
+  font-size: .98rem; line-height: 2.1; color: rgba(232,226,214,.7); margin-bottom: 1.4rem;
+}
+.insight-section p strong { color: #c8a96e; font-weight: 500; }
+.counterpoint {
+  border-top: 1px solid rgba(232,226,214,.1);
+  margin-top: 2rem; padding-top: 2rem;
+}
+.counter-label {
+  font-size: .80rem; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: #b85c3a; margin-bottom: 1rem;
+}
+.counterpoint p { color: rgba(232,226,214,.65); }
+
+footer {
+  text-align: center; padding: 2.5rem 2rem;
+  background: #111827; border-top: 1px solid rgba(232,226,214,.06);
+}
+footer p { font-size: .80rem; color: rgba(232,226,214,.3); letter-spacing: .06em; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media(max-width:640px) {
+  .content { padding: 3rem 1.25rem; }
+  .hero { padding: 3rem 1.5rem; min-height: 90vh; }
+}
+</style>
+</head>
+<body>
+
+<a href="https://d.324.ing/" class="home-btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+Archives
+</a>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<section class="hero">
+<div class="hero-inst">제웅산 시민 인문학 강좌 · 자본주의의 미래 · 제2강</div>
+<h1>민주주의와 자본주의<br><em>균형, 불균형, 그리고 한국의 경험</em></h1>
+<p class="hero-sub">경제 체제와 정치 체제는 서로를 어떻게 규정하는가.<br>자본주의가 상수가 된 세계에서, 불평등이라는 변수가<br>민주주의의 지속 가능성을 어떻게 위협하는가.</p>
+<div class="hero-speaker">
+  <span class="name">정치학 강연자</span>
+  <span class="title">정치경제학 · 비교정치 · 체제 이행 전공</span>
+</div>
+<div class="hero-date">2023. 05. 24 · 42분 · 김병연 교수 제1강에 이은 제2강</div>
+</section>
+
+<main class="content">
+
+<div class="chapter">
+<div class="chapter-label">서론</div>
+<h2>정치와 경제 — 분리할 수 없는 두 축</h2>
+<p>자본주의 하나만으로도 1~2년을 강의할 수 있고, 민주주의 하나만으로도 마찬가지다. 이 둘의 관계를 다루는 것은 곧 정치와 경제의 관계를 다루는 것이며, 빙산의 일각만 건드릴 수 있는 거대한 주제다.</p>
+<p>강연자는 정치와 경제의 관계를 네 단계로 구분한다. 첫째, 분리 — 정치학자는 정치만, 경제학자는 경제만 이야기하므로 사실상 많은 학자가 이 입장에 서 있다. 둘째, 상관관계 — 둘 사이에 모종의 연결이 있다. 셋째, 인과관계 — 한쪽의 변화가 다른 쪽의 변화를 초래한다. 넷째, 상호 조응성 — 특정 경제 체제와 특정 정치 체제가 서로 잘 맞아 안정적 균형을 이루는 짝(pair)이 존재한다.</p>
+<div class="thesis-card">
+<div class="thesis-label">핵심 프레임</div>
+<p>만약 정치 체제와 경제 체제가 상호 조응하여 안정적 균형에 도달할 수 있다면, 그 체제쌍은 상당 기간 지속된다. 그러나 한쪽에서 불균형 요인이 발생하면 — 그것이 불평등이든, 외부 충격이든 — 균형이 깨지고 변화가 일어난다. 이 변화를 분석적으로 볼 것인가, 규범적으로(깨져야 마땅하다는 입장에서) 볼 것인가에 따라 접근이 달라진다.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">고전적 논의</div>
+<h2>자본주의가 민주주의를 낳았다 — 그리고 충돌한다</h2>
+<p>고전적 서사는 이렇다. 자본주의의 발전 → 산업화 → 부르주아 계급의 성장 → 정치적 참여 요구 → 민주주의 등장. 이 인과적 관계 때문에 자본주의와 민주주의는 불가분의 상보적 관계라는 주장이 성립한다.</p>
+<p>그러나 마르크스적 관점에서 보면, 자본주의 발전 과정에서 발생하는 계급 간 모순과 갈등 때문에 자본주의가 만들어낸 민주주의와 충돌하는 국면이 불가피하다. 상보적이면서도 상충적 — 이것이 고전적 논의의 이중 구조다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">현대적 논의</div>
+<h2>경제 발전은 민주주의를 지탱하는가</h2>
+<p>현대 정치학에서는 "일정하게 경제 발전이 이루어져야 민주주의가 지속될 가능성이 높다"는 가설이 광범위하게 연구되어 왔다. 특히 1970~80년대에 이 상보성 논의가 활발했다.</p>
+<p>그러나 예외가 있었다. 관료적 권위주의(Bureaucratic Authoritarianism) 연구다. 라틴아메리카 사례를 연구한 학자들은 자본주의 경제 발전이 불평등과 연결되어 민주주의를 지탱하기는커녕 오히려 권위주의를 강화하는 패턴을 발견했다. 한국의 유신 시대도 이 분석틀로 설명되었다.</p>
+<div class="debate-card">
+<div class="debate-label">핵심 긴장</div>
+<p>더 중요한 현대적 논의는 자본주의 운영 과정에서 발생하는 <strong>불평등이 민주주의를 위협하는 요인으로 작용</strong>한다는 것이다. 불평등이 관리되지 않으면 정치-경제의 균형이 깨진다. 점진적 관리(사회민주주의, 복지국가)와 급진적 관리(계급투쟁, 체제 변혁) 양쪽 모두 시도되어 왔다.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">체제의 변수</div>
+<h2>자본주의 + 권위주의: 중국이라는 위협</h2>
+<p>자본주의는 이미 상수화되었다. 체제 경쟁은 끝났다. 남은 변수는 정치 체제 — 민주주의냐 권위주의냐 — 뿐이다. 현존하는 가장 강력한 자본주의-권위주의 조합은 싱가포르와 중국이다.</p>
+<p>중국이 민주주의 논의에서 가장 큰 위협인 이유: 멀쩡히 국가자본주의 체제이면서 권위주의와 상보적 관계를 유지하고 있다. 미국 정책 담당자들(공화당이든 민주당이든)이 수십 년간 가졌던 낙관적 시나리오 — 경제 발전 → 중산층 성장 → 정치적 각성 → 민주화 — 는 실현되지 않았다.</p>
+<div class="data-card">
+<div class="data-label">발전 국가 모델</div>
+<p>권위주의 국가의 경제 성장은 양날의 칼이다. <strong>성공</strong>하면 중산층이 성장하고, 교육을 통해 각성하고, 정치적 변화를 촉발할 수 있다. <strong>실패</strong>하면 리스크가 폭발한다. 이를 억제하는 유일한 수단은 정보 통제인데, 그것도 한계가 있다. 영구적인 공존은 역사의 패턴상 불가능해 보인다.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">한국의 경험</div>
+<h2>권위주의의 향수, 민주주의의 성취</h2>
+<p>한국의 경험은 다층적이다. 권위주의와 자본주의의 공존(60~80년대 발전 국가)을 경험했고, 민주화 이후 민주주의와 자본주의의 상보성도 경험했다. 종속이론이나 세계체제론이 "주변부에서 핵심부로의 도약은 불가능하다"고 했지만, 한국은 그 반례다.</p>
+<p>그러나 권위주의에 대한 향수가 실존했다. 인권 탄압을 당한 국민은 일부였고, 많은 국민에게 그 시절은 빈곤을 벗어나고 공모 죽는 일이 없어진 시절이었기 때문이다.</p>
+<div class="voice">
+<p>한국의 사례가 가지는 의미는, 단기적으로는 자본주의와 민주주의의 상관성의 반례이지만 — 권위주의와 자본주의가 30여 년간 공존한 예이지만 — 장기적으로는 결국 민주화 이후 민주주의와 자본주의가 유효하게 공존한 확증 사례이기도 하다는 것이다.</p>
+<cite>— 강연자</cite>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">한국의 논쟁사</div>
+<h2>사회 구성체론 — 토대와 상부 구조를 종합적으로</h2>
+<p>1980년대 한국에서 벌어진 사회 구성체론(社會構成體論)은 한국 논쟁사에서 독특한 지점이다. 조희연, 박현채 등 좌파 학자들이 주도한 이 논의는 한국의 정치 체제와 경제 체제를 따로 떼어놓지 않고 종합적으로 이해하려는 시도였다.</p>
+<p>핵심 질문: 한국 사회의 구성체는 어떤 유형인가? 식민지적 성격이 있는가, 아니면 자율성을 가진 탈식민지적 성격인가? 주도 세력은 누구이고 운동의 전략은 무엇인가? 대내외적 관점을 아우르는 종합적 논의였으나, 사회주의권 몰락 이후 급격히 사라졌다.</p>
+<p>강연자의 회고: "전망이 항상 이렇게 가면 한국 자본주의가 얼마 안 남았어, 일주일 남은 것 같다, 다음 달에 무너진다 — 자꾸 안 무너지더라고요." 돌이켜 보면 중진 자본주의론이 가장 타당한 이론이었으나, 당시 다른 급진적 이론들이 우위를 점해 현실 분석을 흐렸다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">점진주의 vs. 급진주의</div>
+<h2>경제민주화와 반세계화의 두 갈래</h2>
+<p><strong>점진주의적 접근: 경제민주화론.</strong> 2012년 대선까지 큰 화두였다. 재벌 개혁, 대기업-중소기업 상생, 공정한 시장 질서 구축에 초점을 맞췄다. 실질적 민주주의, 심화된 민주주의, 사회화된 민주주의 — 불평등을 완화하여 민주주의의 깊이를 더하려는 시도들이다.</p>
+<p><strong>급진주의적 접근: 반세계화 운동.</strong> 냉전 시대 사회주의 운동을 했던 세력들이 세계화 비판을 필두로 운동의 모멘텀을 마련했다. 본질적으로 반자본주의 또는 대안 자본주의 운동이었으며, 코스모크라시(cosmocracy) 같은 글로벌 차원의 민주주의 체제를 상정하기도 했다.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">미래</div>
+<h2>불평등을 묶어놓을 수 있는가 — 민주주의의 관건</h2>
+<p>자본주의의 대안은 없다. 그러나 자본주의-민주주의 조합이 자본주의-권위주의 조합에 비해 가지는 최대 장점은 <strong>창의와 혁신</strong>이다. 문제는 불평등이라는 아킬레스건을 어떻게 관리하느냐다.</p>
+<p>고전적인 "토대가 상부 구조를 결정한다"는 공식은 역전되고 있다. 현 국면에서는 오히려 정치(상부 구조)가 경제(토대)를 결정하는 방향으로 진입했다. 민주주의가 얼마나 스마트하고 기민하게 불평등을 관리하고, 그것을 위한 사회적 합의(consensus)를 수립하느냐에 따라 민주주의의 지속 가능성이 결정된다.</p>
+<div class="thesis-card">
+<div class="thesis-label">결론적 전환</div>
+<p>세계화가 재개되더라도, 기존의 위로부터의 세계화(강대국 중심, 생산체인 중심)가 아닌 아래로부터의 세계화 — 시민사회, 비국가적 주체에 의한 대항적 조직화와 숙의가 결합된 민주주의 — 를 모색해야 한다. 국내에서만 민주주의를 논하고, 국경을 넘는 순간 정글의 논리에 맡기는 이분법을 넘어서야 한다.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="chapter">
+<div class="chapter-label">Q&A</div>
+<h2>자본주의라는 이름 자체를 의심하라</h2>
+<p>청중 질문: "우리가 진짜 자본주의에 살고 있는가? 초기 자본주의, 수정 자본주의, 현대 자본주의 — 수식어만 바뀌는데 본질이 같은 것인가? 차라리 기득권과 비기득권, 식민지를 가진 나라와 식민지인 나라의 관계로 접근하는 것이 더 정직하지 않은가?"</p>
+<p>강연자의 답: 분석적으로 강자와 약자, 지배와 피지배로 간결하게 설명할 수 있는 부분이 있다. 근본 취지에 상당 부분 동의한다. 그러나 분석을 세밀하게 들어가려면 개념의 세분화가 필요하다. 자본주의라는 체제 범주 — 사유제와 시장 경제 — 가 전 세계적으로 채택되고 있는 이상, 그 범주 안에서 논의하는 것이 분석적 유용성을 가진다.</p>
+</div>
+
+</main>
+
+<section class="insight-section">
+<div class="insight-inner">
+<div class="insight-label">Claude's Insight</div>
+<div class="insight-title">균형론자의 정치학 — 체제를 다루는 두 번째 언어</div>
+
+<p>이 강연은 김병연 교수의 경제학적 체제론에 대한 <strong>정치학적 응답</strong>이다. 1강이 "자본주의는 대안이 없다"를 논증했다면, 2강은 "대안이 없는 자본주의를 민주주의가 어떻게 통제할 것인가"를 묻는다. 같은 연속 강좌에서 이 두 강연이 짝을 이루는 구조 자체가 흥미롭다.</p>
+
+<p>강연자의 프레임은 <strong>균형론</strong>이다. 정치 체제와 경제 체제가 상호 조응하여 안정적 균형에 도달하면 지속되고, 한쪽이 불균형을 일으키면 깨진다. 이 프레임은 체제를 분석하는 데 유용하지만, 동시에 보수적 함의를 가진다. "균형 상태가 좋다"는 전제를 깔기 때문이다. 강연자 자신이 이를 인식하고 있어서, 규범적 관점 — 이 균형이 깨져야 마땅하다는 입장 — 도 함께 제시한다.</p>
+
+<p>가장 날카로운 지적은 <strong>"토대-상부구조 관계의 역전"</strong>이다. 마르크스의 고전적 공식(경제가 정치를 결정한다)이 현 국면에서는 뒤집히고 있다는 진단. 자본주의가 상수가 된 이상, 변수는 정치 체제뿐이다. 민주주의가 불평등을 얼마나 효과적으로 관리하느냐가 자본주의의 지속 가능성까지 결정한다. 이것은 정치의 자율성에 대한 상당히 강한 주장이며, 경제 결정론에 대한 정면 반박이다.</p>
+
+<p>1980년대 사회 구성체론에 대한 <strong>회고적 평가</strong>도 주목할 만하다. "한국 자본주의가 일주일 남았다, 다음 달에 무너진다 — 자꾸 안 무너지더라고요." 이 한마디는 급진적 이론이 현실 분석을 얼마나 흐릴 수 있는지를 보여준다. 동시에 "중진 자본주의론이 가장 타당했다"는 재평가는, 당대 논쟁의 승패가 학문적 정합성과 반드시 일치하지 않음을 시사한다.</p>
+
+<div class="counterpoint">
+<div class="counter-label">Counterpoint</div>
+
+<p><strong>첫째, "아래로부터의 세계화"가 구체성을 결여한다.</strong> 강연의 결론부에서 제시되는 이 비전 — 시민사회, 비국가적 주체에 의한 대항적 세계화 — 은 방향으로서는 매력적이지만, 실현 경로가 제시되지 않는다. 세계 시민사회는 누가 조직하는가? 비국가적 주체의 민주적 정당성은 어디서 오는가? 반세계화 운동 자체가 이미 조직화의 한계를 보였는데, 그것을 넘어서는 메커니즘이 필요하다.</p>
+
+<p><strong>둘째, 불평등이 민주주의를 위협한다는 진단은 정확하지만, 민주주의가 불평등을 관리할 수 있다는 처방이 순환적이다.</strong> 불평등이 대의제의 대표성을 훼손한다면, 그 훼손된 대의제가 불평등을 관리할 능력이 있는가? 이것은 1강에서 김병연 교수가 "구조적 문제에 도덕적 해법을 제시한다"고 비판받을 수 있었던 것과 유사한 구조다. 불평등이 정치 시스템 자체를 부식시킨 상태에서 그 시스템에게 불평등 해결을 맡기는 것은 논리적 난관이다.</p>
+
+<p><strong>셋째, 한국 경험의 교훈이 과도하게 낙관적으로 읽힐 수 있다.</strong> "장기적으로는 결국 민주화 이후 민주주의와 자본주의가 유효하게 공존한 확증 사례"라는 평가는 2023년 시점에서도 그대로 유효한가? 정치적 양극화, 세대·젠더 갈등, 민주주의 제도에 대한 불신 증가 — 이 모든 징후는 한국의 민주주의-자본주의 균형이 새로운 불균형 국면에 진입했을 가능성을 시사한다. 강연자 자신의 프레임에 따르면, 이 균형이 영구적일 이유는 없다.</p>
+
+<p>그럼에도 이 강연의 가치는, <strong>정치와 경제를 함께 보는 시선 자체가 희귀하다는 점</strong>에 있다. 강연자가 지적했듯이, 정치학자는 정치만 하고 경제학자는 경제만 한다. 정치경제학이라는 관점에서 양자를 종합적으로 보려는 시도 자체가 — 그것이 불완전하더라도 — 빙산의 나머지를 상상하게 만드는 출발점이다.</p>
+</div>
+
+</div>
+</section>
+
+<footer>
+<p>제웅산 시민 인문학 강좌 · 2023. 05. 24 · 제2강 기록</p>
+</footer>
+
+<script>
+// Scroll-to-top
+window.addEventListener('scroll',()=>{
+  document.getElementById('scrollTop').classList.toggle('visible',window.scrollY>600);
+});
+// Home btn style change after hero
+window.addEventListener('scroll',()=>{
+  const btn=document.querySelector('.home-btn');
+  if(window.scrollY>window.innerHeight*.8){
+    btn.style.color='var(--muted)';
+    btn.style.borderColor='var(--border)';
+    btn.style.background='rgba(245,240,232,.95)';
+  } else {
+    btn.style.color='rgba(232,226,214,.5)';
+    btn.style.borderColor='rgba(232,226,214,.15)';
+    btn.style.background='rgba(44,54,84,.3)';
+  }
+});
+// Fade-in on scroll
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});
+},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(18px)';el.style.transition='opacity .7s,transform .7s';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>

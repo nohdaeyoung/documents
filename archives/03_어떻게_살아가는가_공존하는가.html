@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>어떻게 살아가는가, 공존하는가 — 심현보</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --paper: #f5f0e8;
+    --cream: #ebe4d6;
+    --accent: #8b4513;
+    --accent-light: #c4956a;
+    --muted: #7a7062;
+    --divider: #d4cbb8;
+    --highlight: #fff8ed;
+    --deep: #2c1810;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--deep);
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.85;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hero Section ── */
+  .hero {
+    background: var(--deep);
+    color: var(--paper);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(139,69,19,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(196,149,106,0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent-light);
+  }
+
+  .hero-meta {
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+
+  .hero-meta span { margin: 0 0.75rem; }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards, float 3s 2s infinite;
+  }
+
+  .scroll-indicator svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent-light);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  /* ── Main Content ── */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 4.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s forwards;
+  }
+
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.15s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+
+  .section-number {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--deep);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 1.25rem;
+  }
+
+  .section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .section p {
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+    line-height: 2;
+  }
+
+  /* ── Story Block ── */
+  .story-block {
+    background: var(--highlight);
+    border-left: 3px solid var(--accent);
+    padding: 2rem 2rem 2rem 2.5rem;
+    margin: 2rem 0;
+    border-radius: 0 8px 8px 0;
+    position: relative;
+  }
+
+  .story-block .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .story-block h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 0.75rem;
+  }
+
+  .story-block p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    line-height: 1.9;
+  }
+
+  /* ── Comparison ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .compare { grid-template-columns: 1fr; }
+  }
+
+  .compare-card {
+    padding: 2rem;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .compare-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .compare-card.left {
+    background: #faf5f0;
+    border: 1px solid #e8ddd0;
+  }
+  .compare-card.left::before { background: #b8860b; }
+
+  .compare-card.right {
+    background: #f0f5f2;
+    border: 1px solid #cdddd4;
+  }
+  .compare-card.right::before { background: #2e7d5b; }
+
+  .compare-card .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .compare-card.left .label { color: #b8860b; }
+  .compare-card.right .label { color: #2e7d5b; }
+
+  .compare-card h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--deep);
+  }
+
+  .compare-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+
+  /* ── Stat Block ── */
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    padding: 1.75rem 1rem;
+    background: var(--cream);
+    border-radius: 12px;
+  }
+
+  .stat-item .num {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-item .desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* ── Insight (Claude) ── */
+  .insight-section {
+    background: var(--deep);
+    color: var(--paper);
+    padding: 5rem 2rem;
+    margin-top: 2rem;
+  }
+
+  .insight-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .insight-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .insight-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(196,149,106,0.3);
+  }
+
+  .insight-section h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    color: var(--cream);
+  }
+
+  .insight-section p {
+    font-size: 0.95rem;
+    line-height: 2.1;
+    color: rgba(235,228,214,0.8);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .insight-section p strong {
+    color: var(--accent-light);
+    font-weight: 500;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--deep);
+    border-top: 1px solid rgba(196,149,106,0.15);
+  }
+
+  footer p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Flow Diagram ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--cream);
+    border-radius: 12px;
+  }
+
+  .flow-step {
+    background: white;
+    padding: 0.6rem 1.1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--deep);
+    border: 1px solid var(--divider);
+    white-space: nowrap;
+  }
+
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+
+  /* ── Quote Block ── */
+  .quote-block {
+    background: var(--cream);
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .quote-block::before {
+    content: '"';
+    font-family: 'Noto Serif KR', serif;
+    font-size: 3rem;
+    color: var(--accent);
+    opacity: 0.3;
+    position: absolute;
+    top: 0.5rem;
+    left: 1.5rem;
+    line-height: 1;
+  }
+
+  .quote-block .q-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--deep);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .quote-block .q-from {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* ── Home Button ── */
+  .home-btn {
+    position: fixed;
+    top: 1.25rem;
+    left: 1.25rem;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: rgba(235,228,214,0.6);
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid rgba(235,228,214,0.15);
+    border-radius: 8px;
+    background: rgba(44,24,16,0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.25s;
+  }
+  .home-btn:hover {
+    color: var(--accent-light);
+    border-color: var(--accent-light);
+    background: rgba(44,24,16,0.9);
+  }
+  .home-btn svg { flex-shrink: 0; }
+
+  /* ── Scroll-to-Top Button ── */
+  .scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--divider);
+    border-radius: 50%;
+    background: rgba(245,240,232,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--accent);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    pointer-events: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .scroll-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .scroll-top:hover {
+    background: var(--cream);
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(139,69,19,0.15);
+  }
+
+  /* ── Keyframes ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── Divider ── */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--divider);
+    margin: 4rem 0;
+    position: relative;
+  }
+
+  .section-divider::after {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--paper);
+    padding: 0 1rem;
+    color: var(--accent);
+    font-size: 0.6rem;
+  }
+
+  /* ── Counsel Grid ── */
+  .counsel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .counsel-grid { grid-template-columns: 1fr; }
+  }
+
+  .counsel-card {
+    background: white;
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .counsel-card .q {
+    font-size: 0.88rem;
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .counsel-card .a {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  .counsel-card .who {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- Home Button -->
+<a href="https://nohdaeyoung.github.io/documents/" class="home-btn">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  Archives
+</a>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <p class="hero-label">강연 요약 노트</p>
+  <h1>어떻게 살아가는가<br><em>공존하는가</em></h1>
+  <p class="hero-meta">
+    청년과 노년이 함께 만드는 브랜드, 시니어마켓 이야기
+    <br><span>2023.04.21</span>·<span>심현보</span>·<span>아이앤윌리(I&WILLY) 대표</span>
+  </p>
+  <div class="scroll-indicator">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main class="content">
+
+  <!-- ─ 1. 시작 ─ -->
+  <div class="section">
+    <span class="section-number">01</span>
+    <h2>할머니의 폐지 — 모든 것이 시작된 곳</h2>
+    <p>
+      26세에 잘 다니던 회사를 그만두게 된 계기는 친할머니 집 앞 풍경이었다. 할머니가 폐지를 줍고 계셨다. 4남매의 자녀가 가까이 살고, 매주 만나며 용돈도 드리는 상황이었다. 그런데도 할머니는 폐지를 주웠다. 이유는 단순했다. <strong>"내가 번 돈으로 친구들한테 아이스크림 한 번 사주고 싶어서."</strong> 소일거리이자 자기만의 용돈이 필요했던 것이다.
+    </p>
+    <p>
+      가족은 만류했고, 할머니는 폐지를 그만두었다. 하지만 할머니의 친구분은 폐지 없이는 생계를 이어갈 수 없는 처지였다. 이 장면이 심현보 대표를 고물상 앞으로 이끌었다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 2. 고물상에서 발견한 것 ─ -->
+  <div class="section">
+    <span class="section-number">02</span>
+    <h2>새벽 6시의 고물상 — 두 번의 충격</h2>
+    <p>
+      새벽 6시 반, 고물상 앞에 섰다. 두 가지 충격이 있었다.
+    </p>
+    <div class="story-block">
+      <span class="icon">🚗</span>
+      <h3>첫 번째 충격 — 세단을 타는 사장님</h3>
+      <p>6시 55분, 검은 세단 한 대가 도착했다. 운전석에서 내린 멋진 아저씨가 고물상 문을 열었다. 폐지를 모아 오는 어르신들과 그 폐지를 사들이는 사장님 사이의 간극이 눈에 들어왔다.</p>
+    </div>
+    <div class="story-block">
+      <span class="icon">🤝</span>
+      <h3>두 번째 충격 — "고맙다"를 듣지 못하다</h3>
+      <p>2시간 반 동안 40~50명의 어르신들에게 물, 장갑, 간식 꾸러미를 나눠드렸다. 그런데 "고맙다"는 말을 10번도 듣지 못했다. 고물상 사장님이 말했다. "사회복지사인 줄 알았을 거야. 당연하다고 생각한 거지." 그 순간 본질적인 질문이 떠올랐다. <strong>아무리 좋은 직장에서 돈을 벌어 기부하고 후원한들, 이들의 삶이 정말 바뀔까?</strong></p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 3. 폐지 경제학 ─ -->
+  <div class="section">
+    <span class="section-number">03</span>
+    <h2>폐지 1kg = 60원 — 사라지는 생계</h2>
+    <p>
+      한국에 폐지를 주워 생계를 꾸리는 어르신이 얼마나 되는지에 대한 공식 통계는 없다. 추산은 6만 6천 명에서 175만 명까지 편차가 크다. 2016~17년 서울 동작구 연구에서는 폐지 수거 어르신의 약 75%가 <strong>생활비 마련이 목적</strong>이라고 답했다.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <span class="num">150원</span>
+        <span class="desc">2016~17년<br>폐지 1kg 가격</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">60원</span>
+        <span class="desc">현재<br>폐지 1kg 가격</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">~9만원</span>
+        <span class="desc">현재 기준<br>추정 월수입</span>
+      </div>
+    </div>
+
+    <p>
+      리어카 한 대를 채우려면 3일이 걸리고, 100~150kg 정도가 실린다. 2016년 기준으로 한 달 약 22만 5천 원, 현재 가격으로는 한 달 약 <strong>9만 원</strong>. 여기에 노령연금을 더해도 살아가기 어렵다. 폐지 수거를 대체할 수 있는 새로운 일자리가 필요하다는 확신이 생겼다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 4. 아이앤윌리의 탄생 ─ -->
+  <div class="section">
+    <span class="section-number">04</span>
+    <h2>나를 세우고 우리를 세우다 — 아이앤윌리</h2>
+    <p>
+      어르신들을 만나며 발견한 공통점은 <strong>자존감이 매우 낮다</strong>는 것, 그리고 다수가 독거 상태라는 것이었다. 공동체를 만들어 심리적 안정감을 줄 수 있다면 무언가 달라지지 않을까. '아이앤윌리(I&WILLY)'라는 이름은 '나(我)를 세우고(立) 우리를 세우다'라는 뜻이다. 개인이 먼저 서야 공동체가 선다.
+    </p>
+    <p>
+      어르신들을 모아 이야기를 나누었다. 하지만 이야기만으로는 오래 갈 수 없었다. 공감대를 만들 무언가가 필요했고, 그것이 <strong>그림</strong>이었다. 60~70년 만에 펜을 잡은 어르신들의 그림은 놀랍도록 유니크했다. 이 그림들을 콘텐츠와 제품으로 만들고, 소비자와 연결하는 브랜드 <strong>'시니어마켓'</strong>이 탄생했다.
+    </p>
+
+    <div class="flow">
+      <span class="flow-step">🎨 어르신이 그림·글씨 창작</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">💰 저작권료 지급 (1차 일자리)</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">📦 제품화·콜라보</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">🤲 포장 인건비 (2차 일자리)</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 5. 세대를 잇는 상담소 ─ -->
+  <div class="section">
+    <span class="section-number">05</span>
+    <h2>할머니 상담소 — 세대 간 벽을 허물다</h2>
+    <p>
+      그림만으로는 아쉬웠다. 청년과 노년을 진짜로 이어줄 콘텐츠가 필요했고, 그것이 <strong>상담</strong>이었다. 어르신들에게 직접 결혼, 진로, 돈, 외로움에 대한 질문을 보내고, 어르신들이 자신만의 언어로 답한다. 세대 간 벽은 두꺼웠다. 어르신들은 "젊은 사람 필적 조사해서 찾아와 때릴 거야"라고 걱정할 정도로 청년을 무서워했고, 청년들은 지하철에서의 일부 경험을 전체로 일반화하곤 했다.
+    </p>
+
+    <div class="counsel-grid">
+      <div class="counsel-card">
+        <p class="q">💬 사는 게 너무 재미없을 때 어떻게 해야 할까요?</p>
+        <p class="a">"없어요."</p>
+        <p class="who">— 한복순 어르신, 90세</p>
+      </div>
+      <div class="counsel-card">
+        <p class="q">💬 제가 지금 걷고 있는 이 길이 맞는지 모르겠어요.</p>
+        <p class="a">"지금 가고 있는 길이 어딘지 알아야 내가 알려주지."</p>
+        <p class="who">— 어르신 답변</p>
+      </div>
+      <div class="counsel-card">
+        <p class="q">💬 혼자 있는 게 좋고 편한데 결혼을 꼭 해야 할까요?</p>
+        <p class="a">"편이 맞냐, 그럼 안 해도 된다. 근데 외로워. 니 마음대로 해."</p>
+        <p class="who">— 어르신 A</p>
+      </div>
+      <div class="counsel-card">
+        <p class="q">💬 씀씀이가 커서 모아둔 돈이 없어요. 어떻게 해야 할까요?</p>
+        <p class="a">"씀씀이가 헤프면 배가 고파 봐야 한다."</p>
+        <p class="who">— 어르신 답변</p>
+      </div>
+    </div>
+
+    <p>
+      이 상담들은 책으로 엮여 출판되었고, 출판기념회도 열렸다. 어르신들은 평생 처음으로 사인을 만들고, 연습해 오셨다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 6. 브랜드 경쟁력 ─ -->
+  <div class="section">
+    <span class="section-number">06</span>
+    <h2>수정할 수 없습니다 — 브랜드의 두 가지 경쟁력</h2>
+
+    <div class="compare">
+      <div class="compare-card left">
+        <span class="label">경쟁력 1</span>
+        <h3>🎨 유니크함</h3>
+        <p>78세 어르신이 아이패드로 그린 그림, 절기를 주제로 한 달력, 어르신의 손글씨 키링. 어디서도 찾을 수 없고 따라 할 수 없다.</p>
+      </div>
+      <div class="compare-card right">
+        <span class="label">경쟁력 2</span>
+        <h3>✏️ 수정 불가</h3>
+        <p>콜라보 브랜드에게 가장 먼저 하는 말: <strong>"우리는 수정할 수 없습니다."</strong> 오탈자, 맞춤법 오류 그대로. 필요하면 새로 그리지만 결과는 전혀 다를 수 있다. 이것이 삶을 존중하는 방식이다.</p>
+      </div>
+    </div>
+
+    <p>
+      소비자가 "맞춤법 검사도 안 하느냐"고 지적하면, 대표가 직접 답한다. <strong>"맞춤법이 틀린 게 아니라 그대로인 거예요. 이게 그분들의 삶을 존중하는 방식입니다."</strong> SK텔링크, 스킨푸드(일주일 만에 완판), 카카오, 배달의민족, 롯데백화점, 한국후지필름 등 다수 브랜드와의 콜라보가 이어졌다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 7. 조직 문화 ─ -->
+  <div class="section">
+    <span class="section-number">07</span>
+    <h2>이름을 불러드립니다 — 집단이 아닌 개인으로</h2>
+    <p>
+      아이앤윌리에는 세 가지 조직 문화가 있다.
+    </p>
+    <div class="story-block">
+      <span class="icon">🍚</span>
+      <h3>① 점심을 같이 먹는다</h3>
+      <p>면접에서 묻는다. "밥을 같이 먹어도 괜찮아요?" 그것에 동의하는 사람이 이 브랜드를 이해할 수 있다고 믿는다. 어르신들이 아침마다 만들어주시는 만두, 떡볶이, 잡채, 전, 누룽지, 닭모래집 — 강연 첫 장면의 음식들은 바로 이 '식구'의 밥상이었다.</p>
+    </div>
+    <div class="story-block">
+      <span class="icon">📛</span>
+      <h3>② 이름을 부른다</h3>
+      <p>누구누구 엄마, 남편 댁 — 평생 그렇게 불려온 어르신들에게, 이 공간에서만큼은 <strong>"화자 어르신", "마형 어르신", "복순 어르신"</strong>으로 본래의 이름을 부른다. 집단이 아닌 개인으로 바라보겠다는 약속이다.</p>
+    </div>
+    <div class="story-block">
+      <span class="icon">🪪</span>
+      <h3>③ 사원증을 드린다</h3>
+      <p>16명의 어르신 모두에게 사원증을 발급한다. 어르신들은 이 사원증을 놀라울 만큼 소중히 여겼다. <strong>어딘가에 소속된다는 것</strong> — 그것이 사원증 한 장에 담긴 의미였다.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 8. 결론 ─ -->
+  <div class="section">
+    <span class="section-number">08</span>
+    <h2>복지의 대상이 아니라 생산자이자 창작자</h2>
+    <p>
+      심현보 대표의 핵심 메시지는 하나다. <strong>노인이라는 이유만으로 기부와 후원의 대상으로 바라보는 시선을 전환해야 한다.</strong> 일할 수 있는 노인에게는 생산자와 창작자로서의 기회를 드려야 한다. 그것이 이 강연이 말하는 '공존'이다.
+    </p>
+    <p>
+      아이앤윌리의 다음 5년은 더 많은 지역의 어르신들에게 일자리를 만드는 것이다. 내부적 동기는 단순하고 강력하다. "5년 뒤면 우리 아버지가 65세다. 우리 엄마 아빠가 일할 수 있는 회사를 만들자. 거기서 같이 다니면 얼마나 좋을까."
+    </p>
+
+    <div class="quote-block">
+      <p class="q-text">청년과 노년, 어디서나 언제나<br>같은 시간 그리고 오늘을 각자가 사랑한다</p>
+      <p class="q-from">— 아이앤윌리 내부 슬로건</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ CLAUDE'S INSIGHT ══ -->
+<section class="insight-section">
+  <div class="insight-inner">
+    <div class="insight-label">Claude's Insight</div>
+    <h2>사원증 한 장의 무게</h2>
+
+    <p>
+      앞의 두 강연이 한국 사회의 나이듦과 죽음이라는 <strong>구조적 문제</strong>를 진단했다면, 이 강연은 그 문제를 <strong>한 사람의 행동</strong>으로 어떻게 바꿀 수 있는지를 보여준다. 이론에서 실천으로의 전환이다. 그리고 그 실천의 출발점이 거대한 정책이나 예산이 아니라, 고물상 앞 새벽 6시 반의 풍경이라는 것이 인상적이다.
+    </p>
+
+    <p>
+      이 강연에서 가장 강렬한 지점은 <strong>"수정할 수 없습니다"</strong>라는 한마디다. 맞춤법 오류를 고치지 않는 것, 그림을 다듬지 않는 것 — 이것은 단순한 마케팅 전략이 아니다. 그것은 한 사람의 삶을 있는 그대로 존중한다는 선언이다. 우리 사회는 노인을 '돌봄의 대상', '관리의 객체'로 바라보는 데 익숙하다. 송병기 작가의 강연에서 요양원의 할머니가 딸기를 먹지 못한 것도, 결국 어르신을 주체가 아닌 대상으로 바라보는 시스템의 결과였다. 시니어마켓은 정반대의 선언을 한다. <strong>어르신은 돌봄의 대상이 아니라 창작의 주체다.</strong>
+    </p>
+
+    <p>
+      또 하나 주목할 것은 <strong>소속감</strong>의 힘이다. 사원증 한 장에 어르신들이 그토록 강하게 반응한 것은, "어딘가에 속해 있다"는 감각이 인간에게 얼마나 근본적인 욕구인지를 보여준다. 이것은 이도훈 교수가 지적한 1인 가구 증가, 세대 간 물리적 거리 확대라는 구조적 현실과 정확히 맞닿는다. 청년도, 노년도 각자 고립되어 가는 사회에서, 매주 수요일 아침 함께 모여 그림을 그리고 밥을 먹는 것 — 이 단순한 루틴이 만들어내는 공동체의 힘은 통계로는 잡히지 않지만 분명히 실재한다.
+    </p>
+
+    <p>
+      이 세 강연을 하나로 엮으면 이런 그림이 그려진다. <strong>이도훈 교수가 '무엇이 일어나고 있는가'를 진단</strong>했고, <strong>송병기 작가가 '그래서 현장은 어떠한가'를 보여줬</strong>다면, <strong>심현보 대표는 '그렇다면 무엇을 할 수 있는가'를 실행</strong>하고 있다. 구조 → 현장 → 실천. 그리고 세 강연 모두가 결국 하나의 질문으로 수렴한다. 우리는 나이든 사람을 어떤 눈으로 바라볼 것인가. 복지의 대상인가, 삶의 주체인가. 그 시선을 바꾸는 것이 아마도 모든 변화의 시작일 것이다.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>강연 요약 및 분석 · 원 강연: 심현보(아이앤윌리 대표) · 2023.04.21</p>
+</footer>
+
+<script>
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('scrollTop');
+  if (window.scrollY > 600) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+</script>
+</body>
+</html>

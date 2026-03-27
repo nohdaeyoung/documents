@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin — Archives</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f8f6f1;
+      --fg: #1a1a18;
+      --muted: #8a8780;
+      --accent: #c4450a;
+      --card-bg: #ffffff;
+      --border: #e5e2db;
+      --success: #2a6b4f;
+      --danger: #c4450a;
+      --info: #3b82f6;
+      --radius: 10px;
+    }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ===== LOGIN ===== */
+    .login-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .login-overlay.hidden { display: none; }
+
+    .login-box {
+      width: 100%; max-width: 380px; padding: 48px 32px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .login-box h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem; font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .login-box p { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 0.82rem; font-weight: 600;
+      margin-bottom: 6px; color: var(--fg);
+    }
+    .form-group small { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+    input, select, textarea {
+      width: 100%; padding: 10px 14px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: inherit; font-size: 0.9rem; color: var(--fg);
+      background: var(--card-bg); outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--fg); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border: none; border-radius: 8px;
+      font-family: inherit; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-primary { background: var(--fg); color: var(--bg); }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { opacity: 0.85; }
+    .btn-outline {
+      background: transparent; color: var(--fg);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--fg); }
+    .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+    .btn-full { width: 100%; justify-content: center; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .login-error {
+      color: var(--danger); font-size: 0.82rem;
+      margin-bottom: 12px; display: none;
+    }
+    .login-error.show { display: block; }
+
+    /* ===== APP LAYOUT ===== */
+    .app { display: none; }
+    .app.active { display: block; }
+
+    .topbar {
+      background: var(--card-bg);
+      border-bottom: 1.5px solid var(--border);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+
+    .topbar-left {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .topbar h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; font-weight: 400;
+    }
+
+    .topbar-right { display: flex; gap: 8px; align-items: center; }
+
+    .main-content {
+      max-width: 900px; margin: 0 auto;
+      padding: 32px 24px 100px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex; gap: 0; margin-bottom: 32px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .tab-btn {
+      padding: 12px 24px; background: none; border: none;
+      font-family: inherit; font-size: 0.9rem; font-weight: 500;
+      color: var(--muted); cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px; transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--fg); }
+    .tab-btn.active { color: var(--fg); border-bottom-color: var(--fg); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ===== FILE LIST ===== */
+    .toolbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+
+    .file-list { list-style: none; }
+
+    .file-item {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 14px;
+      transition: box-shadow 0.15s;
+    }
+    .file-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .file-item.sortable-ghost { opacity: 0.4; }
+    .file-item.sortable-chosen { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+    .drag-handle {
+      cursor: grab; color: var(--muted); font-size: 1.2rem;
+      user-select: none; padding: 4px;
+    }
+    .drag-handle:active { cursor: grabbing; }
+
+    .file-checkbox { width: 18px; height: 18px; cursor: pointer; accent-color: var(--fg); }
+
+    .file-tag {
+      flex-shrink: 0; font-size: 0.68rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 3px 8px; border-radius: 5px;
+    }
+
+    .file-info { flex: 1; min-width: 0; }
+    .file-title {
+      font-weight: 500; font-size: 0.95rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .file-meta { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    .file-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    .bulk-actions {
+      display: none; padding: 12px 16px; margin-bottom: 16px;
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      align-items: center; gap: 12px;
+    }
+    .bulk-actions.show { display: flex; }
+    .bulk-actions span { font-size: 0.85rem; color: var(--muted); }
+
+    /* ===== FILE FORM ===== */
+    .form-panel {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: var(--bg); overflow-y: auto;
+    }
+    .form-panel.active { display: block; }
+
+    .form-header {
+      background: var(--card-bg);
+      border-bottom: 1.5px solid var(--border);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+    }
+
+    .form-header-left { display: flex; align-items: center; gap: 12px; }
+    .back-btn {
+      background: none; border: none; font-size: 1.3rem;
+      cursor: pointer; color: var(--fg); padding: 4px;
+    }
+
+    .form-body {
+      max-width: 720px; margin: 0 auto;
+      padding: 32px 24px 100px;
+    }
+
+    .form-body .form-group { margin-bottom: 24px; }
+
+    .drop-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 40px; text-align: center; color: var(--muted);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--fg); color: var(--fg);
+    }
+    .drop-zone .icon { font-size: 2rem; margin-bottom: 8px; }
+    .drop-zone p { font-size: 0.9rem; }
+    .drop-zone small { font-size: 0.78rem; }
+    .drop-zone input[type="file"] { display: none; }
+
+    .file-attached {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; background: var(--card-bg);
+      border: 1.5px solid var(--border); border-radius: 8px;
+      margin-top: 8px;
+    }
+    .file-attached .name { flex: 1; font-size: 0.88rem; font-weight: 500; }
+    .file-attached .remove {
+      background: none; border: none; cursor: pointer;
+      color: var(--danger); font-size: 1.1rem;
+    }
+
+    /* Editor */
+    .editor-toggle {
+      background: none; border: none; cursor: pointer;
+      font-family: inherit; font-size: 0.9rem; font-weight: 500;
+      color: var(--fg); display: flex; align-items: center; gap: 6px;
+      padding: 8px 0;
+    }
+
+    .editor-wrap {
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; display: none;
+    }
+    .editor-wrap.open { display: block; }
+
+    .editor-wrap textarea {
+      width: 100%; min-height: 400px; border: none; border-radius: 0;
+      padding: 16px; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; line-height: 1.7; resize: vertical;
+    }
+
+    .preview-frame {
+      width: 100%; height: 500px; border: 1.5px solid var(--border);
+      border-radius: var(--radius); background: #fff;
+      display: none;
+    }
+    .preview-frame.open { display: block; }
+
+    .form-footer {
+      display: flex; justify-content: flex-end; gap: 10px;
+      padding-top: 24px; border-top: 1.5px solid var(--border);
+      margin-top: 32px;
+    }
+
+    /* ===== CATEGORY MANAGEMENT ===== */
+    .cat-add-row {
+      display: flex; gap: 8px; margin-bottom: 24px;
+      flex-wrap: wrap; align-items: flex-end;
+    }
+    .cat-add-row .form-group { margin-bottom: 0; flex: 1; min-width: 100px; }
+    .cat-add-row .form-group.color-group { flex: 0 0 80px; }
+
+    .cat-list { list-style: none; }
+    .cat-item {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 20px; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 14px;
+    }
+
+    .cat-color {
+      width: 24px; height: 24px; border-radius: 50%;
+      flex-shrink: 0; border: 2px solid rgba(0,0,0,0.1);
+    }
+
+    .cat-info { flex: 1; }
+    .cat-id { font-size: 0.78rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+    .cat-label { font-weight: 500; font-size: 0.92rem; }
+
+    /* Toast */
+    .toast-container {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .toast {
+      padding: 12px 20px; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 500;
+      color: #fff; animation: slideUp 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    .toast.info { background: var(--info); }
+
+    @keyframes slideUp {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Empty */
+    .empty-state {
+      text-align: center; padding: 60px 24px; color: var(--muted);
+    }
+    .empty-state .icon { font-size: 2.2rem; margin-bottom: 12px; opacity: 0.4; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .topbar { padding: 12px 16px; }
+      .main-content { padding: 20px 16px 80px; }
+      .file-item { flex-wrap: wrap; padding: 12px; }
+      .file-actions { width: 100%; justify-content: flex-end; margin-top: 8px; }
+      .cat-add-row { flex-direction: column; }
+      .form-body { padding: 20px 16px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <h1>Admin</h1>
+    <p>Archives 관리자 페이지</p>
+    <div class="login-error" id="loginError">ID 또는 비밀번호가 올바르지 않습니다.</div>
+    <div class="form-group">
+      <label>ID</label>
+      <input type="text" id="loginId" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPw">
+    </div>
+    <div class="form-group">
+      <label>GitHub Token (PAT)</label>
+      <input type="password" id="loginToken" placeholder="ghp_xxxxxxxxxxxx">
+      <small>GitHub → Settings → Developer settings → Personal access tokens에서 발급</small>
+    </div>
+    <button class="btn btn-primary btn-full" id="loginBtn" style="margin-top:20px" onclick="handleLogin()">로그인</button>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div class="app" id="app">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <h2>Admin</h2>
+    </div>
+    <div class="topbar-right">
+      <a href="../" class="btn btn-outline btn-sm">🏠 사이트</a>
+      <button class="btn btn-primary btn-sm" onclick="openFileForm()">+ 파일 등록</button>
+      <button class="btn btn-outline btn-sm" onclick="handleLogout()">로그아웃</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="files" onclick="switchTab('files')">📁 파일 목록</button>
+      <button class="tab-btn" data-tab="categories" onclick="switchTab('categories')">🏷️ 분류 관리</button>
+    </div>
+
+    <!-- Tab: File List -->
+    <div class="tab-panel active" id="tab-files">
+      <div class="toolbar">
+        <div style="font-size:0.9rem;color:var(--muted)" id="fileCount">총 0개</div>
+        <button class="btn btn-primary btn-sm" onclick="saveOrder()">💾 순서 저장</button>
+      </div>
+
+      <div class="bulk-actions" id="bulkActions">
+        <span id="selectedCount">0개 선택</span>
+        <button class="btn btn-danger btn-sm" onclick="bulkDelete()">선택 삭제</button>
+      </div>
+
+      <ul class="file-list" id="fileList"></ul>
+      <div class="empty-state" id="fileEmpty" style="display:none">
+        <div class="icon">📂</div>
+        <p>등록된 파일이 없습니다.</p>
+      </div>
+    </div>
+
+    <!-- Tab: Categories -->
+    <div class="tab-panel" id="tab-categories">
+      <h3 style="margin-bottom:20px;font-size:1rem">분류 추가</h3>
+      <div class="cat-add-row">
+        <div class="form-group">
+          <label>ID (영문)</label>
+          <input type="text" id="catNewId" placeholder="blog">
+        </div>
+        <div class="form-group">
+          <label>표시명</label>
+          <input type="text" id="catNewLabel" placeholder="블로그">
+        </div>
+        <div class="form-group color-group">
+          <label>색상</label>
+          <input type="color" id="catNewColor" value="#c4450a" style="height:38px;padding:4px">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addCategory()" style="height:38px;align-self:flex-end">추가</button>
+      </div>
+
+      <h3 style="margin-bottom:16px;font-size:1rem">분류 목록</h3>
+      <ul class="cat-list" id="catList"></ul>
+      <div class="empty-state" id="catEmpty" style="display:none">
+        <div class="icon">🏷️</div>
+        <p>등록된 분류가 없습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FILE FORM (Full-screen panel) ===== -->
+<div class="form-panel" id="fileFormPanel">
+  <div class="form-header">
+    <div class="form-header-left">
+      <button class="back-btn" onclick="closeFileForm()">←</button>
+      <h2 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:1.2rem" id="formTitle">파일 등록</h2>
+    </div>
+    <div>
+      <button class="btn btn-outline btn-sm" onclick="togglePreview()">👁 미리보기</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="form-group">
+      <label>제목 *</label>
+      <input type="text" id="inputTitle" placeholder="파일 업로드 시 자동 추출됩니다">
+    </div>
+    <div class="form-group">
+      <label>분류 *</label>
+      <select id="inputCategory"></select>
+    </div>
+    <div class="form-group">
+      <label>일자 *</label>
+      <input type="date" id="inputDate">
+    </div>
+    <div class="form-group">
+      <label>파일 첨부 *</label>
+      <div class="drop-zone" id="dropZone">
+        <div class="icon">📎</div>
+        <p>파일을 드래그하거나 클릭하세요</p>
+        <small>.html, .md 파일 지원</small>
+        <input type="file" id="fileInput" accept=".html,.md,.htm">
+      </div>
+      <div class="file-attached" id="fileAttached" style="display:none">
+        <span class="name" id="attachedName"></span>
+        <button class="remove" onclick="removeFile()">✕</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <button class="editor-toggle" onclick="toggleEditor()">
+        <span id="editorArrow">▶</span> 파일 내용 편집
+      </button>
+      <div class="editor-wrap" id="editorWrap">
+        <textarea id="editorArea" spellcheck="false"></textarea>
+      </div>
+    </div>
+    <iframe class="preview-frame" id="previewFrame" sandbox="allow-same-origin"></iframe>
+    <div class="form-footer">
+      <button class="btn btn-outline" onclick="closeFileForm()">취소</button>
+      <button class="btn btn-primary" id="submitBtn" onclick="submitFile()">등록</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ===== CONFIG =====
+const CONFIG = {
+  owner: 'nohdaeyoung',
+  repo: 'documents',
+  branch: 'main',
+  credentials: { id: 'dynoworld', pw: '0324' }
+};
+
+let token = '';
+let archives = [];
+let categories = [];
+let archivesSha = '';
+let categoriesSha = '';
+let editingIndex = -1; // -1 = new, >=0 = editing
+let attachedFile = null;
+let attachedContent = '';
+
+// ===== AUTH =====
+function handleLogin() {
+  const id = document.getElementById('loginId').value.trim();
+  const pw = document.getElementById('loginPw').value.trim();
+  const pat = document.getElementById('loginToken').value.trim();
+  const errEl = document.getElementById('loginError');
+
+  if (id !== CONFIG.credentials.id || pw !== CONFIG.credentials.pw) {
+    errEl.textContent = 'ID 또는 비밀번호가 올바르지 않습니다.';
+    errEl.classList.add('show');
+    return;
+  }
+  if (!pat.startsWith('ghp_') && !pat.startsWith('github_pat_')) {
+    errEl.textContent = '유효한 GitHub Token을 입력해주세요.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  token = pat;
+  sessionStorage.setItem('admin_token', pat);
+  errEl.classList.remove('show');
+  document.getElementById('loginOverlay').classList.add('hidden');
+  document.getElementById('app').classList.add('active');
+  loadData();
+}
+
+function handleLogout() {
+  sessionStorage.removeItem('admin_token');
+  token = '';
+  location.reload();
+}
+
+// Auto-login from session
+(function checkSession() {
+  const saved = sessionStorage.getItem('admin_token');
+  if (saved) {
+    token = saved;
+    document.getElementById('loginOverlay').classList.add('hidden');
+    document.getElementById('app').classList.add('active');
+    loadData();
+  }
+  // Enter key on login
+  document.getElementById('loginPw').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginToken').focus(); });
+  document.getElementById('loginToken').addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+})();
+
+// ===== GITHUB API =====
+async function apiGet(path) {
+  const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${path}?ref=${CONFIG.branch}`, {
+    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json' }
+  });
+  if (!res.ok) throw new Error(`GET ${path}: ${res.status}`);
+  return res.json();
+}
+
+async function apiPut(path, content, sha, message) {
+  const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch: CONFIG.branch };
+  if (sha) body.sha = sha;
+  const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message || res.status); }
+  return res.json();
+}
+
+async function apiDelete(path, sha, message) {
+  const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${path}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, sha, branch: CONFIG.branch })
+  });
+  if (!res.ok) throw new Error(`DELETE ${path}: ${res.status}`);
+  return res.json();
+}
+
+async function getFileSha(path) {
+  try {
+    const data = await apiGet(path);
+    return data.sha;
+  } catch { return null; }
+}
+
+// ===== DATA LOADING =====
+async function loadData() {
+  try {
+    await Promise.all([loadArchives(), loadCategories()]);
+    renderFileList();
+    renderCategoryList();
+  } catch (err) {
+    toast('데이터 로딩 실패: ' + err.message, 'error');
+  }
+}
+
+async function loadArchives() {
+  try {
+    const data = await apiGet('archives.json');
+    archivesSha = data.sha;
+    const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+    archives = JSON.parse(content);
+    if (!Array.isArray(archives)) archives = [];
+  } catch {
+    archives = [];
+    archivesSha = '';
+  }
+}
+
+async function loadCategories() {
+  try {
+    const data = await apiGet('categories.json');
+    categoriesSha = data.sha;
+    const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+    categories = JSON.parse(content);
+    if (!Array.isArray(categories)) categories = [];
+  } catch {
+    categories = [];
+    categoriesSha = '';
+  }
+}
+
+async function saveArchives(message) {
+  const content = JSON.stringify(archives, null, 2);
+  const result = await apiPut('archives.json', content, archivesSha, message || 'update archives.json');
+  archivesSha = result.content.sha;
+}
+
+async function saveCategories(message) {
+  const content = JSON.stringify(categories, null, 2);
+  const result = await apiPut('categories.json', content, categoriesSha, message || 'update categories.json');
+  categoriesSha = result.content.sha;
+}
+
+// ===== TABS =====
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === `tab-${tabId}`));
+}
+
+// ===== FILE LIST =====
+function renderFileList() {
+  const list = document.getElementById('fileList');
+  const empty = document.getElementById('fileEmpty');
+  const count = document.getElementById('fileCount');
+
+  count.textContent = `총 ${archives.length}개`;
+
+  if (archives.length === 0) {
+    list.innerHTML = '';
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = archives.map((file, i) => {
+    const cat = categories.find(c => c.id === file.category);
+    const tagBg = cat ? cat.color + '18' : '#f0ece4';
+    const tagColor = cat ? cat.color : '#5c5a55';
+    const tagLabel = cat ? cat.label : (file.ext || 'file');
+
+    return `<li class="file-item" data-index="${i}">
+      <span class="drag-handle">☰</span>
+      <input type="checkbox" class="file-checkbox" onchange="updateBulk()">
+      <span class="file-tag" style="background:${tagBg};color:${tagColor}">${tagLabel}</span>
+      <div class="file-info">
+        <div class="file-title">${file.title || file.name}</div>
+        <div class="file-meta">${file.name}${file.date ? ' · ' + file.date : ''}</div>
+      </div>
+      <div class="file-actions">
+        <button class="btn btn-outline btn-sm" onclick="editFile(${i})">수정</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteFile(${i})">삭제</button>
+      </div>
+    </li>`;
+  }).join('');
+
+  // Init sortable
+  if (window._sortable) window._sortable.destroy();
+  window._sortable = new Sortable(list, {
+    handle: '.drag-handle',
+    animation: 150,
+    ghostClass: 'sortable-ghost',
+    chosenClass: 'sortable-chosen',
+    onEnd: function(evt) {
+      const item = archives.splice(evt.oldIndex, 1)[0];
+      archives.splice(evt.newIndex, 0, item);
+      renderFileList();
+      toast('순서가 변경되었습니다. "순서 저장"을 눌러 반영하세요.', 'info');
+    }
+  });
+}
+
+async function saveOrder() {
+  try {
+    archives.forEach((f, i) => f.order = i);
+    await saveArchives('reorder archives');
+    toast('순서가 저장되었습니다.', 'success');
+  } catch (err) {
+    toast('순서 저장 실패: ' + err.message, 'error');
+  }
+}
+
+async function deleteFile(index) {
+  const file = archives[index];
+  if (!confirm(`"${file.title || file.name}" 파일을 삭제하시겠습니까?`)) return;
+
+  try {
+    // Delete actual file
+    const sha = await getFileSha(`archives/${file.name}`);
+    if (sha) await apiDelete(`archives/${file.name}`, sha, `delete: ${file.name}`);
+
+    // Update archives.json
+    archives.splice(index, 1);
+    await saveArchives(`remove: ${file.name}`);
+    renderFileList();
+    toast('파일이 삭제되었습니다.', 'success');
+  } catch (err) {
+    toast('삭제 실패: ' + err.message, 'error');
+  }
+}
+
+function updateBulk() {
+  const checked = document.querySelectorAll('.file-checkbox:checked');
+  const bulk = document.getElementById('bulkActions');
+  const count = document.getElementById('selectedCount');
+  if (checked.length > 0) {
+    bulk.classList.add('show');
+    count.textContent = `${checked.length}개 선택`;
+  } else {
+    bulk.classList.remove('show');
+  }
+}
+
+async function bulkDelete() {
+  const checkboxes = document.querySelectorAll('.file-checkbox:checked');
+  const indices = Array.from(checkboxes).map(cb => {
+    return parseInt(cb.closest('.file-item').dataset.index);
+  }).sort((a, b) => b - a); // reverse order for safe splice
+
+  if (!confirm(`${indices.length}개 파일을 삭제하시겠습니까?`)) return;
+
+  try {
+    for (const i of indices) {
+      const file = archives[i];
+      const sha = await getFileSha(`archives/${file.name}`);
+      if (sha) await apiDelete(`archives/${file.name}`, sha, `delete: ${file.name}`);
+      archives.splice(i, 1);
+    }
+    await saveArchives('bulk delete');
+    renderFileList();
+    document.getElementById('bulkActions').classList.remove('show');
+    toast(`${indices.length}개 파일이 삭제되었습니다.`, 'success');
+  } catch (err) {
+    toast('일괄 삭제 실패: ' + err.message, 'error');
+  }
+}
+
+// ===== FILE FORM =====
+function openFileForm(index) {
+  editingIndex = (index !== undefined) ? index : -1;
+  const panel = document.getElementById('fileFormPanel');
+  const title = document.getElementById('formTitle');
+
+  // Reset
+  document.getElementById('inputTitle').value = '';
+  document.getElementById('inputDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('editorArea').value = '';
+  document.getElementById('editorWrap').classList.remove('open');
+  document.getElementById('editorArrow').textContent = '▶';
+  document.getElementById('previewFrame').classList.remove('open');
+  document.getElementById('fileAttached').style.display = 'none';
+  document.getElementById('dropZone').style.display = '';
+  attachedFile = null;
+  attachedContent = '';
+
+  // Populate category select
+  const sel = document.getElementById('inputCategory');
+  sel.innerHTML = '<option value="">분류 선택</option>' +
+    categories.map(c => `<option value="${c.id}">${c.label}</option>`).join('');
+
+  if (editingIndex >= 0) {
+    title.textContent = '파일 수정';
+    document.getElementById('submitBtn').textContent = '수정';
+    const file = archives[editingIndex];
+    document.getElementById('inputTitle').value = file.title || '';
+    document.getElementById('inputDate').value = file.date || '';
+    sel.value = file.category || '';
+
+    // Load file content
+    loadFileContent(file.name);
+  } else {
+    title.textContent = '파일 등록';
+    document.getElementById('submitBtn').textContent = '등록';
+  }
+
+  panel.classList.add('active');
+}
+
+async function loadFileContent(filename) {
+  try {
+    const data = await apiGet(`archives/${filename}`);
+    attachedContent = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+    document.getElementById('editorArea').value = attachedContent;
+    document.getElementById('attachedName').textContent = filename;
+    document.getElementById('fileAttached').style.display = 'flex';
+    document.getElementById('dropZone').style.display = 'none';
+    attachedFile = { name: filename, sha: data.sha };
+  } catch (err) {
+    toast('파일 내용 로딩 실패: ' + err.message, 'error');
+  }
+}
+
+function closeFileForm() {
+  document.getElementById('fileFormPanel').classList.remove('active');
+  editingIndex = -1;
+}
+
+function editFile(index) {
+  openFileForm(index);
+}
+
+// Drop zone
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  if (e.dataTransfer.files.length) handleFileSelect(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', e => {
+  if (e.target.files.length) handleFileSelect(e.target.files[0]);
+});
+
+function handleFileSelect(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['html', 'htm', 'md'].includes(ext)) {
+    toast('HTML 또는 Markdown 파일만 지원됩니다.', 'error');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    attachedContent = e.target.result;
+    attachedFile = { name: file.name, sha: null };
+
+    document.getElementById('attachedName').textContent = file.name;
+    document.getElementById('fileAttached').style.display = 'flex';
+    document.getElementById('dropZone').style.display = 'none';
+    document.getElementById('editorArea').value = attachedContent;
+
+    // Auto-extract title
+    const titleInput = document.getElementById('inputTitle');
+    if (!titleInput.value.trim()) {
+      const extracted = extractTitle(attachedContent, ext);
+      if (extracted) titleInput.value = extracted;
+    }
+  };
+  reader.readAsText(file);
+}
+
+function extractTitle(content, ext) {
+  if (ext === 'html' || ext === 'htm') {
+    const match = content.match(/<title[^>]*>(.*?)<\/title>/is);
+    if (match) return match[1].trim();
+  } else if (ext === 'md') {
+    const lines = content.split('\n');
+    for (const line of lines) {
+      if (line.trim().startsWith('# ')) return line.trim().slice(2).trim();
+    }
+  }
+  return null;
+}
+
+function removeFile() {
+  attachedFile = null;
+  attachedContent = '';
+  document.getElementById('fileAttached').style.display = 'none';
+  document.getElementById('dropZone').style.display = '';
+  document.getElementById('editorArea').value = '';
+  fileInput.value = '';
+}
+
+function toggleEditor() {
+  const wrap = document.getElementById('editorWrap');
+  const arrow = document.getElementById('editorArrow');
+  wrap.classList.toggle('open');
+  arrow.textContent = wrap.classList.contains('open') ? '▼' : '▶';
+}
+
+function togglePreview() {
+  const frame = document.getElementById('previewFrame');
+  frame.classList.toggle('open');
+  if (frame.classList.contains('open')) {
+    const content = document.getElementById('editorArea').value || attachedContent;
+    frame.srcdoc = content;
+  }
+}
+
+async function submitFile() {
+  const title = document.getElementById('inputTitle').value.trim();
+  const category = document.getElementById('inputCategory').value;
+  const date = document.getElementById('inputDate').value;
+  const editorContent = document.getElementById('editorArea').value;
+
+  if (!title) { toast('제목을 입력해주세요.', 'error'); return; }
+  if (!category) { toast('분류를 선택해주세요.', 'error'); return; }
+  if (!date) { toast('일자를 선택해주세요.', 'error'); return; }
+  if (!attachedFile && editingIndex < 0) { toast('파일을 첨부해주세요.', 'error'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> 처리 중…';
+
+  try {
+    const content = editorContent || attachedContent;
+    const fileName = attachedFile ? attachedFile.name : archives[editingIndex].name;
+    const ext = fileName.split('.').pop().toLowerCase();
+
+    // Upload/update file
+    const existingSha = attachedFile?.sha || await getFileSha(`archives/${fileName}`);
+    await apiPut(`archives/${fileName}`, content, existingSha, `${editingIndex >= 0 ? 'update' : 'add'}: ${fileName}`);
+
+    // Update archives.json
+    const entry = {
+      name: fileName,
+      title: title,
+      ext: ext === 'htm' ? 'html' : ext,
+      category: category,
+      size: new Blob([content]).size,
+      date: date,
+      order: editingIndex >= 0 ? archives[editingIndex].order : archives.length,
+      thumbnail: editingIndex >= 0 ? (archives[editingIndex].thumbnail || '') : ''
+    };
+
+    if (editingIndex >= 0) {
+      archives[editingIndex] = entry;
+    } else {
+      archives.push(entry);
+    }
+
+    await saveArchives(`${editingIndex >= 0 ? 'update' : 'add'} entry: ${fileName}`);
+    renderFileList();
+    closeFileForm();
+    toast(`파일이 ${editingIndex >= 0 ? '수정' : '등록'}되었습니다.`, 'success');
+  } catch (err) {
+    toast('저장 실패: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = editingIndex >= 0 ? '수정' : '등록';
+  }
+}
+
+// ===== CATEGORY MANAGEMENT =====
+function renderCategoryList() {
+  const list = document.getElementById('catList');
+  const empty = document.getElementById('catEmpty');
+
+  if (categories.length === 0) {
+    list.innerHTML = '';
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = categories.map((cat, i) => `
+    <li class="cat-item">
+      <div class="cat-color" style="background:${cat.color}"></div>
+      <div class="cat-info">
+        <div class="cat-label">${cat.label}</div>
+        <div class="cat-id">${cat.id}</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editCategory(${i})">수정</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCategory(${i})">삭제</button>
+      </div>
+    </li>
+  `).join('');
+}
+
+async function addCategory() {
+  const id = document.getElementById('catNewId').value.trim().toLowerCase();
+  const label = document.getElementById('catNewLabel').value.trim();
+  const color = document.getElementById('catNewColor').value;
+
+  if (!id || !label) { toast('ID와 표시명을 모두 입력해주세요.', 'error'); return; }
+  if (categories.find(c => c.id === id)) { toast('이미 존재하는 ID입니다.', 'error'); return; }
+
+  categories.push({ id, label, color });
+
+  try {
+    await saveCategories(`add category: ${id}`);
+    renderCategoryList();
+    document.getElementById('catNewId').value = '';
+    document.getElementById('catNewLabel').value = '';
+    toast('분류가 추가되었습니다.', 'success');
+  } catch (err) {
+    categories.pop();
+    toast('추가 실패: ' + err.message, 'error');
+  }
+}
+
+function editCategory(index) {
+  const cat = categories[index];
+  const newLabel = prompt('표시명 수정:', cat.label);
+  if (!newLabel || newLabel.trim() === cat.label) return;
+
+  const newColor = prompt('색상 코드 (예: #c4450a):', cat.color);
+
+  categories[index].label = newLabel.trim();
+  if (newColor && /^#[0-9a-fA-F]{6}$/.test(newColor)) categories[index].color = newColor;
+
+  saveCategories(`update category: ${cat.id}`)
+    .then(() => { renderCategoryList(); toast('분류가 수정되었습니다.', 'success'); })
+    .catch(err => toast('수정 실패: ' + err.message, 'error'));
+}
+
+async function deleteCategory(index) {
+  const cat = categories[index];
+  const used = archives.filter(a => a.category === cat.id).length;
+  if (used > 0 && !confirm(`이 분류를 사용 중인 파일이 ${used}개 있습니다. 삭제하시겠습니까?`)) return;
+  if (used === 0 && !confirm(`"${cat.label}" 분류를 삭제하시겠습니까?`)) return;
+
+  categories.splice(index, 1);
+  try {
+    await saveCategories(`delete category: ${cat.id}`);
+    renderCategoryList();
+    toast('분류가 삭제되었습니다.', 'success');
+  } catch (err) {
+    toast('삭제 실패: ' + err.message, 'error');
+  }
+}
+
+// ===== TOAST =====
+function toast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = message;
+  container.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 3000);
+}
+</script>
+</body>
+</html>

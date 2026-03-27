@@ -14,10 +14,7 @@ async function getData() {
         "slug",
         "title",
         "categoryId",
-        "size",
-        "date",
-        "displayOrder",
-        "thumbnail"
+        "date"
       )
       .get(),
     adminDb.collection("categories").orderBy("displayOrder").get(),
@@ -31,10 +28,7 @@ async function getData() {
       slug: data.slug,
       title: data.title,
       categoryId: data.categoryId,
-      size: data.size,
       date: data.date,
-      displayOrder: data.displayOrder,
-      thumbnail: data.thumbnail || "",
     };
   });
 

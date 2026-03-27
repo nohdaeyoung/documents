@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 사회의 인구 변동 — 이도훈 교수</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --paper: #f5f0e8;
+    --cream: #ebe4d6;
+    --accent: #8b4513;
+    --accent-light: #c4956a;
+    --muted: #7a7062;
+    --divider: #d4cbb8;
+    --highlight: #fff8ed;
+    --deep: #2c1810;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--deep);
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.85;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hero Section ── */
+  .hero {
+    background: var(--deep);
+    color: var(--paper);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(139,69,19,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(196,149,106,0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent-light);
+  }
+
+  .hero-meta {
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+
+  .hero-meta span { margin: 0 0.75rem; }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards, float 3s 2s infinite;
+  }
+
+  .scroll-indicator svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent-light);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  /* ── Main Content ── */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 4.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s forwards;
+  }
+
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.15s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+
+  .section-number {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--deep);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 1.25rem;
+  }
+
+  .section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .section p {
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+    line-height: 2;
+  }
+
+  /* ── Story Block ── */
+  .story-block {
+    background: var(--highlight);
+    border-left: 3px solid var(--accent);
+    padding: 2rem 2rem 2rem 2.5rem;
+    margin: 2rem 0;
+    border-radius: 0 8px 8px 0;
+    position: relative;
+  }
+
+  .story-block .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .story-block h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 0.75rem;
+  }
+
+  .story-block p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    line-height: 1.9;
+  }
+
+  /* ── Comparison ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .compare { grid-template-columns: 1fr; }
+  }
+
+  .compare-card {
+    padding: 2rem;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .compare-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .compare-card.left {
+    background: #faf5f0;
+    border: 1px solid #e8ddd0;
+  }
+  .compare-card.left::before { background: #b8860b; }
+
+  .compare-card.right {
+    background: #f0f5f2;
+    border: 1px solid #cdddd4;
+  }
+  .compare-card.right::before { background: #2e7d5b; }
+
+  .compare-card .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .compare-card.left .label { color: #b8860b; }
+  .compare-card.right .label { color: #2e7d5b; }
+
+  .compare-card h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--deep);
+  }
+
+  .compare-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+
+  /* ── Stat Block ── */
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    padding: 1.75rem 1rem;
+    background: var(--cream);
+    border-radius: 12px;
+  }
+
+  .stat-item .num {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-item .desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* ── Insight (Claude) ── */
+  .insight-section {
+    background: var(--deep);
+    color: var(--paper);
+    padding: 5rem 2rem;
+    margin-top: 2rem;
+  }
+
+  .insight-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .insight-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .insight-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(196,149,106,0.3);
+  }
+
+  .insight-section h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    color: var(--cream);
+  }
+
+  .insight-section p {
+    font-size: 0.95rem;
+    line-height: 2.1;
+    color: rgba(235,228,214,0.8);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .insight-section p strong {
+    color: var(--accent-light);
+    font-weight: 500;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--deep);
+    border-top: 1px solid rgba(196,149,106,0.15);
+  }
+
+  footer p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Flow Diagram ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--cream);
+    border-radius: 12px;
+  }
+
+  .flow-step {
+    background: white;
+    padding: 0.6rem 1.1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--deep);
+    border: 1px solid var(--divider);
+    white-space: nowrap;
+  }
+
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+
+  /* ── Keyframes ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── Divider ── */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--divider);
+    margin: 4rem 0;
+    position: relative;
+  }
+
+  .section-divider::after {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--paper);
+    padding: 0 1rem;
+    color: var(--accent);
+    font-size: 0.6rem;
+  }
+
+  /* ── Pyramid Visual ── */
+  .pyramid-row {
+    display: flex;
+    gap: 1rem;
+    margin: 2.5rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pyramid-card {
+    flex: 1;
+    min-width: 180px;
+    max-width: 220px;
+    text-align: center;
+    padding: 2rem 1.25rem;
+    border-radius: 12px;
+    border: 1px solid var(--divider);
+    background: white;
+    position: relative;
+  }
+
+  .pyramid-card .year {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .pyramid-card .shape {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .pyramid-card .label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <p class="hero-label">강연 요약 노트</p>
+  <h1>한국 사회의 <em>인구 변동</em><br>무슨 일이 벌어지고 있는가</h1>
+  <p class="hero-meta">
+    사회학자의 시선으로 읽는 저출생·고령화·세대 간 격차
+    <br><span>2023.04.21</span>·<span>이도훈</span>·<span>연세대학교 사회학과 교수</span>
+  </p>
+  <div class="scroll-indicator">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ══ PROLOGUE ══ -->
+<main class="content">
+
+  <div class="section">
+    <span class="section-number">PROLOGUE</span>
+    <h2>자기 관련성 — 남의 이야기가 아니다</h2>
+    <p>
+      세미나 기획자 박현영 소장은 오프닝에서 핵심 키워드를 제시했다. <strong>'자기 관련성'</strong>. 고령화는 비즈니스 타깃의 문제로 시작했지만, 기획을 발전시키며 깨달은 것은 이것이 결국 "내 얘기"라는 사실이었다. 어떤 산업에 종사하든, 어떤 나이이든, 나이듦은 모두에게 돌아오는 자신의 문제다. 그리고 우리는 이 문제에 대해 너무 모르고 있고, 어쩌면 알고 싶지 않았을 수도 있다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 1. 출생률의 급락 ─ -->
+  <div class="section">
+    <span class="section-number">01</span>
+    <h2>도대체 무슨 일이 생겼는가 — 출생률의 급락</h2>
+    <p>
+      한국의 저출생은 2000년대에 시작된 것이 아니다. 사회 재생산에 필요한 합계출산율 2.1을 밑돈 것은 <strong>이미 1980년대 중반</strong>이었다. 한국은 저출생 사회에 진입한 지 이미 40년에 가까워지고 있다. 2000년대에 합계출산율 1.3 이하로 떨어지며 초저출생 사회로 접어들었고, 2022년에는 0.78이라는 수치를 기록했다.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <span class="num">0.78</span>
+        <span class="desc">2022년<br>합계출산율</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">~40년</span>
+        <span class="desc">저출생 사회<br>진입 경과</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">7년</span>
+        <span class="desc">초고령사회<br>진입까지</span>
+      </div>
+    </div>
+
+    <p>
+      이 수치는 1990년대 초 독일 통일 직후의 충격적 출생률, 심지어 소련 연방 붕괴 당시 러시아의 출생률보다도 낮다. <strong>전쟁이 나지 않은 나라에서 전쟁보다 낮은 출생률</strong>이 나타나고 있다는 것, 이것이 한국 인구 변동의 현실이다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 2. 구조적 관성 ─ -->
+  <div class="section">
+    <span class="section-number">02</span>
+    <h2>구조적 관성 — 사회는 왜 느리게 반응하는가</h2>
+    <p>
+      1980년대에 이미 저출생 사회에 진입했음에도 불구하고, 한국 정부는 2000년대 전까지 "둘도 많다, 하나만 낳자"는 산아제한 정책을 유지했다. 이미 출생률이 떨어지고 있는데도 인구를 줄이는 방향의 캠페인을 계속한 것이다. 이것이 바로 <strong>구조적 관성(structural inertia)</strong>이다.
+    </p>
+    <p>
+      사회의 정책과 인식이 현실 변화의 속도를 따라가지 못할 때, 그 지연이 누적되어 더 큰 문제를 낳는다. 한국의 인구 문제를 이해하려면 단순한 방향성뿐 아니라, 그 <strong>변화의 속도</strong>에 주목해야 한다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 3. 인구 피라미드의 변형 ─ -->
+  <div class="section">
+    <span class="section-number">03</span>
+    <h2>삼각형에서 역삼각형으로 — 인구 피라미드의 변형</h2>
+    <p>
+      '인구 피라미드'라는 용어 자체가 이미 현실을 반영하지 못한다. 1990년에는 삼각형이었던 인구 구조가 2020년에 마름모꼴로 변했고, 30년 뒤에는 역삼각형이 될 것으로 전망된다. 이것은 추정이 아니라 <strong>사회적 사실(social fact)</strong>에 가깝다.
+    </p>
+
+    <div class="pyramid-row">
+      <div class="pyramid-card">
+        <span class="year">1990</span>
+        <span class="shape">△</span>
+        <span class="label">전통적<br>피라미드형</span>
+      </div>
+      <div class="pyramid-card">
+        <span class="year">2020</span>
+        <span class="shape">◇</span>
+        <span class="label">마름모꼴<br>(현재)</span>
+      </div>
+      <div class="pyramid-card">
+        <span class="year">2050</span>
+        <span class="shape">▽</span>
+        <span class="label">역삼각형<br>(전망)</span>
+      </div>
+    </div>
+
+    <p>
+      고령 사회에서 초고령 사회로의 전환에 영국은 50년, 미국도 수십 년이 걸렸지만, 한국은 약 7년이면 진입한다. 이 <strong>압축적 속도</strong>에 어떻게 적응할 것인가가 핵심 과제다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 4. 가구 구성의 변화 ─ -->
+  <div class="section">
+    <span class="section-number">04</span>
+    <h2>X자 교차 — 가구 구성의 지각 변동</h2>
+    <p>
+      인구 변동은 숫자만의 문제가 아니다. <strong>가구 구조</strong>의 변화도 핵심이다. 1인 가구는 지속적으로 증가하고 핵가족(부모+자녀) 가구는 줄어들며, 두 추세선은 X자로 교차하고 있다. 부부만으로 이루어진 '딩크(DINK)' 가구도 꾸준히 증가 중이다.
+    </p>
+
+    <div class="compare">
+      <div class="compare-card left">
+        <span class="label">청년 1인 가구</span>
+        <h3>🏙️ 서울·수도권에 집중</h3>
+        <p>20~30대 1인 가구는 주로 서울과 수도권에 밀집해 있다. 일자리와 교육을 따라 수도권으로 모여든 결과다.</p>
+      </div>
+      <div class="compare-card right">
+        <span class="label">고령 1인 가구</span>
+        <h3>🏞️ 지방에 집중</h3>
+        <p>60대 이상 1인 가구는 주로 지방에 집중되어 있다. 이는 단순한 수도권-지방 격차를 넘어, 세대 간 <strong>물리적·사회적 거리</strong>가 벌어지고 있음을 의미한다.</p>
+      </div>
+    </div>
+
+    <p>
+      한국의 특이성은 결혼과 출산의 분리 양상에서도 드러난다. 서구 사회에서는 비혼 출산이 미국 40%, 프랑스 60%, 아이슬란드 65%에 달하지만, 한국에서는 결혼 없는 출산이 거의 불가능하다. 한국에서 결혼과 출산의 분리는 '비혼 출산'이 아니라 <strong>'아예 결혼을 안 하는 것'</strong>으로 나타나고 있다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 5. 왜 이런가 ─ -->
+  <div class="section">
+    <span class="section-number">05</span>
+    <h2>Y절편과 기울기 — 세대 간 경험의 단층</h2>
+    <p>
+      이도훈 교수는 프랑스 사회학자 피에르 부르디외의 개념을 빌려, 객관적 현실과 주관적 인식 간의 <strong>불일치</strong>가 한국 인구 변화의 핵심 요인이라고 분석한다.
+    </p>
+
+    <div class="compare">
+      <div class="compare-card left">
+        <span class="label">50~60대 세대</span>
+        <h3>📈 낮은 출발점, 가파른 성장</h3>
+        <p>평균 경제성장률 약 9%. 생애 동안 1인당 국민소득이 약 <strong>4.7배</strong> 증가하는 경험을 했다. Y절편(출발점)은 낮았지만, 기울기(성장률)는 급격했다.</p>
+      </div>
+      <div class="compare-card right">
+        <span class="label">20~30대 세대</span>
+        <h3>📊 높은 출발점, 완만한 성장</h3>
+        <p>평균 경제성장률 약 2.8%. 50~60대가 될 때까지 소득이 약 <strong>2.5배</strong> 증가할 것으로 전망된다. Y절편은 높지만 기울기는 완만하다.</p>
+      </div>
+    </div>
+
+    <p>
+      이 구조에서 청년 세대의 유보임금(최소한 이 정도는 받아야 한다는 기대치)이 높은 것은 <strong>당연한 결과</strong>다. 지금의 50~60대가 20~30대의 조건에 놓인다면 똑같은 기대치를 가질 것이다. 문제는 이 객관적 조건의 차이를 세대 갈등이나 개인의 태도 문제로 환원하는 시선이다.
+    </p>
+
+    <div class="story-block">
+      <span class="icon">🔄</span>
+      <h3>주관적 인식의 자율성</h3>
+      <p>사회 구조가 주관적 인식에 영향을 주지만, 일정 시점을 넘으면 주관적 인식 자체가 나름의 자율성을 띠게 된다. 부모 세대보다 잘 살게 될 것이라는 믿음은 줄어들고, 생활수준이 나빠질 것이라는 전망은 늘어나고 있다. 결혼 의향은 50%를 간신히 넘고, 출산 의향은 이미 50% 아래로 떨어졌다. 이 <strong>인식 자체가 현실을 다시 만들어가고 있다.</strong></p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 6. 여성 노동과 출생률 ─ -->
+  <div class="section">
+    <span class="section-number">06</span>
+    <h2>역전된 관계 — 여성 노동 참여와 출생률</h2>
+    <p>
+      1980년대 중반까지 여성의 노동시장 참여율이 높을수록 출생률은 낮았다(부정적 관계). 그러나 1980년대 후반 이후, 이 관계가 <strong>역전</strong>되기 시작했다. 여성이 일할 수 있는 사회일수록 오히려 출생률이 높아지는 경향이 나타난 것이다.
+    </p>
+    <p>
+      이것은 단순히 육아휴직이나 어린이집 같은 제도적 지원만의 문제가 아니다. 그 배면에는 <strong>"내가 일하는데 뭐가 잘못된 거야, 사회가 그걸 충분히 서포트해줘야지"</strong>라는 에토스(ethos), 즉 사회적 가치관의 변화가 깔려 있다. 가족과 일 — 이 두 '탐욕스러운 제도(greedy institutions)'를 양립 가능하게 만드는 것이 불가능한 일은 아니라는 것을 OECD 국가들의 데이터가 보여주고 있다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 7. 부양비 재정의 ─ -->
+  <div class="section">
+    <span class="section-number">07</span>
+    <h2>나이를 다시 정의하다 — 건강 조정 부양비</h2>
+    <p>
+      현재 한국의 부양비 논의는 전부 <strong>쪽수(생물학적 나이)</strong>로 계산된다. 65세 이상이면 자동으로 '부양 대상'이 되는 구조다. 그러나 최근 인구학에서는 건강 상태를 반영한 <strong>'건강 조정 부양비(Health-Adjusted Dependency Ratio)'</strong> 개념이 부상하고 있다.
+    </p>
+    <p>
+      이 기준으로 다시 계산하면 영국은 부양 기준 연령이 71세로 올라간다. 한국도 기존 쪽수 기반 부양비에서는 녹색(양호) 수준이지만, 건강 조정 부양비로 재계산하면 <strong>파란색(매우 양호)</strong>으로 떨어진다. 나이 자체가 단순히 생물학적 사실이 아니라 <strong>사회적으로 정의되는 개념</strong>이라는 것, 이것을 인식하는 것만으로도 고령화 논의의 프레임이 달라질 수 있다.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 8. 세대 간 통합 ─ -->
+  <div class="section">
+    <span class="section-number">08</span>
+    <h2>섞이게 하라 — 세대 간 통합의 시도들</h2>
+    <p>
+      청년층과 노년층의 물리적·사회적 거리가 벌어지고 있는 한국에서, 서구의 세대 통합(Intergenerational Housing) 사례는 주목할 만하다.
+    </p>
+
+    <div class="compare">
+      <div class="compare-card left">
+        <span class="label">네덜란드</span>
+        <h3>🏠 요양시설 + 학생 주거</h3>
+        <p>요양시설에 학생들에게 무상 주거를 제공하고, 대신 노인 돌봄에 일정한 책임을 부과한다. 비용을 줄이면서 세대를 자연스럽게 섞는 방식이다.</p>
+      </div>
+      <div class="compare-card right">
+        <span class="label">미국 애리조나</span>
+        <h3>🎓 캠퍼스 안 시니어 아파트</h3>
+        <p>애리조나 주립대학교(ASU) 캠퍼스 안에 시니어 전용 아파트를 건설했다. 입주 조건은 <strong>대학 수업을 청강하는 것</strong>. 매진되었다. 강제가 아니라 넛지(nudge)로 세대를 섞는다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ─ 9. 결론 ─ -->
+  <div class="section">
+    <span class="section-number">09</span>
+    <h2>강연자의 결론 — 부담이 아니라 균형의 문제</h2>
+
+    <div class="story-block">
+      <span class="icon">⚖️</span>
+      <h3>핵심 메시지</h3>
+      <p>인구 감소와 초고령 사회 진입은 이미 <strong>사회적 사실(social fact)</strong>이다. 이를 되돌릴 수는 없다. 인구 감소 자체가 나쁜 것도 아니다.</p>
+      <p>핵심은 이 변화의 <strong>속도에 어떻게 적응(adaptation)할 것인가</strong>, 그리고 "이건 부담이다, 어떡할 거냐"라는 프레임을 넘어 <strong>"어떻게 균형을 맞춰갈 것인가"</strong>로 논의의 초점을 바꾸는 것이다.</p>
+      <p>구조적 관성에 갇히지 않고, 주관적 인식의 자율성이 부정적 방향으로 고착되지 않도록, 세대 간 통합과 나이의 재정의를 통해 새로운 균형점을 찾아야 한다.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ CLAUDE'S INSIGHT ══ -->
+<section class="insight-section">
+  <div class="insight-inner">
+    <div class="insight-label">Claude's Insight</div>
+    <h2>기울기가 만든 세계, 기울기가 부순 세계</h2>
+
+    <p>
+      이 강연에서 가장 인상적인 것은 <strong>Y절편과 기울기</strong>라는 중학교 1차 방정식의 비유다. 이 단순한 프레임 하나가 한국 세대 갈등의 본질을 꿰뚫는다. 50~60대가 경험한 세계는 '바닥에서 시작하되 급격히 올라가는 세계'였고, 20~30대가 살고 있는 세계는 '꽤 높은 곳에서 시작하되 거의 평평한 세계'다. 같은 좌표 평면 위에 있지만, 그래프의 모양이 완전히 다른 삶을 살고 있는 것이다.
+    </p>
+
+    <p>
+      이 구조를 이해하면, 세대 간 갈등의 많은 부분이 <strong>도덕적 판단이 아니라 수학적 귀결</strong>이라는 것을 알 수 있다. "요즘 젊은이들은 눈이 높다"는 말은, 같은 조건에서라면 누구나 그럴 수밖에 없다는 구조적 사실을 개인의 태도 문제로 전환하는 것이다. 교수가 "이건 누구의 잘잘못을 가릴 문제가 아니라, 당연히 높은 것"이라고 단언한 부분이 이 강연에서 가장 솔직한 순간이었다.
+    </p>
+
+    <p>
+      또 하나 주목할 것은 <strong>'구조적 관성'</strong>이라는 개념이다. 이미 아이가 줄고 있는데도 "하나만 낳자" 캠페인을 20년 가까이 계속했다는 사실은, 사회가 얼마나 과거의 프레임에 갇히기 쉬운지를 보여준다. 그리고 이 관성은 지금도 작동하고 있다. 우리는 여전히 65세라는 생물학적 나이를 기준으로 부양비를 계산하고, 인구 피라미드라는 이미 깨진 비유를 쓰고 있다.
+    </p>
+
+    <p>
+      이 강연이 제안하는 전환은 두 가지다. 첫째, <strong>나이를 재정의하라</strong>. 건강 조정 부양비 개념이 보여주듯, 65세를 일률적으로 부양 대상으로 분류하는 것은 현실도 아니고 미래는 더더욱 아니다. 둘째, <strong>세대를 섞어라</strong>. 네덜란드의 요양시설-학생 공동주거나, ASU 캠퍼스 내 시니어 아파트처럼 물리적 공간을 공유하는 것만으로도 세대 간 거리가 줄어들 수 있다.
+    </p>
+
+    <p>
+      결국 이 강연의 핵심 통찰은 이것이다. 한국의 인구 문제는 <strong>'얼마나'의 문제가 아니라 '얼마나 빨리'의 문제</strong>이며, <strong>'부담'의 프레임이 아니라 '균형'의 프레임</strong>으로 봐야 한다는 것. 속도를 늦출 수 없다면, 적응의 속도를 높이는 수밖에 없다. 그리고 그 적응은 제도만으로는 부족하고, 우리가 나이·가족·돌봄을 바라보는 시선 자체가 바뀌어야 가능하다.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>강연 요약 및 분석 · 원 강연: 이도훈(연세대학교 사회학과) · 2023.04.21 · 오프닝: 박현영(바이브컴퍼니)</p>
+</footer>
+
+</body>
+</html>

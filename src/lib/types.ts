@@ -18,10 +18,7 @@ export interface ArchiveListItem {
   slug: string;
   title: string;
   categoryId: string;
-  size: number;
   date: string;
-  displayOrder: number;
-  thumbnail: string;
 }
 
 export interface Category {
