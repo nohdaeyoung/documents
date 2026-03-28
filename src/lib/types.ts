@@ -9,6 +9,7 @@ export interface Archive {
   date: string;
   displayOrder: number;
   thumbnail: string;
+  summary?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -19,6 +20,7 @@ export interface ArchiveListItem {
   title: string;
   categoryId: string;
   date: string;
+  summary?: string;
 }
 
 export interface Category {

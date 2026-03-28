@@ -2,6 +2,7 @@ import { adminDb } from "@/lib/firebase/admin";
 import { ArchiveListItem, Category } from "@/lib/types";
 import ArchiveListClient from "@/components/archive-list-client";
 import { getSiteSettings } from "@/app/admin/actions";
+import { Suspense } from "react";
 
 export const revalidate = 3600;
 
@@ -14,7 +15,8 @@ async function getData() {
         "slug",
         "title",
         "categoryId",
-        "date"
+        "date",
+        "summary"
       )
       .get(),
     adminDb.collection("categories").orderBy("displayOrder").get(),
@@ -29,6 +31,7 @@ async function getData() {
       title: data.title,
       categoryId: data.categoryId,
       date: data.date,
+      summary: data.summary ?? undefined,
     };
   });
 
@@ -49,11 +52,13 @@ async function getData() {
 export default async function HomePage() {
   const { archives, categories, settings } = await getData();
   return (
-    <ArchiveListClient
-      archives={archives}
-      categories={categories}
-      siteTitle={settings.archiveTitle}
-      siteSubtitle={settings.archiveSubtitle}
-    />
+    <Suspense>
+      <ArchiveListClient
+        archives={archives}
+        categories={categories}
+        siteTitle={settings.archiveTitle}
+        siteSubtitle={settings.archiveSubtitle}
+      />
+    </Suspense>
   );
 }

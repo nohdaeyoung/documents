@@ -1,9 +1,13 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArchiveListItem, Category } from "@/lib/types";
 import Link from "next/link";
 import SubscribeForm from "@/components/subscribe-form";
+import Pagination from "@/components/pagination";
+
+const PAGE_SIZE = 20;
 
 const CHOSUNG = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
 
@@ -49,9 +53,19 @@ interface Props {
 }
 
 export default function ArchiveListClient({ archives, categories, siteTitle, siteSubtitle }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [currentPage, setCurrentPage] = useState(() => {
+    const p = parseInt(searchParams.get("page") ?? "1", 10);
+    return isNaN(p) || p < 1 ? 1 : p;
+  });
+
+  const prevFilterRef = useRef(activeFilter);
+  const prevSearchRef = useRef(searchQuery);
 
   const catMap = useMemo(() => {
     const map: Record<string, Category> = {};
@@ -78,22 +92,50 @@ export default function ArchiveListClient({ archives, categories, siteTitle, sit
     return result;
   }, [archives, activeFilter, searchQuery, catMap]);
 
-  // Animation index map: only first 8 items get staggered animation
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+
+  // Reset to page 1 when filter or search changes
+  useEffect(() => {
+    if (activeFilter !== prevFilterRef.current || searchQuery !== prevSearchRef.current) {
+      prevFilterRef.current = activeFilter;
+      prevSearchRef.current = searchQuery;
+      goToPage(1);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilter, searchQuery]);
+
+  function goToPage(page: number) {
+    const clamped = Math.min(Math.max(1, page), totalPages);
+    setCurrentPage(clamped);
+    const params = new URLSearchParams(searchParams.toString());
+    if (clamped === 1) {
+      params.delete("page");
+    } else {
+      params.set("page", String(clamped));
+    }
+    const qs = params.toString();
+    router.push(qs ? `/?${qs}` : "/", { scroll: true });
+  }
+
+  const safePage = Math.min(currentPage, totalPages);
+  const paginatedItems = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
+  // Animation index: stagger only first 8 items on current page
   const animIdx = useMemo(() => {
     const map: Record<string, number> = {};
-    filtered.forEach((a, i) => { map[a.id] = i; });
+    paginatedItems.forEach((a, i) => { map[a.id] = i; });
     return map;
-  }, [filtered]);
+  }, [paginatedItems]);
 
   const grouped = useMemo(() => {
     const map: Record<string, ArchiveListItem[]> = {};
-    for (const a of filtered) {
+    for (const a of paginatedItems) {
       const key = a.date?.slice(0, 7) || "날짜 미상";
       if (!map[key]) map[key] = [];
       map[key].push(a);
     }
     return Object.entries(map).sort((a, b) => b[0].localeCompare(a[0]));
-  }, [filtered]);
+  }, [paginatedItems]);
 
   return (
     <>
@@ -179,8 +221,11 @@ export default function ArchiveListClient({ archives, categories, siteTitle, sit
         {/* Content */}
         {filtered.length === 0 ? (
           <div className="archive-content empty-state">
-            <div className="empty-icon">🔍</div>
-            <p>검색 결과가 없습니다</p>
+            <p className="empty-text">
+              {searchQuery.trim()
+                ? `"${searchQuery.trim()}" 검색 결과가 없습니다`
+                : "표시할 항목이 없습니다"}
+            </p>
           </div>
         ) : (
           <div className="archive-content">
@@ -215,6 +260,9 @@ export default function ArchiveListClient({ archives, categories, siteTitle, sit
                               {tagLabel}
                             </span>
                             <div className="card-title">{archive.title}</div>
+                            {archive.summary && (
+                              <div className="card-summary">{archive.summary}</div>
+                            )}
                             <div className="card-date">{formatDate(archive.date)}</div>
                           </Link>
                           <a
@@ -257,6 +305,9 @@ export default function ArchiveListClient({ archives, categories, siteTitle, sit
                             </span>
                             <div className="item-content">
                               <div className="title">{archive.title}</div>
+                              {archive.summary && (
+                                <div className="item-summary">{archive.summary}</div>
+                              )}
                               <div className="meta">{formatDate(archive.date)}</div>
                             </div>
                           </Link>
@@ -281,6 +332,12 @@ export default function ArchiveListClient({ archives, categories, siteTitle, sit
                 )}
               </section>
             ))}
+
+            <Pagination
+              currentPage={safePage}
+              totalPages={totalPages}
+              onPageChange={goToPage}
+            />
           </div>
         )}
 

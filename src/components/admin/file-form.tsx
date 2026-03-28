@@ -27,6 +27,7 @@ export default function FileForm({
     archive?.date ?? new Date().toISOString().slice(0, 16)
   );
   const [contentHtml, setContentHtml] = useState(archive?.contentHtml ?? "");
+  const [summary, setSummary] = useState(archive?.summary ?? "");
   const [fileName, setFileName] = useState("");
   const [saving, setSaving] = useState(false);
   const [htmlLoading, setHtmlLoading] = useState(isEdit);
@@ -70,6 +71,7 @@ export default function FileForm({
           categoryId,
           contentHtml,
           date,
+          summary: summary.trim() || undefined,
         });
       } else {
         await createArchive({
@@ -78,6 +80,7 @@ export default function FileForm({
           categoryId,
           contentHtml,
           date,
+          summary: summary.trim() || undefined,
         });
       }
       await onSaved();
@@ -134,6 +137,18 @@ export default function FileForm({
               <label className="form-label">날짜</label>
               <input type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} className="form-input" />
             </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">소개 텍스트 (선택 — 목록에 표시)</label>
+            <textarea
+              value={summary}
+              onChange={e => setSummary(e.target.value)}
+              placeholder="1-2줄 소개 문장 (없으면 비워두세요)"
+              rows={2}
+              className="form-input"
+              style={{ resize: "vertical", minHeight: "60px" }}
+            />
           </div>
 
           {isEdit && (

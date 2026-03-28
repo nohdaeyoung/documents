@@ -11,7 +11,7 @@ export async function getAdminData() {
     adminDb
       .collection("archives")
       .orderBy("date", "desc")
-      .select("slug", "title", "categoryId", "fileExt", "size", "date", "displayOrder", "thumbnail")
+      .select("slug", "title", "categoryId", "fileExt", "size", "date", "displayOrder", "thumbnail", "summary")
       .get(),
     adminDb.collection("categories").orderBy("displayOrder").get(),
   ]);
@@ -29,6 +29,7 @@ export async function getAdminData() {
       date: d.date ?? "",
       displayOrder: d.displayOrder ?? 0,
       thumbnail: d.thumbnail ?? "",
+      summary: d.summary ?? undefined,
       createdAt: null as null,
       updatedAt: null as null,
     };
@@ -60,6 +61,7 @@ export async function createArchive(data: {
   categoryId: string;
   contentHtml: string;
   date: string;
+  summary?: string;
 }) {
   const snap = await adminDb
     .collection("archives")
@@ -101,6 +103,7 @@ export async function updateArchive(
     categoryId: string;
     contentHtml: string;
     date: string;
+    summary?: string;
   }
 ) {
   await adminDb
