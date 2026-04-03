@@ -344,7 +344,8 @@ export default function ArchiveListClient({ archives, categories, siteTitle, sit
         <footer className="archive-footer">
           324(dy) · claude Opus4.6 · Next.js · Firestore ·{" "}
           <a href="/colophon">Colophon</a> ·{" "}
-          <a href="/notes">개발노트</a>
+          <a href="/notes">개발노트</a> ·{" "}
+          <a href="https://knowledge-324.vercel.app" target="_blank" rel="noopener noreferrer">Knowledge Graph</a>
         </footer>
       </div>
       <SubscribeForm />
