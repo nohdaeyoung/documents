@@ -4,7 +4,7 @@ import { adminDb } from "@/lib/firebase/admin";
 function getResend() {
   return new Resend(process.env.RESEND_API_KEY ?? "placeholder");
 }
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://doc.324.ing";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://d.324.ing";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "324 Archives <noreply@324.ing>";
 
 function newArchiveEmailHtml({
