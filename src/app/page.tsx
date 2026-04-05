@@ -4,7 +4,7 @@ import ArchiveListClient from "@/components/archive-list-client";
 import { getSiteSettings } from "@/app/admin/actions";
 import { Suspense } from "react";
 
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 async function getData() {
   const [archivesSnap, categoriesSnap, settings] = await Promise.all([
