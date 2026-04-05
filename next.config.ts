@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async headers() {
+    return [
+      {
+        source: "/",
+        headers: [
+          { key: "CDN-Cache-Control", value: "no-cache" },
+          { key: "Vercel-CDN-Cache-Control", value: "no-cache" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
