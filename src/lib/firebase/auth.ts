@@ -63,8 +63,15 @@ export async function signOut() {
   return firebaseSignOut(auth);
 }
 
+const ALLOWED_EMAILS = ["dynoworld@gmail.com"];
+
 export async function signInWithGoogle() {
-  return signInWithPopup(auth, googleProvider);
+  const result = await signInWithPopup(auth, googleProvider);
+  if (!ALLOWED_EMAILS.includes(result.user.email ?? "")) {
+    await firebaseSignOut(auth);
+    throw new Error("접근 권한이 없는 계정입니다.");
+  }
+  return result;
 }
 
 export async function linkGoogleAccount() {
